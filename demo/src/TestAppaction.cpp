@@ -12,9 +12,6 @@
 #include "Uuid.h"
 
 #include <iostream>
-#include <cmath>
-
-using std::iostream;
 
 using WsTools::Log;
 
