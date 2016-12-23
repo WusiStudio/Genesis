@@ -31,7 +31,7 @@ namespace engine
         const bool init(void) override;
 
     private:
-        static const char * const ms_nodeType;
+        static const char * const msc_nodeType;
 
         static vector<World *> ms_worldPool;
     };

@@ -57,7 +57,7 @@ namespace engine
     private:
         Window(void);
 
-        static const char * const ms_nodeType;
+        static const char * const msc_nodeType;
 
         //用于多窗口事件回调
         static vector<Window *> ms_windowPool;

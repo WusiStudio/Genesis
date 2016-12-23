@@ -6,7 +6,7 @@ namespace engine
 {
     using WsTools::Log;
 
-    const char * const Node::ms_nodeType = "Node";
+    const char * const Node::msc_nodeType = "Node";
 
     Node::Node(void)
     {
@@ -29,7 +29,7 @@ namespace engine
 
     const char *  Node::nodeType(void) const
     {
-        return ms_nodeType;
+        return msc_nodeType;
     }
 
     const bool Node::append(Node & child)
@@ -89,7 +89,7 @@ namespace engine
     {
         if(m_worldCoordinateInvalid){ return m_worldCoordinate; }
         m_worldCoordinate = m_position;
-        if(!parent() || parent()->nodeType() != ms_nodeType){ return m_worldCoordinate; }
+        if(!parent() || parent()->nodeType() != msc_nodeType){ return m_worldCoordinate; }
 
         Node & parentNode = *(Node *)parent();
 

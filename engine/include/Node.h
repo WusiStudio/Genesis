@@ -67,7 +67,7 @@ namespace engine
         void posterityWorldCoordinateInvalid(void);
 
 
-        static const char * const ms_nodeType;
+        static const char * const msc_nodeType;
 
         //位置 旋转 缩放
         Vec3 m_position, m_rotate, m_scale;

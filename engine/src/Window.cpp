@@ -10,7 +10,7 @@ namespace engine
     using WsTools::Log;
 
     vector<Window *> Window::ms_windowPool;
-    const char * const Window::ms_nodeType = "Window";
+    const char * const Window::msc_nodeType = "Window";
 
     const vector<Window *> & Window::windowPool(void)
     {
@@ -19,7 +19,7 @@ namespace engine
 
     const char *  Window::nodeType(void) const
     {
-        return ms_nodeType;
+        return msc_nodeType;
     }
 
     //添加子节点

@@ -8,7 +8,7 @@ namespace engine
     using WsTools::Log;
 
     vector<World *> World::ms_worldPool;
-    const char * const World::ms_nodeType = "World";
+    const char * const World::msc_nodeType = "World";
 
     const vector<World *> & World::worldPool()
     {
@@ -17,7 +17,7 @@ namespace engine
 
     const char *  World::nodeType(void) const
     {
-        return ms_nodeType;
+        return msc_nodeType;
     }
 
     World::World(void)
