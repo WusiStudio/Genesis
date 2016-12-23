@@ -2,6 +2,8 @@
 #include <cstring>
 #include <random>
 
+using std::random_device;
+using std::uniform_int_distribution;
 
 namespace engine
 {

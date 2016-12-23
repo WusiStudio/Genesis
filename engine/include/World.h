@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include <vector>
 
-using namespace std;
+using std::vector;
 
 namespace engine
 {

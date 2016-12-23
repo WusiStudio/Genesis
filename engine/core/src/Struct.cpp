@@ -1,6 +1,7 @@
 #include "Struct.h"
 #include <cmath>
-using namespace std;
+
+using std::abs;
 
 namespace engine
 {

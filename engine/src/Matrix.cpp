@@ -1,8 +1,6 @@
 #include "Matrix.h"
 #include <cmath>
 
-using namespace std;
-
 namespace engine
 {
     //------------------------------------------------------------------

@@ -6,7 +6,9 @@
 #include <iostream>
 #include "BaseObject.h"
 #include "Object.h"
-using namespace std;
+
+using std::list;
+using std::iostream;
 
 namespace engine
 {    

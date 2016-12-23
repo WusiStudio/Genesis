@@ -1,8 +1,6 @@
 #include "Vec.h"
 #include <cmath>
 
-using namespace std;
-
 namespace engine
 {
     float & Vec::operator[](const unsigned int index) const

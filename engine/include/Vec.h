@@ -5,7 +5,10 @@
 #include "Struct.h"
 #include <iostream>
 
-using namespace std;
+using std::iostream;
+using std::ostream;
+using std::cout;
+using std::endl;
 
 namespace engine
 {

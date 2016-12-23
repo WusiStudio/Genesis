@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 #include <string>
 
-using namespace std;
+using std::string;
 
 namespace engine
 {

@@ -11,7 +11,9 @@
 #include "Vec.h"
 #include "Matrix.h"
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::map;
 
 namespace engine
 {

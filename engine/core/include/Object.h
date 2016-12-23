@@ -5,7 +5,6 @@
 #include "BaseObject.h"
 
 #include <cassert>
-using namespace std;
 
 namespace engine
 {

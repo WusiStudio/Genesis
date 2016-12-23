@@ -12,9 +12,7 @@
 #define ACCESS access
 #endif
 
-using namespace std;
 using namespace WsTools;
-
 
 namespace engine
 {

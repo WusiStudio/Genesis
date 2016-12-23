@@ -7,7 +7,6 @@
 #include "Window.h"
 #include <functional>
 
-using namespace std;
 
 namespace engine
 {

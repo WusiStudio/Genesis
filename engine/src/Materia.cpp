@@ -2,8 +2,6 @@
 
 #include <cstring>
 
-using namespace std;
-
 namespace engine
 {
 

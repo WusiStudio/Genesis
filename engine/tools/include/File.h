@@ -6,7 +6,9 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
+using std::ios;
+using std::string;
+using std::ifstream;
 
 namespace engine
 {

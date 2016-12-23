@@ -6,7 +6,8 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+using std::string;
+using std::ostream;
 
 namespace engine
 {

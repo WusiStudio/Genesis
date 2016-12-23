@@ -3,8 +3,10 @@
 #include "File.h"
 #include "Appaction.h"
 #include <cassert>
+#include <regex>
 
-using namespace std;
+using std::smatch;
+
 using namespace WsTools;
 
 namespace engine

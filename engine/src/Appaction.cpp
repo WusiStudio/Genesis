@@ -13,7 +13,10 @@
 #include "CameraOutput.h"
 #include "Window.h"
 
-using namespace std;
+#include <regex>
+
+using std::smatch;
+
 using namespace WsTools;
 
 namespace engine

@@ -2,8 +2,6 @@
 #include <clocale>
 #include <cstring>
 
-using namespace std;
-
 namespace engine
 {
     namespace tools

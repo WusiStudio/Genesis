@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-using namespace std;
+using std::iostream;
 
 namespace engine
 {

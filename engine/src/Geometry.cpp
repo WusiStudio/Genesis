@@ -10,8 +10,6 @@
 #include "Matrix.h"
 #include "ShaderProgram.h"
 
-
-using namespace std;
 using namespace WsTools;
 
 namespace engine

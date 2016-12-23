@@ -14,7 +14,8 @@
 #include <iostream>
 #include <cmath>
 
-using namespace std;
+using std::iostream;
+
 using namespace engine;
 using namespace tools;
 using namespace WsTools;

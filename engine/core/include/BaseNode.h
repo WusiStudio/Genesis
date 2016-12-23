@@ -9,7 +9,9 @@
 #include <functional>
 #include <string>
 
-using namespace std;
+using std::list;
+using std::function;
+using std::string;
 
 namespace engine
 {

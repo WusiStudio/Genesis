@@ -2,8 +2,6 @@
 #include <cmath>
 #include "WSLog.h"
 
-
-using namespace std;
 using namespace WsTools;
 
 namespace engine
