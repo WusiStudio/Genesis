@@ -13,7 +13,6 @@
 
 namespace engine
 {
-    using namespace tools;
     class Geometry : public Node
     {
     public:

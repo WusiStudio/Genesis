@@ -2,10 +2,10 @@
 #include "WSLog.h"
 #include "Matrix.h"
 
-using namespace WsTools;
-
 namespace engine
 {
+    using WsTools::Log;
+
     const char * const Node::ms_nodeType = "Node";
 
     Node::Node(void)

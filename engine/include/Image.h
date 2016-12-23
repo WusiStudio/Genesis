@@ -5,10 +5,10 @@
 #include "Object.h"
 #include <string>
 
-using std::string;
-
 namespace engine
 {
+    using std::string;
+
     class Image : public Object
     {
     public:

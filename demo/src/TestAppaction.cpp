@@ -16,9 +16,7 @@
 
 using std::iostream;
 
-using namespace engine;
-using namespace tools;
-using namespace WsTools;
+using WsTools::Log;
 
 TestAppaction & TestAppaction::Instance(void)
 {

@@ -5,11 +5,11 @@
 #include "WSLog.h"
 #include "Appaction.h"
 
-using namespace WsTools;
-
 namespace engine
 {
-    using namespace tools;
+    using WsTools::Log;
+    using tools::File;
+    
     Image & Image::Create(const string & path)
     {
         Image & result = Create();

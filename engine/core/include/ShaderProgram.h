@@ -11,12 +11,13 @@
 #include "Vec.h"
 #include "Matrix.h"
 
-using std::string;
-using std::vector;
-using std::map;
 
 namespace engine
 {
+    using std::string;
+    using std::vector;
+    using std::map;
+    
     class ShaderProgram : public Object
     {
     public:

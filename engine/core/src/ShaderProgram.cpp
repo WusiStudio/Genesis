@@ -1,12 +1,10 @@
 #include "ShaderProgram.h"
 #include "WSLog.h"
-#include "File.h"
-
-using namespace WsTools;
 
 namespace engine
 {
-    using namespace tools;
+    using WsTools::Log;
+
     //着色器缓存池
     map<string, ShaderProgram *> ShaderProgram::ms_shaderProgramsPool;
 

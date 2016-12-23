@@ -9,12 +9,12 @@
 #include <functional>
 #include <string>
 
-using std::list;
-using std::function;
-using std::string;
-
 namespace engine
 {
+    using std::list;
+    using std::function;
+    using std::string;
+
     class BaseNode : public Object
     {
     public:

@@ -12,12 +12,12 @@
 #define ACCESS access
 #endif
 
-using namespace WsTools;
-
 namespace engine
 {
     namespace tools
     {
+        using WsTools::Log;
+
         string File::ReadAllText(const string & filePath)
         {
             string result;

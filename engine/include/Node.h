@@ -8,10 +8,10 @@
 
 #include <string>
 
-using std::string;
-
 namespace engine
 {
+    using std::string;
+    
     class Node : public BaseNode
     {
     public:

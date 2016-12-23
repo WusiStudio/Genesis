@@ -13,11 +13,11 @@
 #include "Camera.h"
 #include "CameraOutput.h"
 
-using std::string;
-using std::vector;
-
 namespace engine
 {
+    using std::string;
+    using std::vector;
+    
     class Window : public BaseNode
     {
     public:

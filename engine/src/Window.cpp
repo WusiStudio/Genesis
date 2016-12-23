@@ -5,10 +5,10 @@
 #include "WSLog.h"
 #include "Gc.h"
 
-using namespace WsTools;
-
 namespace engine
 {
+    using WsTools::Log;
+
     vector<Window *> Window::ms_windowPool;
     const char * const Window::ms_nodeType = "Window";
 

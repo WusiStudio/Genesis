@@ -7,11 +7,11 @@
 #include "BaseObject.h"
 #include "Object.h"
 
-using std::list;
-using std::iostream;
-
 namespace engine
 {    
+    using std::list;
+    using std::iostream;
+
     class Gc : protected BaseObject
     {
     public:

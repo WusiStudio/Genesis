@@ -7,7 +7,6 @@
 #include "Window.h"
 #include <functional>
 
-
 namespace engine
 {
     class Appaction : public Object

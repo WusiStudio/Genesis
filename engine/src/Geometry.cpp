@@ -10,11 +10,9 @@
 #include "Matrix.h"
 #include "ShaderProgram.h"
 
-using namespace WsTools;
-
 namespace engine
 {
-    using namespace tools;
+    using WsTools::Log;
 
     const bool Geometry::bindMateria(Materia & m)
     {

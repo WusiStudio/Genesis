@@ -1,10 +1,10 @@
 #include "CameraOutput.h"
 #include "WSLog.h"
 
-using namespace WsTools;
-
 namespace engine
 {
+    using WsTools::Log;
+
     const bool CameraOutput::init(void)
     {
         if(!Node::init()){ return false; }

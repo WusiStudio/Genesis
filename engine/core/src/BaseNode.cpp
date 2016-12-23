@@ -4,7 +4,6 @@
 
 namespace engine
 {
-
     BaseNode::BaseNode(void)
     {
         m_id = nullptr;

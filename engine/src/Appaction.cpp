@@ -15,13 +15,11 @@
 
 #include <regex>
 
-using std::smatch;
-
-using namespace WsTools;
-
 namespace engine
 {
-    using namespace tools;
+    using std::smatch;
+    using std::regex;
+    using WsTools::Log;
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {

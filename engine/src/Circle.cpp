@@ -2,11 +2,9 @@
 #include <cmath>
 #include "WSLog.h"
 
-using namespace WsTools;
-
 namespace engine
 {
-    using namespace tools;
+    using WsTools::Log;
 
     Circle::Circle(void)
     {

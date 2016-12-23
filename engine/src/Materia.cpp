@@ -4,7 +4,6 @@
 
 namespace engine
 {
-
     Materia * Materia::ms_defaultMateria = nullptr;
 
     const Materia & Materia::defaultMateria(void)

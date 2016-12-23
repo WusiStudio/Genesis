@@ -6,10 +6,10 @@
 #include "Camera.h"
 #include <vector>
 
-using std::vector;
-
 namespace engine
 {
+    using std::vector;
+    
     class World : public BaseNode
     {
     public:

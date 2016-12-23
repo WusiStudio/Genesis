@@ -2,10 +2,11 @@
 #include <algorithm>
 #include "WSLog.h"
 
-using namespace WsTools;
 
 namespace engine
 {
+    using WsTools::Log;
+
     vector<World *> World::ms_worldPool;
     const char * const World::ms_nodeType = "World";
 

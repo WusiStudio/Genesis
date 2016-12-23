@@ -2,12 +2,10 @@
 #include "WSLog.h"
 #include "Materia.h"
 
-using namespace WsTools;
-
 namespace engine
 {
-
-    using namespace tools;
+    using WsTools::Log;
+    
     Triangle & Triangle::Create(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3)
     {
         Triangle & result = Create();

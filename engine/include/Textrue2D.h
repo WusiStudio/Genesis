@@ -7,10 +7,10 @@
 #include <glad/glad.h>
 #include <string>
 
-using std::string;
-
 namespace engine
 {
+    using std::string;
+
     class Textrue2D : public Object
     {
     public:

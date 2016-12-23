@@ -7,10 +7,10 @@
 
 #include <iostream>
 
-using std::iostream;
-
 namespace engine
 {
+    using std::iostream;
+
     template<typename C, typename T, unsigned dimension>
     class Matrix : public Struct
     {

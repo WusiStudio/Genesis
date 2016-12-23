@@ -5,13 +5,16 @@
 #include <cassert>
 #include <regex>
 
-using std::smatch;
-
-using namespace WsTools;
-
 namespace engine
 {
-    using namespace tools;
+    using tools::File;
+    using WsTools::Log;
+
+    using std::smatch;
+    using std::regex;
+    using std::stringstream;
+    using std::sregex_iterator;
+
     string Shader::m_versionKey = "#version";
     string Shader::m_globalCodeKey = "#globalCode";
     string Shader::m_mainCodeKey = "#mainCode";

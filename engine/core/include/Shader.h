@@ -10,11 +10,11 @@
 #include "Object.h"
 #include "File.h"
 
-using std::string;
-using std::vector;
-
 namespace engine
 {
+    using std::string;
+    using std::vector;
+
     enum ShaderType{
         vertex = GL_VERTEX_SHADER,
         fragment = GL_FRAGMENT_SHADER

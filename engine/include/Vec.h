@@ -5,13 +5,13 @@
 #include "Struct.h"
 #include <iostream>
 
-using std::iostream;
-using std::ostream;
-using std::cout;
-using std::endl;
-
 namespace engine
 {
+    using std::iostream;
+    using std::ostream;
+    using std::cout;
+    using std::endl;
+    
     class Vec : public Struct
     {
     public: 
