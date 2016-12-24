@@ -8,7 +8,7 @@ namespace engine
         return !m_initializeErrorCode;
     }
 
-    const unsigned short Object::fault(void) const
+    const int Object::fault(void) const
     {
         return m_initializeErrorCode;
     }
@@ -24,7 +24,7 @@ namespace engine
         return true;
     }
 
-    void Object::initializeError(const unsigned short errorCode)
+    void Object::initializeError(const int errorCode)
     {
         if(!errorCode){ return; }
         m_initializeErrorCode = errorCode;

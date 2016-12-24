@@ -29,14 +29,14 @@ namespace engine
         //获取可用状态
         const bool ready(void) const;
         //获取错误码 (0表示无错误)
-        const unsigned short fault(void) const;
+        const int fault(void) const;
 
         //对象自动释放
         virtual const bool autoRelease(void);
 
         virtual const bool init(void);
 
-        void initializeError(const unsigned short errorCode);
+        void initializeError(const int errorCode);
 
     protected:
         
@@ -45,7 +45,7 @@ namespace engine
 
     private:
         //初始化错误码
-        unsigned short m_initializeErrorCode;
+        int m_initializeErrorCode;
     };
 }
 

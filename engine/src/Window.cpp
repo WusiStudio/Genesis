@@ -67,13 +67,15 @@ namespace engine
     {
         //设置参数
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        //设置多重采样
+        glfwWindowHint(GLFW_SAMPLES, 1600);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
         //创建窗口
-        m_windowSize = Size2((int)size.width, (int)size.height);
+        m_windowSize = Size2((float)(int)size.width, (float)(int)size.height);
         m_window = glfwCreateWindow((int)m_windowSize.width, (int)m_windowSize.height, title.c_str(), nullptr, nullptr);
         if (m_window == nullptr)
         {
