@@ -48,7 +48,7 @@ TestAppaction & TestAppaction::Instance(void)
 
         // Log.info("location = {0}", location);
 
-        Matrix2 matrix(Vec2(1.6666, 3.152454), Vec2(2.154, 4.556));
+        Matrix2 matrix(Vec2(1.6666f, 3.152454f), Vec2(2.154f, 4.556f));
 
         Matrix2 matrix2(matrix);
 

@@ -95,8 +95,6 @@ namespace engine
             glGetIntegerv(GL_SAMPLE_BUFFERS,&buffers);
             glGetIntegerv(GL_SAMPLES,&samples);
 
-            Log.info("buffers: {0}, samples{0}", buffers, samples);
-
             if(buffers > 0 && samples > 0)
                 glEnable(GL_MULTISAMPLE);
         }

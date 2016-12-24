@@ -19,6 +19,7 @@ namespace engine
     {
         if(!Object::init()){ return false; }
 
+        //默认类型与颜色
         m_materiaType = MateriaType::Purity;
         m_color = ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f);
         return true;
@@ -53,6 +54,7 @@ namespace engine
         m_colors = new ColorRGBA[count];
         memcpy(m_colors, colors, sizeof(ColorRGBA) * count);
 
+        m_materiaType = MateriaType::Multicolor;
         return true;
     }
 

@@ -311,6 +311,10 @@ namespace engine
                     vShaderFiles.push_back("MPurity.vert");
                     fShaderFiles.push_back("MPurity.frag");
                 break;
+                case MateriaType::Multicolor:
+                    vShaderFiles.push_back("Multicolor.vert");
+                    fShaderFiles.push_back("Multicolor.frag");
+                break;
                 default:
                     return false;
             }

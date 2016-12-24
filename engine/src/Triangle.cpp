@@ -33,7 +33,12 @@ namespace engine
 
         // ColorRGBA tempColors[3] = {ColorRGBA(.2f, 1.0f, .4f, 1.0f), ColorRGBA(.2f, 1.0f, .4f, 1.0f), ColorRGBA(.2f, 1.0f, .4f, 1.0f)};
         // materia.colors(tempColors, sizeof(tempColors) / sizeof(ColorRGBA));
-        materia.color(ColorRGBA(1.0f, 1.0f, 0.0f, 1.0f));
+        ColorRGBA colors[] = {
+            ColorRGBA(1.0f, 1.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 1.0f, 1.0f, 1.0f),
+            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
+        };
+        materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
         bindMateria(materia);
         Vec3 tempVertexs[3] = {vertex_1, vertex_2, vertex_3};
