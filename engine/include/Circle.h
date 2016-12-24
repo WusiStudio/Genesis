@@ -25,7 +25,7 @@ namespace engine
         virtual const bool init(const float r);
 
         const bool tick(const float dp) override;
-        const bool draw(const Matrix4 & projection) override;
+        const bool draw(const Matrix4 & projection) const override;
 
     private:
         float m_radius;

@@ -53,8 +53,13 @@ namespace engine
         //顶点数据顺序对象
         const GLuint indiesBufferObject(void) const;
 
+        //绑定数据到Vao
+        const bool bindVaoData(void) const;
+
         const bool tick(const float dp) override;
-        const bool draw(const Matrix4 & projection) override;
+        const bool draw(const Matrix4 & projection) const override;
+
+        const bool deputeDraw(const Matrix4 & projection, function<bool(void)> cb_draw) const;
     private:
 
         //创建并使用当前设置所需要的着色器
@@ -76,6 +81,7 @@ namespace engine
         //gl对象
         GLuint m_vertexArrayObject, m_vertexBufferObject, m_indiesBufferObject;
         
+        static Materia * DefaultMateria(void);
     };
 }
 

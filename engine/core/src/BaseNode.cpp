@@ -156,7 +156,7 @@ namespace engine
         return true;
     }
 
-    const bool BaseNode::draw(const Matrix4 & projection)
+    const bool BaseNode::draw(const Matrix4 & projection) const
     {
         for(auto item : m_chidren)
         {

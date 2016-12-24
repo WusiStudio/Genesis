@@ -85,6 +85,20 @@ namespace engine
         glfwMakeContextCurrent(m_window);
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
+
+        //启用多重采样 (未成功)
+        if(glIsEnabled(GL_MULTISAMPLE))
+        {
+            GLint buffers ,samples;
+            glGetIntegerv(GL_SAMPLE_BUFFERS,&buffers);
+            glGetIntegerv(GL_SAMPLES,&samples);
+
+            Log.info("buffers: {0}, samples{0}", buffers, samples);
+
+            if(buffers > 0 && samples > 0)
+                glEnable(GL_MULTISAMPLE);
+        }
+
         // glfwSetErrorCallback(error_callback);
 
         //引擎按键处理

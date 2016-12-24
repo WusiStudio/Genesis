@@ -40,7 +40,7 @@ namespace engine
 
         vertexs(tempVertexs);
 
-        return true;
+        return bindVaoData();
     }
 
      const bool Triangle::tick(const float dp)
@@ -50,13 +50,11 @@ namespace engine
          return true;
      }
 
-     const bool Triangle::draw(const Matrix4 & projection)
+     const bool Triangle::draw(const Matrix4 & projection) const
      {
-         if(!Geometry::draw(projection)){ return false; }
-
-        glBindVertexArray(vertexArrayObject());
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        return true;
+        return deputeDraw(projection, [this](void)->bool{
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+            return true;
+        });
      }
 }

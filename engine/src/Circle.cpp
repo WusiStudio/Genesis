@@ -62,7 +62,7 @@ namespace engine
 
         indie(vertexsCount(), 1);
 
-        return true;
+        return bindVaoData();
     }
 
     const float Circle::radius(void)
@@ -78,16 +78,13 @@ namespace engine
      }
 
 
-    const bool Circle::draw(const Matrix4 & projection)
+    const bool Circle::draw(const Matrix4 & projection) const
      {
-         if(!Geometry::draw(projection)){ return false; }
-
-        glBindVertexArray(vertexArrayObject());
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
-
-        glDrawElements(GL_TRIANGLE_FAN, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
-
-        return true;
+        return deputeDraw(projection, [this](void)->bool{
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
+            glDrawElements(GL_TRIANGLE_FAN, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
+            return true;
+        });
      }
 
 }

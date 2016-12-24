@@ -4,18 +4,6 @@
 
 namespace engine
 {
-    Materia * Materia::ms_defaultMateria = nullptr;
-
-    const Materia & Materia::defaultMateria(void)
-    {
-        if(!ms_defaultMateria)
-        {
-            ms_defaultMateria = &Materia::Create();
-            ms_defaultMateria->retain();
-        }
-        return *ms_defaultMateria;
-    }
-
     Materia::Materia(void)
     {
         m_colors = nullptr;

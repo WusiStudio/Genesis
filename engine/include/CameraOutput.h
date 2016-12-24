@@ -17,7 +17,7 @@ namespace engine
         void camera(Camera & linkCamera);
 
         void size(const Size2 & size);
-        Size2 & size(void);
+        const Size2 & size(void) const;
 
     protected:
 
@@ -25,7 +25,7 @@ namespace engine
 
         const bool tick(const float dt) override;
         //绘制
-        const bool draw(const Matrix4 & projection) override;
+        const bool draw(const Matrix4 & projection) const override;
 
         CameraOutput(void);
         virtual ~CameraOutput(void);

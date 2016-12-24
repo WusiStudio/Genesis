@@ -45,7 +45,6 @@ namespace engine
         unsigned int m_colorsCount;
         MateriaType m_materiaType; 
 
-        static Materia * ms_defaultMateria;
     };
 }
 

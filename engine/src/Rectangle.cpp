@@ -33,7 +33,7 @@ namespace engine
         unsigned short tempIndies[4] = {0, 1, 2, 3};
         indies(tempIndies);
 
-        return true;
+        return bindVaoData();
     }
 
     const bool Rectangle::tick(const float dp)
@@ -43,16 +43,14 @@ namespace engine
          return true;
      }
 
-     const bool Rectangle::draw(const Matrix4 & projection)
+     const bool Rectangle::draw(const Matrix4 & projection) const
      {
-         if(!Geometry::draw(projection)){ return false; }
 
-        glBindVertexArray(vertexArrayObject());
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
-
-        glDrawElements(GL_TRIANGLE_STRIP, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
-
-        return true;
+        return deputeDraw(projection, [this](void)->bool{
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
+            glDrawElements(GL_TRIANGLE_STRIP, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
+            return true;
+        });
      }
 
 }

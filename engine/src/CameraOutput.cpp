@@ -32,7 +32,7 @@ namespace engine
         m_size = size;
     }
 
-    Size2 & CameraOutput::size(void)
+    const Size2 & CameraOutput::size(void) const
     {
         return m_size;
     }
@@ -50,7 +50,7 @@ namespace engine
         return true;
     }
 
-    const bool CameraOutput::draw(const Matrix4 & projection)
+    const bool CameraOutput::draw(const Matrix4 & projection) const
     {
 
         //画布空间

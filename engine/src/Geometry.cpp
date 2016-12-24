@@ -14,6 +14,18 @@ namespace engine
 {
     using WsTools::Log;
 
+    Materia * Geometry::DefaultMateria(void)
+    {
+        static Materia * result = nullptr;
+        if(!result)
+        {
+            result = &Materia::Create();
+            result->retain();
+        }
+
+        return result;
+    }
+
     const bool Geometry::bindMateria(Materia & m)
     {
         if(m_materia) { m_materia->release(); }
@@ -31,7 +43,7 @@ namespace engine
     {
         m_vertexs = nullptr;
         m_indies = nullptr;
-        m_materia = nullptr;
+        m_materia = DefaultMateria();
         m_shaderProgram = nullptr;
 
         m_vertexArrayObject = m_vertexBufferObject = m_indiesBufferObject = 0;
@@ -42,9 +54,7 @@ namespace engine
     {
         if(!Node::init()){ return false; }
 
-        m_materia = (engine::Materia*)&(Materia::defaultMateria());
         updateShaderProgram();
-
         return true;
     }
 
@@ -174,30 +184,26 @@ namespace engine
         return m_indies;
     }
 
-    const bool Geometry::tick(const float dp)
+    const bool Geometry::bindVaoData(void) const
     {
-        if(!Node::tick(dp)){ return false; }
-        return true;
-    }
-
-    const bool Geometry::draw(const Matrix4 & projection)
-    {
-
         //如果没有顶点数据直接返回
-        if(!m_vertexsCount){ return true; }
+        if(!m_vertexsCount) { return true; }
 
         //如果没有bind着色器程序
         if(!m_shaderProgram)
         { 
-            Log.error("not bind ShaderProgram!");
+            Log.error("Not Bind ShaderProgram!");
             return false; 
         }
 
-        //启用着色器程序
         m_shaderProgram->use();
 
         //材质
-        if(!m_materia) { return false; }
+        if(!m_materia) 
+        { 
+            Log.error("Materia Is NULL!");
+            return false; 
+        }
 
         if(m_indiesCount)
         {
@@ -213,7 +219,6 @@ namespace engine
         switch(materiaType)
         {
             case MateriaType::Purity:
-
                 glBufferData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount, m_vertexs, GL_STATIC_DRAW);
                 m_shaderProgram->uniformSet("fColor", m_materia->color().rgba());
             break;
@@ -238,7 +243,27 @@ namespace engine
         glEnableVertexAttribArray(1);
 
         glBindVertexArray(0);
-        
+
+        return true;
+    }
+
+    const bool Geometry::tick(const float dp)
+    {
+        if(!Node::tick(dp)){ return false; }
+        return true;
+    }
+
+    const bool Geometry::draw(const Matrix4 & projection) const
+    {
+        return Node::draw(projection);
+    }
+
+    const bool Geometry::deputeDraw(const Matrix4 & projection, function<bool(void)> cb_draw) const
+    {
+        //绘制子节点
+        if(!Geometry::draw(projection)){ return false; }
+
+        m_shaderProgram->use();
 
         //创建旋转  缩放  平移到世界坐标 矩阵
         //旋转
@@ -264,8 +289,12 @@ namespace engine
         m_shaderProgram->uniformSet("viewMatrix", viewMatrix);
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
 
-        //绘制子节点
-        if(!Node::draw(projection)){ return false; }
+        glBindVertexArray(m_vertexArrayObject);
+        if(!cb_draw())
+        {
+            return false;
+        }
+        glBindVertexArray(0);
 
         return true;
     }
