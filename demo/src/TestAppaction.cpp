@@ -27,7 +27,9 @@ TestAppaction & TestAppaction::Instance(void)
  {
         window().append(Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f)));
 
-        Rectangle & rectangle = Rectangle::Create(50.0f);
+        // Triangle & haha = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
+
+        engine::Rectangle & rectangle = Rectangle::Create(50.0f);
         rectangle.position(Vec2(500.0f, 500.0f));
         window().append(rectangle);
 
