@@ -88,7 +88,7 @@ namespace engine
     const Vec3 Node::calculateWorldCoordinate(void)
     {
         if(m_worldCoordinateInvalid){ return m_worldCoordinate; }
-        m_worldCoordinate = m_position;
+        m_worldCoordinate = Vec4(0.0f);
         if(!parent() || parent()->nodeType() != msc_nodeType){ return m_worldCoordinate; }
 
         Node & parentNode = *(Node *)parent();

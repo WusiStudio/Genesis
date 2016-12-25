@@ -156,8 +156,8 @@ namespace engine
     {
         static Matrix4 result(1.0f);
 
-        result[0][0] = 1.0f / viewPortSize.width;
-        result[1][1] = 1.0f / viewPortSize.height;
+        result[0][0] = 2.0f / viewPortSize.width;
+        result[1][1] = 2.0f / viewPortSize.height;
 
         result[0][3] = -1.0f;
         result[1][3] = -1.0f;

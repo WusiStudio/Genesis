@@ -8,14 +8,14 @@ namespace engine
 
     Circle::Circle(void)
     {
-        m_density = 0.05;
+        m_density = 0.05f;
     }
 
     Circle & Circle::Create(const float r)
     {
         Circle & result = Create();
 
-        bool circleInit = result.radius(r);
+        bool circleInit = result.init(r);
 
         assert(circleInit);
 
@@ -35,8 +35,17 @@ namespace engine
     {
         if(r <= 1.0f){ return false; }
 
-        m_radius = r;
-        return false;
+        Materia & materia = Materia::Create();
+        ColorRGBA colors[] = {
+            ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
+        };
+        materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
+
+        bindMateria(materia);
+
+        return radius(r);
     }
 
     const bool Circle::radius(const float r)
@@ -47,8 +56,6 @@ namespace engine
         float perimeter = 2 * PI * r;
         vertexsCount(perimeter * m_density + 1);
         indiesCount(vertexsCount() + 1);
-
-
 
         vertex(0, Vec3(0.0f));
         indie(0, 0);
@@ -80,11 +87,10 @@ namespace engine
 
     const bool Circle::draw(const Matrix4 & projection) const
      {
-        return deputeDraw(projection, [this](void)->bool{
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
-            glDrawElements(GL_TRIANGLE_FAN, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
-            return true;
-        });
+        if(!Geometry::draw(projection)) return false;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
+        glDrawElements(GL_TRIANGLE_FAN, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
+        return true;
      }
 
 }

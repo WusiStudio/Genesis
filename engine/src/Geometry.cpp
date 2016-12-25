@@ -225,8 +225,21 @@ namespace engine
 
             case MateriaType::Multicolor:
 
+                //颜色数据不匹配重新构建颜色数据(暂时这样处理)
+                if(m_vertexsCount > m_materia->colorsCount())
+                {
+                    ColorRGBA * tempArray = new ColorRGBA[m_vertexsCount];
+                    for(auto i = 0; i < m_vertexsCount; ++i)
+                    {
+                        tempArray[i] = m_materia->colors()[i % m_materia->colorsCount()];
+                    }
+                    m_materia->colors(tempArray, m_vertexsCount);
+                    delete[] tempArray;
+                }
+
                 glBufferData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_materia->colorsCount(), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vec3) * m_vertexsCount, m_vertexs);
+
                 glBufferSubData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount, sizeof(ColorRGBA) * m_materia->colorsCount(), m_materia->colors());
             break;
 
@@ -255,13 +268,9 @@ namespace engine
 
     const bool Geometry::draw(const Matrix4 & projection) const
     {
-        return Node::draw(projection);
-    }
 
-    const bool Geometry::deputeDraw(const Matrix4 & projection, function<bool(void)> cb_draw) const
-    {
         //绘制子节点
-        if(!Geometry::draw(projection)){ return false; }
+        if(!Node::draw(projection)){ return false; }
 
         m_shaderProgram->use();
 
@@ -290,11 +299,6 @@ namespace engine
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
 
         glBindVertexArray(m_vertexArrayObject);
-        if(!cb_draw())
-        {
-            return false;
-        }
-        glBindVertexArray(0);
 
         return true;
     }
@@ -351,5 +355,7 @@ namespace engine
         if(m_vertexBufferObject){ glDeleteBuffers(1, &m_indiesBufferObject); }
 
         if(m_vertexBufferObject){ glDeleteVertexArrays(1, &m_vertexArrayObject); }
+
+        if(m_materia) { m_materia->release(); }
     }
 }

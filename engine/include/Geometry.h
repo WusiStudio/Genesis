@@ -58,8 +58,6 @@ namespace engine
 
         const bool tick(const float dp) override;
         const bool draw(const Matrix4 & projection) const override;
-
-        const bool deputeDraw(const Matrix4 & projection, function<bool(void)> cb_draw) const;
     private:
 
         //创建并使用当前设置所需要的着色器

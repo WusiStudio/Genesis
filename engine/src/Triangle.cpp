@@ -35,8 +35,7 @@ namespace engine
         // materia.colors(tempColors, sizeof(tempColors) / sizeof(ColorRGBA));
         ColorRGBA colors[] = {
             ColorRGBA(1.0f, 1.0f, 0.0f, 1.0f),
-            ColorRGBA(0.0f, 1.0f, 1.0f, 1.0f),
-            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
+            ColorRGBA(0.0f, 1.0f, 1.0f, 1.0f)
         };
         materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
@@ -57,9 +56,8 @@ namespace engine
 
      const bool Triangle::draw(const Matrix4 & projection) const
      {
-        return deputeDraw(projection, [this](void)->bool{
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-            return true;
-        });
+        if(!Geometry::draw(projection)) return false;
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        return true;
      }
 }

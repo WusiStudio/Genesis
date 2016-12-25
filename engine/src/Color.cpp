@@ -41,6 +41,11 @@ namespace engine
         return Vec3(b, g, r);
     }
 
+    ostream & operator<<(ostream & _stream, const ColorRGB & param)
+    {
+        return _stream << "ColorRGB(" << param.r << ", " << param.g << ", " << param.b << ")";
+    }
+
 
     //------------------------------------------------------------------
     ColorRGBA::ColorRGBA(void) : ColorRGBA(0.0f, 1.0f) { }
@@ -81,6 +86,11 @@ namespace engine
     Vec4 ColorRGBA::bgra(void) const 
     {
         return Vec4(b, g, r, a);
+    }
+
+    ostream & operator<<(ostream & _stream, const ColorRGBA & param)
+    {
+        return _stream << "ColorRGBA(" << param.r << ", " << param.g << ", " << param.b << ", " << param.a <<")";
     }
 
 }

@@ -45,12 +45,10 @@ namespace engine
 
      const bool Rectangle::draw(const Matrix4 & projection) const
      {
-
-        return deputeDraw(projection, [this](void)->bool{
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
-            glDrawElements(GL_TRIANGLE_STRIP, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
-            return true;
-        });
+        if(!Geometry::draw(projection)) return false;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
+        glDrawElements(GL_TRIANGLE_STRIP, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
+        return true;
      }
 
 }
