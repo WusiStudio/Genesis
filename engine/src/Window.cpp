@@ -68,7 +68,7 @@ namespace engine
         //设置参数
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         //设置多重采样
-        glfwWindowHint(GLFW_SAMPLES, 1600);
+        glfwWindowHint(GLFW_SAMPLES, 16);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -130,6 +130,7 @@ namespace engine
                 }
 
                 itemWindow->m_windowSize = Size2((float)width, (float)height);
+                glViewport(0, 0, width, height);
 
                 Log.info("window size : {0}", itemWindow->m_windowSize);
 
