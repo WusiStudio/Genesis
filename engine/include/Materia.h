@@ -4,6 +4,7 @@
 
 #include "Object.h"
 #include "Color.h"
+#include "Textrue2D.h"
 
 namespace engine
 {
@@ -13,7 +14,7 @@ namespace engine
         //彩色
         Multicolor,
         //贴图
-        Chartlet
+        Chartlet2D
     };
 
     class Materia : public Object
@@ -30,7 +31,10 @@ namespace engine
         
         const bool colors(const ColorRGBA * colors, const unsigned int count);
         const ColorRGBA * colors(void) const;
-        const unsigned int colorsCount(void) const; 
+        const unsigned int colorsCount(void) const;
+
+        const bool chartlet2D(Textrue2D & textrue2D);
+        const Textrue2D * chartlet2D(void) const;
 
         const MateriaType &  materiaType(void) const;
     protected:
@@ -40,9 +44,11 @@ namespace engine
     private:
         void clearData(void);
 
+
         ColorRGBA m_color;
         ColorRGBA * m_colors;
         unsigned int m_colorsCount;
+        Textrue2D * m_textrue2D;
         MateriaType m_materiaType; 
 
     };

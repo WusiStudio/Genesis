@@ -208,7 +208,7 @@ namespace engine
         if(m_indiesCount)
         {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indiesBufferObject);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * m_indiesCount, m_indies, GL_STATIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)(sizeof(unsigned short) * m_indiesCount), m_indies, GL_STATIC_DRAW);
         }
 
         glBindVertexArray(m_vertexArrayObject);
@@ -216,20 +216,24 @@ namespace engine
 
         MateriaType materiaType = m_materia->materiaType();
 
+        Vec2 * tempTexCoords = nullptr;
+
         switch(materiaType)
         {
             case MateriaType::Purity:
-                glBufferData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount, m_vertexs, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs, GL_STATIC_DRAW);
                 m_shaderProgram->uniformSet("fColor", m_materia->color().rgba());
-            break;
 
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+                glEnableVertexAttribArray(0);
+            break;
             case MateriaType::Multicolor:
 
                 //颜色数据不匹配重新构建颜色数据(暂时这样处理)
                 if(m_vertexsCount > m_materia->colorsCount())
                 {
                     ColorRGBA * tempArray = new ColorRGBA[m_vertexsCount];
-                    for(auto i = 0; i < m_vertexsCount; ++i)
+                    for(int i = 0; i < m_vertexsCount; ++i)
                     {
                         tempArray[i] = m_materia->colors()[i % m_materia->colorsCount()];
                     }
@@ -237,10 +241,31 @@ namespace engine
                     delete[] tempArray;
                 }
 
-                glBufferData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_materia->colorsCount(), nullptr, GL_STATIC_DRAW);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vec3) * m_vertexsCount, m_vertexs);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_materia->colorsCount()), nullptr, GL_STATIC_DRAW);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(ColorRGBA) * m_materia->colorsCount()), m_materia->colors());
 
-                glBufferSubData(GL_ARRAY_BUFFER, sizeof(Vec3) * m_vertexsCount, sizeof(ColorRGBA) * m_materia->colorsCount(), m_materia->colors());
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+                glEnableVertexAttribArray(0);
+                glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(1);
+            break;
+            case MateriaType::Chartlet2D:
+
+                tempTexCoords = new Vec2[m_vertexsCount];
+                
+                if(!texCoords(tempTexCoords)) { return false; }
+
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec2) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec2) * m_vertexsCount), tempTexCoords);
+
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+                glEnableVertexAttribArray(0);
+                glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(1);
+
+                delete[] tempTexCoords;
             break;
 
             default:
@@ -249,15 +274,14 @@ namespace engine
         }
 
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
-        glEnableVertexAttribArray(1);
-
         glBindVertexArray(0);
 
         return true;
+    }
+
+    const Materia & Geometry::materia(void) const
+    {
+        return * m_materia;
     }
 
     const bool Geometry::tick(const float dp)
@@ -299,6 +323,11 @@ namespace engine
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
 
         glBindVertexArray(m_vertexArrayObject);
+        if(m_materia->materiaType() == MateriaType::Chartlet2D)
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, (GLuint)m_materia->chartlet2D()->textrueId());
+        }
 
         return true;
     }
@@ -318,6 +347,10 @@ namespace engine
                 case MateriaType::Multicolor:
                     vShaderFiles.push_back("Multicolor.vert");
                     fShaderFiles.push_back("Multicolor.frag");
+                break;
+                case MateriaType::Chartlet2D:
+                    vShaderFiles.push_back("Chartlet2D.vert");
+                    fShaderFiles.push_back("Chartlet2D.frag");
                 break;
                 default:
                     return false;
@@ -340,6 +373,49 @@ namespace engine
         m_shaderProgram = &newShaderProgram;
         newShaderProgram.autoRelease();
         newShaderProgram.retain();
+
+        return true;
+    }
+
+    const bool Geometry::texCoords(Vec2 * tex_coords) const
+    {
+        Vec3 * minMax[4];
+        for(int i = 0; i < 4; i++)
+        {
+            minMax[i] = m_vertexs;
+        }
+        
+        for(int i = 0; i < m_vertexsCount; ++i)
+        {
+            Vec3 * vertex = m_vertexs + i;
+            if(vertex->x < minMax[0]->x)
+            {
+                minMax[0] = vertex;
+            }
+
+            if(vertex->y < minMax[1]->y)
+            {
+                minMax[1] = vertex;
+            }
+
+            if(vertex->x > minMax[2]->x)
+            {
+                minMax[2] = vertex;
+            }
+
+            if(vertex->y > minMax[3]->y)
+            {
+                minMax[3] = vertex;
+            }
+        }
+
+        Size2 geometrySize(minMax[2]->x - minMax[0]->x, minMax[3]->y - minMax[1]->y);
+
+        for(int i = 0; i < m_vertexsCount; ++i)
+        {
+            tex_coords[i].x = (minMax[2]->x - m_vertexs[i].x) / geometrySize.width;
+            tex_coords[i].y = (minMax[3]->y - m_vertexs[i].y) / geometrySize.height;
+        }
 
         return true;
     }

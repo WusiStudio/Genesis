@@ -7,6 +7,7 @@ namespace engine
     Materia::Materia(void)
     {
         m_colors = nullptr;
+        m_textrue2D = nullptr;
         m_colorsCount = 0;
     }
 
@@ -68,6 +69,26 @@ namespace engine
         return m_colorsCount; 
     }
 
+    const bool Materia::chartlet2D(Textrue2D & textrue2D)
+    {
+        if(!textrue2D.ready())
+        {
+            return false;
+        }
+
+        //清除数据
+        clearData();
+
+        m_textrue2D = &textrue2D;
+        textrue2D.retain();
+        m_materiaType = MateriaType::Chartlet2D;
+        return true;
+    }
+    const Textrue2D * Materia::chartlet2D(void) const
+    {
+        return m_textrue2D;
+    }
+
     const MateriaType & Materia::materiaType(void) const 
     {
         return m_materiaType;
@@ -75,11 +96,16 @@ namespace engine
 
     void Materia::clearData(void)
     {
-        if(m_colors != nullptr)
+        if(m_colors)
         {
             delete[] m_colors;
             m_colors = nullptr;
             m_colorsCount = 0;
+        }
+
+        if(m_textrue2D)
+        {
+            m_textrue2D->release();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace engine
         return result;
     }
 
-    int Textrue2D::textrueId(void) const
+    const int Textrue2D::textrueId(void) const
     {
         return m_textrueId;
     }

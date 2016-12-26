@@ -56,12 +56,17 @@ namespace engine
         //绑定数据到Vao
         const bool bindVaoData(void) const;
 
+        const Materia & materia(void) const;
+
         const bool tick(const float dp) override;
         const bool draw(const Matrix4 & projection) const override;
     private:
 
+        static Materia * DefaultMateria(void);
         //创建并使用当前设置所需要的着色器
         const bool updateShaderProgram(void);
+        //
+        const bool texCoords(Vec2 * tex_coords) const;
 
         //顶点数据及顺序
         Vec3 * m_vertexs;
@@ -79,7 +84,6 @@ namespace engine
         //gl对象
         GLuint m_vertexArrayObject, m_vertexBufferObject, m_indiesBufferObject;
         
-        static Materia * DefaultMateria(void);
     };
 }
 

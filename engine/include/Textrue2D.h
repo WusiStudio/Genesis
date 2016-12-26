@@ -17,7 +17,7 @@ namespace engine
         static Textrue2D & Create(const string & fileName);
         static Textrue2D & Create(const Image & img);
 
-        int textrueId(void) const;
+        const int textrueId(void) const;
     protected:
         CREATEFUNC(Textrue2D);
 

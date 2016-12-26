@@ -185,6 +185,15 @@ namespace engine
     //     return (unsigned short)uboSize;
     // }
 
+    const bool ShaderProgram::uniformSet(const char * uniformName, const int d) const
+    {
+        GLuint uboIndex = getUniformLocation(uniformName);
+        if(uboIndex == GL_INVALID_INDEX) return false;
+
+        glUniform1i(uboIndex, d);
+        return true;
+    }
+
     const bool ShaderProgram::uniformSet(const char * uniformName, const float & s) const 
     {
         GLuint uboIndex = getUniformLocation(uniformName);

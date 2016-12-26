@@ -1,10 +1,14 @@
 #include "Triangle.h"
 #include "WSLog.h"
 #include "Materia.h"
+#include "Image.h"
+#include "Textrue2D.h"
 
 namespace engine
 {
     using WsTools::Log;
+    using engine::Image;
+    using engine::Textrue2D;
     
     Triangle & Triangle::Create(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3)
     {
@@ -31,13 +35,9 @@ namespace engine
 
         Materia & materia = Materia::Create();
 
-        // ColorRGBA tempColors[3] = {ColorRGBA(.2f, 1.0f, .4f, 1.0f), ColorRGBA(.2f, 1.0f, .4f, 1.0f), ColorRGBA(.2f, 1.0f, .4f, 1.0f)};
-        // materia.colors(tempColors, sizeof(tempColors) / sizeof(ColorRGBA));
-        ColorRGBA colors[] = {
-            ColorRGBA(1.0f, 1.0f, 0.0f, 1.0f),
-            ColorRGBA(0.0f, 1.0f, 1.0f, 1.0f)
-        };
-        materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
+        Image & img = Image::Create("2.png");
+        Textrue2D & textrue2D = Textrue2D::Create(img);
+        materia.chartlet2D(textrue2D);
 
         bindMateria(materia);
         Vec3 tempVertexs[3] = {vertex_1, vertex_2, vertex_3};

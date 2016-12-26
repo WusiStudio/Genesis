@@ -39,6 +39,7 @@ namespace engine
 
         //uniform变量
         // const unsigned short uniformSizeOf(const char * unformName) const;
+        const bool uniformSet(const char * uniformName, const int d) const;
         const bool uniformSet(const char * uniformName, const float & s) const;
         const bool uniformSet(const char * uniformName, const Vec4 & v) const;
         const bool uniformSet(const char * uniformName, const Matrix4 & m) const;
