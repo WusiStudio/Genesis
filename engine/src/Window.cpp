@@ -130,7 +130,13 @@ namespace engine
                 }
 
                 itemWindow->m_windowSize = Size2((float)width, (float)height);
-                glViewport(0, 0, width, height);
+
+                #if(!defined(APIENTRY))
+                    glViewport(0, 0, width, height);
+                #else
+                    //不重新指定区域也行 还没有弄明白为什么这样
+                    glViewport(0, 0, width * 2, height * 2);
+                #endif
 
                 Log.info("window size : {0}", itemWindow->m_windowSize);
 
