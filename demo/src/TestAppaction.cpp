@@ -8,6 +8,7 @@
 #include "Image.h"
 #include "Textrue2D.h"
 #include "Matrix.h"
+#include "Image.h"
 
 #include "Uuid.h"
 
@@ -68,8 +69,11 @@ TestAppaction & TestAppaction::Instance(void)
         Log.info("matrix3 = {0}", matrix3);
 
 
+        Image & img = Image::Create("/Users/wusi/Downloads/2.png");
+        Log.info("image width: {0}, height: {0}", img.width(), img.height());
 
-        // Textrue2D::Create("asds.jpg");
+        Textrue2D & textrue = Textrue2D::Create(img);
+        Log.info("textrue id: {0}", textrue.textrueId());
  }
 
  void TestAppaction::update(const float dt)

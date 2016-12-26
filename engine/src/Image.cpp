@@ -1,9 +1,8 @@
 #include "Image.h"
-// #define STB_IMAGE_IMPLEMENTATION
-// #include "std_image.h"
 #include "File.h"
 #include "WSLog.h"
 #include "Appaction.h"
+#include "wsimg.h"
 
 namespace engine
 {
@@ -50,24 +49,25 @@ namespace engine
             return false;
         }
 
-        //  m_data = stbi_load(checkPath.c_str(), &m_width, &m_height, &m_n, 0);
+        struct wsimg_info img_info;
+        m_data = wsimg_read_data(checkPath.c_str(), &img_info);
+        if(!m_data) { return false; }
+
+        m_width = img_info.width;
+        m_height = img_info.height;
 
         return true;
     }
 
     const int Image::width(void) const
     {
-        if(!ready()) return 0;
-
         return m_width;
     }
     const int Image::height(void) const 
     {
-        if(!ready()) return 0;
-
         return m_height;
     }
-    unsigned char * Image::data(void) const 
+    const unsigned char * Image::data(void) const 
     {
         if(!ready()) return nullptr;
 
@@ -83,7 +83,7 @@ namespace engine
     {
         if(m_data)
         {
-            //stbi_image_free(m_data);
+            wsimg_free(m_data);
             m_data = nullptr;
         }
     }

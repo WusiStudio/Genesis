@@ -16,7 +16,7 @@ namespace engine
 
         const int width(void) const;
         const int height(void) const;
-        unsigned char * data(void) const;
+        const unsigned char * data(void) const;
         
     protected:
         const bool init(void) override;
@@ -27,7 +27,7 @@ namespace engine
         CREATEFUNC(Image);
 
         int m_width, m_height, m_n;
-        unsigned char * m_data;
+        const unsigned char * m_data;
     };
 }
 

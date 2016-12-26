@@ -29,6 +29,11 @@ namespace engine
         return result;
     }
 
+    int Textrue2D::textrueId(void) const
+    {
+        return m_textrueId;
+    }
+
 
     const bool Textrue2D::init(void)
     {
@@ -56,13 +61,13 @@ namespace engine
         //绑定纹理
         glBindTexture(GL_TEXTURE_2D, m_textrueId);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.width(), img.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, img.data());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, img.data());
         glGenerateMipmap(GL_TEXTURE_2D);
 
         //解绑纹理
         glBindTexture(GL_TEXTURE_2D, 0);
 
-         return true;
+        return true;
      }
     
 }
