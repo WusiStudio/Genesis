@@ -131,7 +131,7 @@ namespace engine
 
                 itemWindow->m_windowSize = Size2((float)width, (float)height);
 
-                #if(!defined(APIENTRY))
+                #if(!(__APPLE__ &&  __MACH__))
                     glViewport(0, 0, width, height);
                 #else
                     //不重新指定区域也行 还没有弄明白为什么这样
