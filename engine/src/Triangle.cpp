@@ -35,9 +35,12 @@ namespace engine
 
         Materia & materia = Materia::Create();
 
-        Image & img = Image::Create("2.png");
-        Textrue2D & textrue2D = Textrue2D::Create(img);
-        materia.chartlet2D(textrue2D);
+        ColorRGBA colors[] = {
+            ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
+        };
+        materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
         bindMateria(materia);
         Vec3 tempVertexs[3] = {vertex_1, vertex_2, vertex_3};

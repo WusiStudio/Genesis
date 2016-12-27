@@ -30,11 +30,12 @@ TestAppaction & TestAppaction::Instance(void)
 
         // Triangle & haha = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
 
-        engine::Rectangle & rectangle = Rectangle::Create(50.0f);
+        engine::Rectangle & rectangle = Rectangle::Create(150.0f);
         rectangle.position(Vec2(500.0f, 500.0f));
         window().append(rectangle);
 
 		Circle & fristCircle = Circle::Create(200.0f);
+        fristCircle.id("haha");
         fristCircle.position(Vec2(window().windowSize().width * 0.5f, window().windowSize().height * 0.5f));
         window().append(fristCircle);
 
@@ -78,6 +79,8 @@ TestAppaction & TestAppaction::Instance(void)
 
  void TestAppaction::update(const float dt)
  {
+        Node * haha = (Node *)window().find("haha");
+        if(haha) { haha->rotate(Vec3(0.0f, 0.0f, haha->rotate().z + 0.01)); }
         // Log.info("update: {0, F4}", dt);
         // int currDisplayTime = Zeus::Instance().runningTime();
 

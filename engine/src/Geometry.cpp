@@ -298,19 +298,19 @@ namespace engine
 
         m_shaderProgram->use();
 
+        //缩放
+        Matrix4 scaleMatrix = Matrix4::CreateScaleMatrix(scale() * (Vec3(0) + accumulativeScaleOffset()));
+        // Log.info("scaleMatrix: {0}", scaleMatrix);
         //创建旋转  缩放  平移到世界坐标 矩阵
         //旋转
         Matrix4 rotationMatrix = Matrix4::CreateRotationMatrix(rotate() + accumulativeRotateOffset());
         // Log.info("rotationMatrix: {0}", rotationMatrix);
-        //缩放
-        Matrix4 scaleMatrix = Matrix4::CreateScaleMatrix(scale() * (Vec3(0) + accumulativeScaleOffset()));
-        // Log.info("scaleMatrix: {0}", scaleMatrix);
         //平移
         Matrix4 translationMatrix = Matrix4::CreateTranslationMatrix(position().convertToSize3() + worldCoordinateOffset());
         // Log.info("translationMatrix: {0}", translationMatrix);
 
         //m
-        Matrix4 modelMatrix = rotationMatrix * scaleMatrix * translationMatrix;
+        Matrix4 modelMatrix = scaleMatrix * rotationMatrix * translationMatrix;
 
         //v
         Matrix4 viewMatrix(1.0f);
