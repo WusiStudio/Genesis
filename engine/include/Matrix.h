@@ -4,12 +4,13 @@
 
 #include "Struct.h"
 #include "Vec.h"
-
+#include "WSLog.h"
 #include <iostream>
 
 namespace engine
 {
     using std::iostream;
+    using WsTools::Log;
 
     template<typename C, typename T, unsigned dimension>
     class Matrix : public Struct
@@ -64,6 +65,20 @@ namespace engine
         }
 
         //乘法
+        C operator*(const float & s) const
+        {
+            C result(.0f);
+            for(unsigned int i = 0; i < dimension; ++i)
+            {
+                for(unsigned int n = 0; n < dimension; ++n)
+                {
+                    result.operator[](i)[n] = operator[](i)[n] * s;
+                }
+            }
+            return result;
+        }
+
+
         T operator*(const T & v) const
         {
             T result(.0f);
@@ -89,6 +104,20 @@ namespace engine
                     {
                         result[i][n] += operator[](i)[j] * m[j][n];
                     }
+                }
+            }
+            return result;
+        }
+
+        //除法
+        C operator/(const float s) const
+        {
+            C result(.0f);
+            for(unsigned int i = 0; i < dimension; ++i)
+            {
+                for(unsigned int n = 0; n < dimension; ++n)
+                {
+                    result.operator[](i)[n] = operator[](i)[n] / s;
                 }
             }
             return result;
@@ -144,6 +173,12 @@ namespace engine
         Matrix3(const Vec3 & v);
         Matrix3(const Vec3 & param1, const Vec3 & param2, const Vec3 & param3);
         Matrix3(const Matrix3 & copy);
+
+
+        const float det(void) const;
+        float cofactor(int x, int y) const;
+        Matrix3 adjugate(void) const;
+        Matrix3 inverse(void) const;
     };
 
     //------------------------------------------------------------------

@@ -75,6 +75,16 @@ TestAppaction & TestAppaction::Instance(void)
 
         Textrue2D & textrue = Textrue2D::Create(img);
         Log.info("textrue id: {0}", textrue.textrueId());
+
+        Matrix3 detTestMatrix3(
+            Vec3(1.0f, .0f, 8.0f),
+            Vec3(.0f, 1.0f, 5.0f),
+            Vec3(.0f, 6.0f, 1.0f)
+        );
+        Log.info("{0}.det() = {1, F}", detTestMatrix3, detTestMatrix3.det());
+        Log.info("{0}.adjugate() = {1}", detTestMatrix3, detTestMatrix3.adjugate());
+        Log.info("{0}.inverse() = {1}", detTestMatrix3, detTestMatrix3.inverse());
+        Log.info("detTestMatrix3 * detTestMatrix3.inverse() = {0}", detTestMatrix3 * detTestMatrix3.inverse());
  }
 
  void TestAppaction::update(const float dt)

@@ -63,6 +63,91 @@ namespace engine
 
     }
 
+    //行列式
+    const float Matrix3::det(void) const
+    {
+        const int dimension = 3;
+        float result = .0f;
+        float computeTempA[dimension], computeTempB[dimension];
+        for(int i = 0; i < dimension; ++i)
+        {
+            for(int j = 0; j < dimension; j++)
+            {
+                if(!i)
+                {
+                    computeTempA[j] = 1.0f;
+                    computeTempB[j] = 1.0f;
+                }
+
+                computeTempA[j] *= operator[](i)[(j + i) % dimension];
+                computeTempB[j] *= operator[](i)[(j - i + dimension) % dimension];
+            }
+        }
+
+        for(int i = 0; i < dimension; ++i)
+        {
+            result += computeTempA[i] - computeTempB[i];
+        }
+
+        return result;
+    }
+
+    //余子式
+    float Matrix3::cofactor(int x, int y) const
+    {
+        float computeTemp[2];
+        float result;
+        for(int i = 0; i < 2; ++i)
+        {
+            for(int j = 0; j < 2; ++j)
+            {
+                if(!i)
+                {
+                    computeTemp[j] = 1.0f;
+                }
+                int _x = i;
+                int _y = (j + i) % 2;
+                _x = _x >= x ? _x + 1 : _x;
+                _y = _y >= y ? _y + 1 : _y;
+
+                computeTemp[j] *= operator[](_x)[_y];
+            }
+        }
+        result = computeTemp[0] - computeTemp[1];
+        return (x + y) % 2 ? result : result;
+    }
+
+    //共轭
+    Matrix3 Matrix3::adjugate(void) const
+    {
+        const int dimension = 3;
+        Matrix3 result;
+        for(int i = 0; i < dimension; ++i)
+        {
+            for(int j = 0; j < dimension; ++j)
+            {
+                result.operator[](i)[j] = cofactor(i, j);
+            }
+        }
+
+        return result;
+    }
+
+    //逆阵
+    Matrix3 Matrix3::inverse(void) const
+    {
+        Matrix3 result;
+        float t_cofactor = det();
+        if(t_cofactor == 0)
+        {
+            return result;
+        }
+
+        result = adjugate() / t_cofactor;
+
+        return result;
+    }
+
     //------------------------------------------------------------------
     Matrix4::Matrix4(void) : Matrix()
     {
