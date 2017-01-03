@@ -85,12 +85,19 @@ TestAppaction & TestAppaction::Instance(void)
         Log.info("{0}.adjugate() = {1}", detTestMatrix3, detTestMatrix3.adjugate());
         Log.info("{0}.inverse() = {1}", detTestMatrix3, detTestMatrix3.inverse());
         Log.info("detTestMatrix3 * detTestMatrix3.inverse() = {0}", detTestMatrix3 * detTestMatrix3.inverse());
+
  }
 
  void TestAppaction::update(const float dt)
  {
         Node * haha = (Node *)window().find("haha");
-        if(haha) { haha->rotate(Vec3(0.0f, 0.0f, haha->rotate().z + 0.01)); }
+        static float temp = .0f;
+        temp += dt;
+        if(haha) 
+        { 
+            haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
+            haha->scale(1.0f + sin(temp / 500.0f) * .1f);
+        }
         // Log.info("update: {0, F4}", dt);
         // int currDisplayTime = Zeus::Instance().runningTime();
 

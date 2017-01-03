@@ -159,6 +159,11 @@ namespace engine
         Matrix2(const Vec2 & v1, const Vec2 & v2);
         Matrix2(const Matrix2 & copy);
 
+        const float det(void) const;
+        float cofactor(int x, int y) const;
+        Matrix2 adjugate(void) const;
+        Matrix2 inverse(void) const;
+
     protected:
         // Matrix2(void){}
     private:

@@ -298,6 +298,10 @@ namespace engine
 
         m_shaderProgram->use();
 
+
+        //平移
+        Matrix4 translationMatrix = Matrix4::CreateTranslationMatrix(position().convertToSize3() + worldCoordinateOffset());
+        // Log.info("translationMatrix: {0}", translationMatrix);
         //缩放
         Matrix4 scaleMatrix = Matrix4::CreateScaleMatrix(scale() * (Vec3(0) + accumulativeScaleOffset()));
         // Log.info("scaleMatrix: {0}", scaleMatrix);
@@ -305,12 +309,9 @@ namespace engine
         //旋转
         Matrix4 rotationMatrix = Matrix4::CreateRotationMatrix(rotate() + accumulativeRotateOffset());
         // Log.info("rotationMatrix: {0}", rotationMatrix);
-        //平移
-        Matrix4 translationMatrix = Matrix4::CreateTranslationMatrix(position().convertToSize3() + worldCoordinateOffset());
-        // Log.info("translationMatrix: {0}", translationMatrix);
 
         //m
-        Matrix4 modelMatrix = scaleMatrix * rotationMatrix * translationMatrix;
+        Matrix4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
         //v
         Matrix4 viewMatrix(1.0f);

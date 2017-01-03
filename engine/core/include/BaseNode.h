@@ -8,12 +8,14 @@
 #include <list>
 #include <functional>
 #include <string>
+#include <map>
 
 namespace engine
 {
     using std::list;
     using std::function;
     using std::string;
+    using std::map;
 
     class BaseNode : public Object
     {
@@ -63,6 +65,8 @@ namespace engine
         BaseNode * m_parent;
         list<BaseNode *> m_chidren;
         function<void(const float)> m_onTick;
+
+        static map<string, BaseNode *> ms_catalogById;
     };
 }
 

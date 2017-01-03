@@ -4,6 +4,8 @@
 
 namespace engine
 {
+    map<string, BaseNode *> BaseNode::ms_catalogById;
+
     BaseNode::BaseNode(void)
     {
         m_id = nullptr;
@@ -12,12 +14,32 @@ namespace engine
 
     BaseNode::~BaseNode(void)
     {
-        if(m_id) delete m_id;
+        if(m_id)
+        {
+            ms_catalogById.erase(*m_id);
+            delete m_id;
+        } 
     }
 
     void BaseNode::id(const string & id)
     {
-        if(m_id) delete m_id;
+        if(m_id && id == *m_id)
+        {
+            return;
+        }
+
+        if(ms_catalogById.find(id) != ms_catalogById.end())
+        {
+            return;
+        }
+
+        if(m_id)
+        {
+            ms_catalogById.erase(*m_id);
+            delete m_id;
+        }
+
+        ms_catalogById[id] = this;
         m_id = new string(id);
     }
 
@@ -66,18 +88,21 @@ namespace engine
 
     BaseNode * BaseNode::find(const string & id)
     {
-        BaseNode * result = nullptr;
+        BaseNode * temp = nullptr;
+        auto it = ms_catalogById.find(id);
+        if(it == ms_catalogById.end()) return nullptr;
 
-        for(auto item : m_chidren)
+        temp = it->second->parent();
+        while(temp)
         {
-            if(item->id() == id)
+            if(temp == this)
             {
-                result = item;
                 break;
             }
+            temp = temp->parent();
         }
 
-        return result;
+        return temp ? it->second : nullptr;
     }
 
     void BaseNode::each(function<bool(BaseNode & node)> cb) const

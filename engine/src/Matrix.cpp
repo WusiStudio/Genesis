@@ -31,6 +31,27 @@ namespace engine
     {
     }
 
+    const float Matrix2::det(void) const
+    {
+        return operator[](0)[0] * operator[](1)[1] - operator[](0)[1] * operator[](1)[0];
+    }
+
+    float Matrix2::cofactor(int x, int y) const
+    {
+        return operator[](x == 0 ? 1 : 0)[y == 0 ? 1 : 0];
+    }
+
+    Matrix2 Matrix2::adjugate(void) const
+    {
+        return Matrix2(Vec2(operator[](1)[1], -operator[](0)[1]), 
+        Vec2(-operator[](1)[0], operator[](0)[0]));
+    }
+
+    Matrix2 Matrix2::inverse(void) const
+    {
+        return adjugate() / det();
+    }
+
     //------------------------------------------------------------------
     Matrix3::Matrix3(void) : Matrix()
     {
@@ -101,10 +122,10 @@ namespace engine
         {
             for(int j = 0; j < 2; ++j)
             {
-                if(!i)
-                {
-                    computeTemp[j] = 1.0f;
-                }
+                //初始化数组元素
+                if(!i) { computeTemp[j] = 1.0f; }
+
+                //计算位置
                 int _x = i;
                 int _y = (j + i) % 2;
                 _x = _x >= x ? _x + 1 : _x;
@@ -114,10 +135,10 @@ namespace engine
             }
         }
         result = computeTemp[0] - computeTemp[1];
-        return (x + y) % 2 ? result : result;
+        return (x + y) % 2 ? 0 - result : result;
     }
 
-    //共轭
+    //伴随矩阵
     Matrix3 Matrix3::adjugate(void) const
     {
         const int dimension = 3;
@@ -136,16 +157,18 @@ namespace engine
     //逆阵
     Matrix3 Matrix3::inverse(void) const
     {
+        const int dimension = 3;
         Matrix3 result;
-        float t_cofactor = det();
-        if(t_cofactor == 0)
+
+        for(int i = 0; i < dimension; ++i)
         {
-            return result;
+            for(int j = 0; j < dimension; ++j)
+            {
+                result.operator[](j)[i] = cofactor(i, j);
+            }
         }
 
-        result = adjugate() / t_cofactor;
-
-        return result;
+        return result / det();
     }
 
     //------------------------------------------------------------------
@@ -232,7 +255,7 @@ namespace engine
 
         result[0][0] = scale.x;
         result[1][1] = scale.y;
-        result[2][2] = scale.z;
+        // result[2][2] = scale.z;
 
         return result;
     }
