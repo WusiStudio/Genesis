@@ -54,7 +54,7 @@ namespace engine
         const GLuint indiesBufferObject(void) const;
 
         //绑定数据到Vao
-        const bool bindVaoData(void) const;
+        const bool bindVaoData(void);
 
         const Materia & materia(void) const;
 

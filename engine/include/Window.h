@@ -40,6 +40,7 @@ namespace engine
 
         void fullScreen(void);
         void cancelFullScreen(const Size2 & size);
+        void cancelFullScreen(const Size2 & size, const Vec2 & position);
 
         Size2 size(void) const;
         Vec2 position(void) const;

@@ -184,7 +184,7 @@ namespace engine
         return m_indies;
     }
 
-    const bool Geometry::bindVaoData(void) const
+    const bool Geometry::bindVaoData(void)
     {
         //如果没有顶点数据直接返回
         if(!m_vertexsCount) { return true; }
@@ -236,8 +236,13 @@ namespace engine
                     {
                         tempArray[i] = m_materia->colors()[i % m_materia->colorsCount()];
                     }
-                    m_materia->colors(tempArray, m_vertexsCount);
+                    Materia & temp_materia = Materia::Create();
+                    temp_materia.colors(tempArray, m_vertexsCount);
                     delete[] tempArray;
+
+                    m_materia->release();
+                    m_materia = &temp_materia;
+                    m_materia->retain();
                 }
 
                 glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_materia->colorsCount()), nullptr, GL_STATIC_DRAW);

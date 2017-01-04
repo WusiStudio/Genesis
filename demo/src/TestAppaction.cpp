@@ -28,7 +28,8 @@ TestAppaction & TestAppaction::Instance(void)
  {
         window().fullScreen();
         window().cancelFullScreen(Size2(1440.0f / 2.0f, 900.0f / 2));
-        window().append(Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f)));
+        Triangle & triangle = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
+        window().append(triangle);
 
         engine::Rectangle & rectangle = Rectangle::Create(350.0f);
         rectangle.position(Vec2(500.0f, 500.0f));
@@ -40,13 +41,6 @@ TestAppaction & TestAppaction::Instance(void)
         window().append(fristCircle);
 
         Materia & materia = Materia::Create();
-        // ColorRGBA colors[] = {
-        //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
-        //     ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
-        //     ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
-        // };
-        // materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
-
         Image & _img = Image::Create("2.png");
         Textrue2D & textrue2D = Textrue2D::Create(_img);
         materia.chartlet2D(textrue2D);
@@ -54,6 +48,17 @@ TestAppaction & TestAppaction::Instance(void)
         Log.info(" materia.materiaType() == MateriaType::Chartlet2D = {0}", materia.materiaType() == MateriaType::Chartlet2D);
 
         fristCircle.bindMateria(materia);
+
+
+        Materia & colorMateria = Materia::Create();
+        ColorRGBA colors[] = {
+            ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
+            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
+        };
+        colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
+
+        rectangle.bindMateria(colorMateria);
+        triangle.bindMateria(colorMateria);
 
 		// ScreenWorld::Instance().append(fristCircle);
 

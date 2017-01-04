@@ -165,11 +165,11 @@ namespace engine
 
                 itemWindow->m_windowSize = Size2((float)width, (float)height);
 
-                #if(!(__APPLE__ &&  __MACH__))
-                    glViewport(0, 0, width, height);
-                #else
+                #if defined(__APPLE__) && defined(__MACH__)
                     //不重新指定区域也行 还没有弄明白为什么这样
                     glViewport(0, 0, width * 2, height * 2);
+                #else
+                    glViewport(0, 0, width, height);
                 #endif
 
                 Log.info("window size : {0}", itemWindow->m_windowSize);
@@ -254,6 +254,10 @@ namespace engine
         GLFWmonitor * monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode * mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        #if defined(__APPLE__) && defined(__MACH__)
+            m_windowPoaition = Vec2(.0f, .0f);
+            if(m_onPositionChange) m_onPositionChange(m_windowPoaition);
+        #endif
         m_fullScene = true;
     }
 
@@ -264,7 +268,21 @@ namespace engine
             return;
         }
         const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowMonitor(m_window, nullptr, (int)m_windowPoaition.x, (int)m_windowPoaition.y, (int)size.width, (int)size.height, mode->refreshRate);
+        cancelFullScreen(size, Vec2((mode->width - size.width) / 2, (mode->height - size.height) / 2));
+    }
+
+    void Window::cancelFullScreen(const Size2 & size, const Vec2 & position)
+    {
+        if(!m_fullScene)
+        {
+            return;
+        }
+        const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowMonitor(m_window, nullptr, (int)position.x, (int)position.y, (int)size.width, (int)size.height, mode->refreshRate);
+        #if defined(__APPLE__) && defined(__MACH__)
+            m_windowPoaition = position;
+            if(m_onPositionChange) m_onPositionChange(m_windowPoaition);
+        #endif
         m_fullScene = false;
     }
 
