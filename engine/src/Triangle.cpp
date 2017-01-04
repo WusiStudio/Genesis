@@ -33,16 +33,6 @@ namespace engine
     const bool Triangle::init(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3)
     {
 
-        Materia & materia = Materia::Create();
-
-        ColorRGBA colors[] = {
-            ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
-            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
-            ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
-        };
-        materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
-
-        bindMateria(materia);
         Vec3 tempVertexs[3] = {vertex_1, vertex_2, vertex_3};
 
         vertexs(tempVertexs);

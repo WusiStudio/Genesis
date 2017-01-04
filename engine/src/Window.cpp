@@ -5,12 +5,40 @@
 #include "WSLog.h"
 #include "Gc.h"
 
+#include <algorithm>
+
 namespace engine
 {
     using WsTools::Log;
 
     vector<Window *> Window::ms_windowPool;
     const char * const Window::msc_nodeType = "Window";
+
+    Window::Window(void)
+    {
+        m_window = nullptr;
+        m_onKeyPress = nullptr;
+        m_onSizeChange = nullptr;
+        m_onPositionChange = nullptr;
+
+        m_show = false;
+        m_fullScene = false;
+    }
+
+    Window::~Window(void)
+    {
+        m_show = false;
+        if(m_window)
+        {
+            glfwDestroyWindow(m_window);
+        }
+
+        auto it = std::find(ms_windowPool.begin(), ms_windowPool.end(), this);
+        if(it != ms_windowPool.end())
+        {
+            ms_windowPool.erase(it);
+        }
+    }
 
     const vector<Window *> & Window::windowPool(void)
     {
@@ -58,6 +86,7 @@ namespace engine
         // // append(*m_canvas);
         // m_canvas->position(Vec2(50.0f));
 
+
         ms_windowPool.push_back(this);
 
         return true;
@@ -87,6 +116,11 @@ namespace engine
         glfwMakeContextCurrent(m_window);
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
+        //初始化窗口位置
+        const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        m_windowPoaition.x = (mode->width - m_windowSize.width) / 2;
+        m_windowPoaition.y = (mode->height - m_windowSize.height) / 2;
+        position(m_windowPoaition);
 
         //启用多重采样 (未成功)
         if(glIsEnabled(GL_MULTISAMPLE))
@@ -158,11 +192,14 @@ namespace engine
                     continue;
                 }
 
+                itemWindow->m_windowPoaition = Vec2((float)xpos, (float)ypos);
+                Log.info("window pos : {0}", itemWindow->m_windowPoaition);
+
                 if(!itemWindow->m_onPositionChange)
                 {
                     break;
                 }
-                itemWindow->m_windowPoaition = Vec2((float)xpos, (float)ypos);
+                
                 itemWindow->m_onPositionChange(itemWindow->m_windowPoaition);
             }
         };
@@ -179,12 +216,12 @@ namespace engine
         return true;
     }
 
-    void Window::setWindowTitle(const string & title) const
+    void Window::title(const string & title) const
     {
         glfwSetWindowTitle(m_window, title.c_str());
     }
 
-    void Window::setWindowIcon(const string & iconPath) const
+    void Window::icon(const string & iconPath) const
     {
         // GLFWimage images[2];
         // images[0] = load_icon("my_icon.png");
@@ -192,26 +229,50 @@ namespace engine
         // glfwSetWindowIcon(m_window, 2, images);
     }
 
-    void Window::setWindowSize(const Size2 & size) const 
+    void Window::size(const Size2 & size) const 
     {
+        if(m_fullScene)
+        {
+            Log.warning("Is In Full Sreen Mode!");
+            return;
+        }
         glfwSetWindowSize(m_window, (int)size.width, (int)size.height);
     }
 
-    void Window::setWindowSizeLimitSize(const Size2 & min, const Size2 & max) const
+    void Window::sizeLimitSize(const Size2 & min, const Size2 & max) const
     {
         glfwSetWindowSizeLimits(m_window, (int)min.width, (int)min.height, (int)max.width, (int)max.height);
     }
 
-    void Window::setWindowPosition(const Vec2 & position) const
+    void Window::position(const Vec2 & position) const
     {
         glfwSetWindowPos(m_window, (int)position.x, (int)position.y);
     }
 
-    Size2 Window::windowSize(void) const
+    void Window::fullScreen(void)
+    {
+        GLFWmonitor * monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode * mode = glfwGetVideoMode(monitor);
+        glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        m_fullScene = true;
+    }
+
+    void Window::cancelFullScreen(const Size2 & size)
+    {
+        if(!m_fullScene)
+        {
+            return;
+        }
+        const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowMonitor(m_window, nullptr, (int)m_windowPoaition.x, (int)m_windowPoaition.y, (int)size.width, (int)size.height, mode->refreshRate);
+        m_fullScene = false;
+    }
+
+    Size2 Window::size(void) const
     {
         return m_windowSize;
     }
-    Vec2 Window::windowPosition(void) const
+    Vec2 Window::position(void) const
     {
         return m_windowPoaition;
     }
@@ -239,7 +300,7 @@ namespace engine
         //
         glClearColor(0.0, 0.0, 0.0, 1.0);
 
-        while(!glfwWindowShouldClose(m_window))
+        while(!glfwWindowShouldClose(m_window) && m_show)
         {
 
             static double prevDisplayTime = 0.0f;
@@ -270,18 +331,5 @@ namespace engine
             prevDisplayTime = currDisplayTime;
         };
         glfwTerminate();
-    }
-
-    Window::Window(void)
-    {
-        m_window = nullptr;
-        m_onKeyPress = nullptr;
-        m_onSizeChange = nullptr;
-        m_onPositionChange = nullptr;
-    }
-
-    Window::~Window(void)
-    {
-        
     }
 }

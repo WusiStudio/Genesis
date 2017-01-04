@@ -32,14 +32,17 @@ namespace engine
         //删除子节点
         const bool remove(Node & child);
 
-        void setWindowTitle(const string & title) const;
-        void setWindowIcon(const string & iconPath) const;
-        void setWindowSize(const Size2 & size) const;
-        void setWindowSizeLimitSize(const Size2 & min, const Size2 & max) const;
-        void setWindowPosition(const Vec2 & position) const;
+        void title(const string & title) const;
+        void icon(const string & iconPath) const;
+        void size(const Size2 & size) const;
+        void sizeLimitSize(const Size2 & min, const Size2 & max) const;
+        void position(const Vec2 & position) const;
 
-        Size2 windowSize(void) const;
-        Vec2 windowPosition(void) const;
+        void fullScreen(void);
+        void cancelFullScreen(const Size2 & size);
+
+        Size2 size(void) const;
+        Vec2 position(void) const;
 
         void onKeyPress(function<void(int key, int scancode, int action, int mode)> callBack);
         void onSizeChange(function<void(const Size2 & size)> callBack);
@@ -73,7 +76,8 @@ namespace engine
         function<void(const Size2 & size)> m_onSizeChange;
         function<void(const Vec2 & position)> m_onPositionChange;
 
-        bool m_show = false;
+        bool m_show;
+        bool m_fullScene;
 
     };
 }

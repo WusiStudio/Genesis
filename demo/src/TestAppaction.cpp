@@ -26,18 +26,34 @@ TestAppaction & TestAppaction::Instance(void)
 
  void TestAppaction::start(void)
  {
+        window().fullScreen();
+        window().cancelFullScreen(Size2(1440.0f / 2.0f, 900.0f / 2));
         window().append(Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f)));
 
-        // Triangle & haha = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
-
-        engine::Rectangle & rectangle = Rectangle::Create(150.0f);
+        engine::Rectangle & rectangle = Rectangle::Create(350.0f);
         rectangle.position(Vec2(500.0f, 500.0f));
         window().append(rectangle);
 
 		Circle & fristCircle = Circle::Create(200.0f);
         fristCircle.id("haha");
-        fristCircle.position(Vec2(window().windowSize().width * 0.5f, window().windowSize().height * 0.5f));
+        fristCircle.position(Vec2(window().size().width * 0.5f, window().size().height * 0.5f));
         window().append(fristCircle);
+
+        Materia & materia = Materia::Create();
+        // ColorRGBA colors[] = {
+        //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
+        //     ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
+        //     ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
+        // };
+        // materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
+
+        Image & _img = Image::Create("2.png");
+        Textrue2D & textrue2D = Textrue2D::Create(_img);
+        materia.chartlet2D(textrue2D);
+
+        Log.info(" materia.materiaType() == MateriaType::Chartlet2D = {0}", materia.materiaType() == MateriaType::Chartlet2D);
+
+        fristCircle.bindMateria(materia);
 
 		// ScreenWorld::Instance().append(fristCircle);
 
@@ -92,15 +108,14 @@ TestAppaction & TestAppaction::Instance(void)
  {
         Node * haha = (Node *)window().find("haha");
         static float temp = .0f;
+        Size2 windowSize = window().size();
         temp += dt;
+
         if(haha) 
         { 
-            haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
-            haha->scale(1.0f + sin(temp / 500.0f) * .1f);
+            // haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
+            // haha->scale(1.0f + sin(temp / 500.0f) * .1f);
+            haha->position(Vec2(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2));
+            haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
         }
-        // Log.info("update: {0, F4}", dt);
-        // int currDisplayTime = Zeus::Instance().runningTime();
-
-		// Node & tr = *ScreenWorld::Instance().root().chidren().at(1);
-		// tr.position(Vec2((Zeus::Instance().windowSize().width - 100) * 0.5f + cos(currDisplayTime / 1000.0f) * (Zeus::Instance().windowSize().width - 100) * 0.5f, (Zeus::Instance().windowSize().height - 100) * 0.5f + sin(currDisplayTime / 1000.0f) * (Zeus::Instance().windowSize().height - 100) * 0.5f));
  }

@@ -34,21 +34,6 @@ namespace engine
     const bool Circle::init(const float r)
     {
         if(r <= 1.0f){ return false; }
-
-        Materia & materia = Materia::Create();
-        // ColorRGBA colors[] = {
-        //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
-        //     ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f),
-        //     ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)
-        // };
-        // materia.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
-
-        Image & img = Image::Create("2.png");
-        Textrue2D & textrue2D = Textrue2D::Create(img);
-        materia.chartlet2D(textrue2D);
-
-        bindMateria(materia);
-
         return radius(r);
     }
 

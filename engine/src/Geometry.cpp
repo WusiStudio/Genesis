@@ -228,7 +228,6 @@ namespace engine
                 glEnableVertexAttribArray(0);
             break;
             case MateriaType::Multicolor:
-
                 //颜色数据不匹配重新构建颜色数据(暂时这样处理)
                 if(m_vertexsCount > m_materia->colorsCount())
                 {
@@ -375,7 +374,8 @@ namespace engine
         newShaderProgram.autoRelease();
         newShaderProgram.retain();
 
-        return true;
+        //更新shader程序后重新绑定数据
+        return bindVaoData();
     }
 
     const bool Geometry::texCoords(Vec2 * tex_coords) const
