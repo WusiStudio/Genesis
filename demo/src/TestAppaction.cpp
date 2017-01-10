@@ -32,20 +32,18 @@ TestAppaction & TestAppaction::Instance(void)
         window().append(triangle);
 
         engine::Rectangle & rectangle = Rectangle::Create(350.0f);
-        rectangle.position(Vec2(500.0f, 500.0f));
+        rectangle.position(Vec3(500.0f, 500.0f, 100.0f));
         window().append(rectangle);
 
 		Circle & fristCircle = Circle::Create(200.0f);
         fristCircle.id("haha");
-        fristCircle.position(Vec2(window().size().width * 0.5f, window().size().height * 0.5f));
+        fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 200.0f));
         window().append(fristCircle);
 
         Materia & materia = Materia::Create();
         Image & _img = Image::Create("2.png");
         Textrue2D & textrue2D = Textrue2D::Create(_img);
         materia.chartlet2D(textrue2D);
-
-        Log.info(" materia.materiaType() == MateriaType::Chartlet2D = {0}", materia.materiaType() == MateriaType::Chartlet2D);
 
         fristCircle.bindMateria(materia);
 
@@ -77,35 +75,35 @@ TestAppaction & TestAppaction::Instance(void)
 
         matrix[0][0] += 2.356645f;
 
-        Log.info("matrix[0][0] = {0}", matrix[0][0]);
-        Log.info("matrix[1][1] = {0}", matrix[1][0]);
+        // Log.info("matrix[0][0] = {0}", matrix[0][0]);
+        // Log.info("matrix[1][1] = {0}", matrix[1][0]);
 
         
 
-        Log.info("matrix2[0][0] = {0}", matrix2[0][0]);
-        Log.info("matrix2[1][1] = {0}", matrix2[1][0]);
+        // Log.info("matrix2[0][0] = {0}", matrix2[0][0]);
+        // Log.info("matrix2[1][1] = {0}", matrix2[1][0]);
 
-        Log.info("matrix2 = {0}", matrix2);
+        // Log.info("matrix2 = {0}", matrix2);
 
-        Matrix3 matrix3(5.123456789f);
-        Log.info("matrix3 = {0}", matrix3);
+        // Matrix3 matrix3(5.123456789f);
+        // Log.info("matrix3 = {0}", matrix3);
 
 
-        Image & img = Image::Create("2.png");
-        Log.info("image width: {0}, height: {1}", img.width(), img.height());
+        // Image & img = Image::Create("2.png");
+        // Log.info("image width: {0}, height: {1}", img.width(), img.height());
 
-        Textrue2D & textrue = Textrue2D::Create(img);
-        Log.info("textrue id: {0}", textrue.textrueId());
+        // Textrue2D & textrue = Textrue2D::Create(img);
+        // Log.info("textrue id: {0}", textrue.textrueId());
 
-        Matrix3 detTestMatrix3(
-            Vec3(1.0f, .0f, 8.0f),
-            Vec3(.0f, 1.0f, 5.0f),
-            Vec3(.0f, 6.0f, 1.0f)
-        );
-        Log.info("{0}.det() = {1, F}", detTestMatrix3, detTestMatrix3.det());
-        Log.info("{0}.adjugate() = {1}", detTestMatrix3, detTestMatrix3.adjugate());
-        Log.info("{0}.inverse() = {1}", detTestMatrix3, detTestMatrix3.inverse());
-        Log.info("detTestMatrix3 * detTestMatrix3.inverse() = {0}", detTestMatrix3 * detTestMatrix3.inverse());
+        // Matrix3 detTestMatrix3(
+        //     Vec3(1.0f, .0f, 8.0f),
+        //     Vec3(.0f, 1.0f, 5.0f),
+        //     Vec3(.0f, 6.0f, 1.0f)
+        // );
+        // Log.info("{0}.det() = {1, F}", detTestMatrix3, detTestMatrix3.det());
+        // Log.info("{0}.adjugate() = {1}", detTestMatrix3, detTestMatrix3.adjugate());
+        // Log.info("{0}.inverse() = {1}", detTestMatrix3, detTestMatrix3.inverse());
+        // Log.info("detTestMatrix3 * detTestMatrix3.inverse() = {0}", detTestMatrix3 * detTestMatrix3.inverse());
 
  }
 
@@ -120,7 +118,7 @@ TestAppaction & TestAppaction::Instance(void)
         { 
             // haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
             // haha->scale(1.0f + sin(temp / 500.0f) * .1f);
-            haha->position(Vec2(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2));
+            haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, haha->position().z));
             haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
         }
  }

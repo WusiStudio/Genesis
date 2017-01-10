@@ -44,10 +44,9 @@ namespace engine
 
     void Appaction::run(int argc, char ** argv)
     {
-        static bool running = false;
-        if(running) return;
-        running = true;
-
+        static bool s_running = false;
+        if(s_running) return;
+        s_running = true;
         
         static regex pathRegex("^([^/\\\\]*[/\\\\])+");
         smatch searchResult;

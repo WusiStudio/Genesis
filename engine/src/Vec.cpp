@@ -320,6 +320,16 @@ namespace engine
 
     Size3::Size3(const Size2 & copy) : Size3(copy.width, copy.height) { }
 
+    const Size3 Size3::operator+(const Size3 & param) const
+    {
+        return Size3(width + param.width, height + param.height, depth + param.depth);
+    }
+
+    const Size3 Size3::operator-(const Size3 & param) const
+    {
+        return Size3(width - param.width, height - param.height, depth + param.depth);
+    }
+
     ostream & operator<<(ostream & _stream, const Size3 & param)
     {
         _stream << "Size3(" << param.width << ", " << param.height << ", " << param.depth << ")";

@@ -190,7 +190,7 @@ namespace engine
         source.replace(source.find(m_globalCodeKey), m_globalCodeKey.size(), globalCode);
         source.replace(source.find(m_mainCodeKey), m_mainCodeKey.size(), mainCode);
 
-        Log.info("source code: {0}", source);
+        // Log.info("source code: {0}", source);
             
         const GLchar * p_source = source.c_str();
         glShaderSource(m_shaderId, 1, &p_source, nullptr);

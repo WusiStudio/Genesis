@@ -175,6 +175,9 @@ namespace engine
         Size3(const Size3 & copy);
         Size3(const Size2 & copy);
 
+        const Size3 operator+(const Size3 & param) const;
+        const Size3 operator-(const Size3 & param) const;
+
         friend ostream & operator<<(ostream & _stream, const Size3 & param);
         
         float depth;

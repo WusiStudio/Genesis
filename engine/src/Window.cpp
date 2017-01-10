@@ -133,6 +133,12 @@ namespace engine
                 glEnable(GL_MULTISAMPLE);
         }
 
+        // if(glIsEnabled(GL_DEPTH_TEST))
+        // {
+            // Log.info("enable depth test");
+            glEnable(GL_DEPTH_TEST);
+        // }
+
         // glfwSetErrorCallback(error_callback);
 
         //引擎按键处理
@@ -338,7 +344,7 @@ namespace engine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // //以每个视口绘制
-            draw(Matrix4::CreateProjectionMatrix(m_windowSize));
+            draw(Matrix4::CreateOrthogonalMatrix(m_windowSize, 100.0f, 500.0f));
 
             //垃圾回收
             Gc::Instance().clean();

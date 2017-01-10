@@ -12,6 +12,7 @@ namespace engine
     {
         m_scale = Vec3(1.0f);
         m_accumulativeScale = Vec3(1.0f);
+        m_worldCoordinateInvalid = false;
     }
 
     Node::~Node(void)

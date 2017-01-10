@@ -210,7 +210,7 @@ namespace engine
 
     Matrix4 Matrix4::CreateTranslationMatrix(const Size3 & size)
     {
-        static Matrix4 result(1.0f);
+        Matrix4 result(1.0f);
 
         result[0][3] = size.width;
         result[1][3] = size.height;
@@ -221,7 +221,7 @@ namespace engine
 
     Matrix4 Matrix4::CreateRotationMatrix(const Vec3 & angle)
     {
-        static Matrix4 rotationX(1.0f), rotationY(1.0f), rotationZ(1.0f);
+        Matrix4 rotationX(1.0f), rotationY(1.0f), rotationZ(1.0f);
         float x = angle.x, y = angle.y, z = angle.z;
 
         //绕x轴旋转
@@ -251,21 +251,67 @@ namespace engine
 
     Matrix4 Matrix4::CreateScaleMatrix(const Vec3 & scale)
     {
-        static Matrix4 result(1.0f);
+        Matrix4 result(1.0f);
 
         result[0][0] = scale.x;
         result[1][1] = scale.y;
-        // result[2][2] = scale.z;
+        result[2][2] = scale.z;
 
         return result;
     }
 
-    Matrix4 Matrix4::CreateProjectionMatrix(const Size2 & viewPortSize)
+    Matrix4 Matrix4::CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & worldUp)
     {
-        static Matrix4 result(1.0f);
+        Matrix4 result(1.0f);
+
+        Vec3 d = (position - target.convertToSize3()).normalize();
+        Vec3 r = worldUp.cross(d).normalize();
+        Vec3 u = d.cross(r).normalize();
+
+        result[0][3] = 0 - position.x;
+        result[1][3] = 0 - position.y;
+        result[2][3] = 0 - position.z;
+
+        result[0][0] = r.x;
+        result[0][1] = r.y;
+        result[0][2] = r.z;
+
+        result[1][0] = u.x;
+        result[1][1] = u.y;
+        result[1][2] = u.z;
+
+        result[2][0] = d.x;
+        result[2][1] = d.y;
+        result[2][2] = d.z;
+
+        return result;
+    }
+
+    Matrix4 Matrix4::CreateProjectionMatrix(const Size2 & viewPortSize, const float near, const float far)
+    {
+        Matrix4 result(0.0f);
+
+        result[0][0] = 2.0f * near / viewPortSize.width;
+
+        result[1][1] = 2.0f * near / viewPortSize.height;
+
+        result[2][2] = 0 - (near + far) / (far - near);
+        result[2][3] = 2.0f * near * far / (far - near);
+
+        result[3][2] = -1.0f;
+
+        return result;
+    }
+
+    Matrix4 Matrix4::CreateOrthogonalMatrix(const Size2 & viewPortSize, const float near, const float far)
+    {
+        Matrix4 result(1.0f);
 
         result[0][0] = 2.0f / viewPortSize.width;
         result[1][1] = 2.0f / viewPortSize.height;
+        result[2][2] = 0 - 2.0f / (far - near);
+        result[2][3] = 0 - (far + near) / (far - near);
+
 
         result[0][3] = -1.0f;
         result[1][3] = -1.0f;
