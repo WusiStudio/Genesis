@@ -273,15 +273,15 @@ namespace engine
         result[2][3] = 0 - position.z;
 
         result[0][0] = r.x;
-        result[0][1] = r.y;
-        result[0][2] = r.z;
+        result[1][0] = r.y;
+        result[2][0] = r.z;
 
-        result[1][0] = u.x;
+        result[0][1] = u.x;
         result[1][1] = u.y;
-        result[1][2] = u.z;
+        result[2][1] = u.z;
 
-        result[2][0] = d.x;
-        result[2][1] = d.y;
+        result[0][2] = d.x;
+        result[1][2] = d.y;
         result[2][2] = d.z;
 
         return result;

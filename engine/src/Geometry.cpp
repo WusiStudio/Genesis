@@ -228,7 +228,7 @@ namespace engine
                 glEnableVertexAttribArray(0);
             break;
             case MateriaType::Multicolor:
-                //颜色数据不匹配重新构建颜色数据(暂时这样处理)
+                //材质的颜色数据数量不匹配时重新创建材质
                 if(m_vertexsCount > m_materia->colorsCount())
                 {
                     ColorRGBA * tempArray = new ColorRGBA[m_vertexsCount];
@@ -323,7 +323,7 @@ namespace engine
         Matrix4 projectionMatrix(1.0f);
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
-        m_shaderProgram->uniformSet("viewMatrix", Matrix4::CreateLookAtMatrix(Vec3(.0f, 0.0f, 300.0f), Vec3(.0f, .0f, .0f), Vec3(.0f, 1.0f, .0f)));
+        m_shaderProgram->uniformSet("viewMatrix", Matrix4::CreateLookAtMatrix(Vec3(.0f, .0f, 1000.0f), Vec3(.0f, .0f, .0f), Vec3(.0f, 1.0f, .0f)));
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
 
         glBindVertexArray(m_vertexArrayObject);

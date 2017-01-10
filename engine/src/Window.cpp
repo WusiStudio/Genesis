@@ -178,7 +178,7 @@ namespace engine
                     glViewport(0, 0, width, height);
                 #endif
 
-                Log.info("window size : {0}", itemWindow->m_windowSize);
+                // Log.info("window size : {0}", itemWindow->m_windowSize);
 
                 if(!itemWindow->m_onSizeChange)
                 {
@@ -199,7 +199,7 @@ namespace engine
                 }
 
                 itemWindow->m_windowPoaition = Vec2((float)xpos, (float)ypos);
-                Log.info("window pos : {0}", itemWindow->m_windowPoaition);
+                // Log.info("window pos : {0}", itemWindow->m_windowPoaition);
 
                 if(!itemWindow->m_onPositionChange)
                 {
@@ -344,7 +344,7 @@ namespace engine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // //以每个视口绘制
-            draw(Matrix4::CreateOrthogonalMatrix(m_windowSize, 100.0f, 500.0f));
+            draw(Matrix4::CreateOrthogonalMatrix(m_windowSize, .0f, 2000.0f));
 
             //垃圾回收
             Gc::Instance().clean();

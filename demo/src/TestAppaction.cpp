@@ -32,12 +32,12 @@ TestAppaction & TestAppaction::Instance(void)
         window().append(triangle);
 
         engine::Rectangle & rectangle = Rectangle::Create(350.0f);
-        rectangle.position(Vec3(500.0f, 500.0f, 100.0f));
+        rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
         window().append(rectangle);
 
 		Circle & fristCircle = Circle::Create(200.0f);
         fristCircle.id("haha");
-        fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 200.0f));
+        fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 10.0f));
         window().append(fristCircle);
 
         Materia & materia = Materia::Create();
