@@ -12,6 +12,7 @@
 #include "Node.h"
 #include "Camera.h"
 #include "CameraOutput.h"
+#include "World.h"
 
 namespace engine
 {
@@ -26,6 +27,9 @@ namespace engine
 
         //类型
         const char *  nodeType(void) const override final;
+
+        //查找指定id的子元素
+        Node * find(const string & id);
 
         //添加子节点
         const bool append(Node & child);
@@ -66,17 +70,29 @@ namespace engine
         //用于多窗口事件回调
         static vector<Window *> ms_windowPool;
 
+        //window property
         Size2 m_windowSize;
         Vec2 m_windowPoaition;
 
-        // CameraOutput * m_canvas;
-        // Camera * m_mainCamera;
+        Camera * m_mainCamera;
+        CameraOutput * m_canvas;
 
         GLFWwindow * m_window;
-        function<void(int key, int scancode, int action, int mode)> m_onKeyPress;
+
+        //
+        World * m_world;
+        
+        //-------   Event  -------//
+        //widnow event
         function<void(const Size2 & size)> m_onSizeChange;
         function<void(const Vec2 & position)> m_onPositionChange;
+        //keyboard
+        function<void(int key, int scancode, int action, int mode)> m_onKeyPress;
+        //mouse
+        function<void(double xpos, double ypos)> m_onMouseMove;
+        function<void(double xoffset, double yoffset)> m_onMouseScroll;
 
+        //window state
         bool m_show;
         bool m_fullScene;
 

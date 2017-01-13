@@ -17,6 +17,9 @@ namespace engine
     Window::Window(void)
     {
         m_window = nullptr;
+        m_mainCamera = nullptr;
+        m_canvas = nullptr;
+        m_world = nullptr;
         m_onKeyPress = nullptr;
         m_onSizeChange = nullptr;
         m_onPositionChange = nullptr;
@@ -27,6 +30,8 @@ namespace engine
 
     Window::~Window(void)
     {
+        if(m_world){ m_world->release(); }  
+              
         m_show = false;
         if(m_window)
         {
@@ -50,15 +55,20 @@ namespace engine
         return msc_nodeType;
     }
 
+    Node * Window::find(const string & id)
+    {
+        return (Node *)m_world->find(id);
+    }
+
     //添加子节点
     const bool Window::append(Node & child)
     {
-        return BaseNode::append(child);
+        return m_world->append(child);
     }
     //删除子节点
     const bool Window::remove(Node & child)
     {
-        return BaseNode::remove(child);
+        return m_world->remove(child);
     }
 
     Window & Window::Create(const Size2 & size, const string & title)
@@ -77,15 +87,21 @@ namespace engine
     {
         if(!Object::init()) { return false; }
 
+        //window world
+        m_world = &World::Create();
+        m_world->retain();
+
         //创建主摄像机
-        // m_mainCamera = & Camera::Create();
+        Camera & tempCamera = Camera::Create();
+        tempCamera.position(Vec3(.0f, .0f, 1000.0f));
+        append(tempCamera);
+        m_mainCamera = &tempCamera;
 
-        // //创建摄像机画布
-        // m_canvas = & CameraOutput::Create();
-        // m_canvas->camera(* m_mainCamera);
-        // // append(*m_canvas);
-        // m_canvas->position(Vec2(50.0f));
 
+        m_canvas = &CameraOutput::Create();
+        BaseNode::append(*m_canvas);
+        m_canvas->size(m_windowSize);
+        m_canvas->camera(*m_mainCamera);
 
         ms_windowPool.push_back(this);
 
@@ -116,6 +132,8 @@ namespace engine
         glfwMakeContextCurrent(m_window);
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
+        // glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         //初始化窗口位置
         const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         m_windowPoaition.x = (mode->width - m_windowSize.width) / 2;
@@ -133,11 +151,7 @@ namespace engine
                 glEnable(GL_MULTISAMPLE);
         }
 
-        // if(glIsEnabled(GL_DEPTH_TEST))
-        // {
-            // Log.info("enable depth test");
-            glEnable(GL_DEPTH_TEST);
-        // }
+        glEnable(GL_DEPTH_TEST);
 
         // glfwSetErrorCallback(error_callback);
 
@@ -170,6 +184,7 @@ namespace engine
                 }
 
                 itemWindow->m_windowSize = Size2((float)width, (float)height);
+                itemWindow->m_canvas->size(itemWindow->m_windowSize);
 
                 #if defined(__APPLE__) && defined(__MACH__)
                     //不重新指定区域也行 还没有弄明白为什么这样
@@ -343,8 +358,8 @@ namespace engine
             // //清空画布
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            // //以每个视口绘制
-            draw(Matrix4::CreateOrthogonalMatrix(m_windowSize, .0f, 2000.0f));
+            //绘制画板
+            draw(Matrix4(1.0f));
 
             //垃圾回收
             Gc::Instance().clean();

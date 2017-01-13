@@ -175,6 +175,8 @@ namespace engine
         Size3(const Size3 & copy);
         Size3(const Size2 & copy);
 
+        Vec3 convertToVec3(void) const;
+
         const Size3 operator+(const Size3 & param) const;
         const Size3 operator-(const Size3 & param) const;
 

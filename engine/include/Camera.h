@@ -5,21 +5,27 @@
 #include "Node.h"
 #include "Vec.h"
 #include "Matrix.h"
+#include "CameraInterface.h"
+#include "World.h"
 
 namespace engine
 {
-    class Camera : public Node
+    class Camera : public Node, protected CameraInterface
     {
     public:
         CREATEFUNC(Camera);
     protected:
         Camera(){}
+        virtual ~Camera(){}
         const bool init(void) override;
 
-        virtual ~Camera(){}
+        const bool tick(const float dp) override;
+
+        const bool composition(const float dp) override final;
+        const bool protograph(void) const override final;
     private:
 
-        Vec3 m_target, m_up;
+        Vec3 m_target;
         Matrix4 m_projectionMatrix;
     };
 }

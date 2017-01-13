@@ -323,7 +323,7 @@ namespace engine
         Matrix4 projectionMatrix(1.0f);
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
-        m_shaderProgram->uniformSet("viewMatrix", Matrix4::CreateLookAtMatrix(Vec3(.0f, .0f, 1000.0f), Vec3(.0f, .0f, .0f), Vec3(.0f, 1.0f, .0f)));
+        m_shaderProgram->uniformSet("viewMatrix", Matrix4::CreateLookAtMatrix(Vec3(0.0f, .0f, 1000.0f), Vec3(.0f, .0f, .0f), Vec3(.0f, 1.0f, .0f)));
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
 
         glBindVertexArray(m_vertexArrayObject);

@@ -3,14 +3,15 @@
 #define __WORLD_H__
 
 #include "BaseNode.h"
-#include "Camera.h"
+#include "Node.h"
+#include "CameraInterface.h"
 #include <vector>
 
 namespace engine
 {
     using std::vector;
     
-    class World : public BaseNode
+    class World : public BaseNode, protected CameraInterface
     {
     public:
 
@@ -29,6 +30,9 @@ namespace engine
         World(void);
         ~World(void);
         const bool init(void) override;
+
+        const bool composition(const float dp) override final;
+        const bool protograph(void) const override final;
 
     private:
         static const char * const msc_nodeType;

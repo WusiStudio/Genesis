@@ -43,6 +43,16 @@ namespace engine
         return true;
     }
 
+    const bool World::composition(const float dp)
+    {
+        return tick(dp);
+    }
+
+    const bool World::protograph(void) const
+    {
+        return draw(Matrix4::CreateOrthogonalMatrix(Size2(1440.0f / 2.0f, 900.0f / 2), .0f, 2000.0f));
+    }
+
     const bool World::append(Node & child)
     {
         return BaseNode::append(child);

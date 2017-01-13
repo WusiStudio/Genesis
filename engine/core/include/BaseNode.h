@@ -26,7 +26,7 @@ namespace engine
         void id(const string & id);
         string id(void) const;
 
-        BaseNode & root(void);
+        BaseNode & root(void) const;
 
         //父元素
         BaseNode * parent(void) const;

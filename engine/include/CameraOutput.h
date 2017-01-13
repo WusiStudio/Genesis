@@ -3,12 +3,14 @@
 #define __CAMERA_OUTPUT_H__
 
 #include "Node.h"
+#include "CameraInterface.h"
 #include "Camera.h"
 #include "Matrix.h"
 
+
 namespace engine
 {
-    class CameraOutput : public Node
+    class CameraOutput : public Node, protected CameraInterface
     {
     public:
         CREATEFUNC(CameraOutput);
@@ -26,6 +28,9 @@ namespace engine
         const bool tick(const float dt) override;
         //绘制
         const bool draw(const Matrix4 & projection) const override;
+        
+        const bool composition(const float dp) override final;
+        const bool protograph(void) const override final;
 
         CameraOutput(void);
         virtual ~CameraOutput(void);

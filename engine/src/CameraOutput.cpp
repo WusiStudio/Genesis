@@ -41,34 +41,33 @@ namespace engine
     {
         if(!Node::tick(dt)){ return false; }
 
-        if(!m_camera){ return false; }
+        if(!m_camera){ return true; }
 
-        Log.info("CameraOutput position: {0}, size: {1}", position(), size());
-
-        // return camera().preparatory(dt);
-        // return window.tick();
-        return true;
+        return composition(dt);
     }
 
     const bool CameraOutput::draw(const Matrix4 & projection) const
     {
 
-        //画布空间
+        //拍照
+        if(protograph()){ return false; }
+
+        //绘制子元素
         if(!Node::draw(projection)){ return false; }
 
-        if(!m_camera){ return false; }
-
-        //设置摄像机投影到gl空间的位置
-
-        Matrix4 canvasMatrix(1.0f);
-        canvasMatrix[0][0] = 2 / size().width;
-        canvasMatrix[0][3] = -1.0f;
-        canvasMatrix[1][1] = 2 / size().height;
-        canvasMatrix[1][3] = -1.0f;
-
-        //拍照
         return true;
-        // return camera().photograph(projection * canvasMatrix * Matrix4::CreateTranslationMatrix(Size2(100.0f, 100.0f)));
+    }
+
+    const bool CameraOutput::composition(const float dp)
+    {
+        return ((CameraInterface *)m_camera)->composition(dp);
+    }
+
+    const bool CameraOutput::protograph(void) const 
+    {
+        if(!m_camera){ return true; }
+
+        return ((CameraInterface *)m_camera)->protograph();
     }
 
     CameraOutput::CameraOutput(void)

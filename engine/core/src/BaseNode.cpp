@@ -48,16 +48,16 @@ namespace engine
         return m_id == nullptr ? "" : *m_id;
     }
 
-    BaseNode & BaseNode::root(void)
+    BaseNode & BaseNode::root(void) const
     {
-        BaseNode * result = this;
+        const BaseNode * result = this;
 
         while(result->m_parent)
         {
             result = result->m_parent;
         }
 
-        return * result;
+        return (BaseNode &)* result;
     }
 
     const bool BaseNode::remove(void)
