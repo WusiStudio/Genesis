@@ -22,10 +22,11 @@ namespace engine
         const bool tick(const float dp) override;
 
         const bool composition(const float dp) override final;
-        const bool protograph(void) const override final;
+        const bool protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const override final;
     private:
 
         Vec3 m_target;
+        Matrix4 m_lookAtMatrix;
         Matrix4 m_projectionMatrix;
     };
 }

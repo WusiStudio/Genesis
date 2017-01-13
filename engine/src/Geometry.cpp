@@ -294,11 +294,11 @@ namespace engine
         return true;
     }
 
-    const bool Geometry::draw(const Matrix4 & projection) const
+    const bool Geometry::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
     {
 
         //绘制子节点
-        if(!Node::draw(projection)){ return false; }
+        if(!Node::draw(eyeMatrix, screenMatrix)){ return false; }
 
         m_shaderProgram->use();
         
@@ -317,14 +317,14 @@ namespace engine
         Matrix4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
         //v
-        Matrix4 viewMatrix(1.0f);
+        Matrix4 viewMatrix = eyeMatrix;
 
         //p
-        Matrix4 projectionMatrix(1.0f);
+        Matrix4 projectionMatrix = screenMatrix;
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
-        m_shaderProgram->uniformSet("viewMatrix", Matrix4::CreateLookAtMatrix(Vec3(0.0f, .0f, 1000.0f), Vec3(.0f, .0f, .0f), Vec3(.0f, 1.0f, .0f)));
-        m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix * projection);
+        m_shaderProgram->uniformSet("viewMatrix", viewMatrix);
+        m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix);
 
         glBindVertexArray(m_vertexArrayObject);
         if(m_materia->materiaType() == MateriaType::Chartlet2D)

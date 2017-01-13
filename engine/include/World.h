@@ -32,7 +32,7 @@ namespace engine
         const bool init(void) override;
 
         const bool composition(const float dp) override final;
-        const bool protograph(void) const override final;
+        const bool protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const override final;
 
     private:
         static const char * const msc_nodeType;

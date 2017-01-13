@@ -58,7 +58,7 @@ namespace engine
 
         function<void(const float)> onTick(void) const;
         virtual const bool tick(const float dt);
-        virtual const bool draw(const Matrix4 & projection) const;
+        virtual const bool draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const;
         //
     private:
         string * m_id;

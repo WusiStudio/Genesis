@@ -341,25 +341,26 @@ namespace engine
 
         while(!glfwWindowShouldClose(m_window) && m_show)
         {
-
+            //计算距上一帧时差
             static double prevDisplayTime = 0.0f;
             double currDisplayTime = glfwGetTime() * 1000;
             float dateSpace = (float)(currDisplayTime - prevDisplayTime);
 
+            //glfw事件系统
             glfwPollEvents();
 
             //动画系统、计时器执行
 
             if(onTick()) onTick()(dateSpace);
 
-            // //确定所有元素的位置后计算所有元素的位置
+            //确定所有元素的位置后计算所有元素的位置
             tick(dateSpace);
 
-            // //清空画布
+            //清空画布
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             //绘制画板
-            draw(Matrix4(1.0f));
+            draw(Matrix4(1.0f), Matrix4(1.0f));
 
             //垃圾回收
             Gc::Instance().clean();

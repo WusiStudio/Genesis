@@ -48,9 +48,9 @@ namespace engine
         return tick(dp);
     }
 
-    const bool World::protograph(void) const
+    const bool World::protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
     {
-        return draw(Matrix4::CreateOrthogonalMatrix(Size2(1440.0f / 2.0f, 900.0f / 2), .0f, 2000.0f));
+        return draw(eyeMatrix, screenMatrix);
     }
 
     const bool World::append(Node & child)
