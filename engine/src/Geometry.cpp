@@ -294,11 +294,11 @@ namespace engine
         return true;
     }
 
-    const bool Geometry::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+    const bool Geometry::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
 
         //绘制子节点
-        if(!Node::draw(eyeMatrix, screenMatrix)){ return false; }
+        if(!Node::draw(eye_matrix, screen_matrix)){ return false; }
 
         m_shaderProgram->use();
         
@@ -317,10 +317,10 @@ namespace engine
         Matrix4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
         //v
-        Matrix4 viewMatrix = eyeMatrix;
+        Matrix4 viewMatrix = eye_matrix;
 
         //p
-        Matrix4 projectionMatrix = screenMatrix;
+        Matrix4 projectionMatrix = screen_matrix;
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
         m_shaderProgram->uniformSet("viewMatrix", viewMatrix);
@@ -338,23 +338,23 @@ namespace engine
 
     const bool Geometry::updateShaderProgram(void)
     {
-        vector<string> vShaderFiles, fShaderFiles;
+        vector<string> v_shader_files, f_shader_files;
 
         if(m_materia)
         {
             switch(m_materia->materiaType())
             {
                 case MateriaType::Purity:
-                    vShaderFiles.push_back("MPurity.vert");
-                    fShaderFiles.push_back("MPurity.frag");
+                    v_shader_files.push_back("MPurity.vert");
+                    f_shader_files.push_back("MPurity.frag");
                 break;
                 case MateriaType::Multicolor:
-                    vShaderFiles.push_back("Multicolor.vert");
-                    fShaderFiles.push_back("Multicolor.frag");
+                    v_shader_files.push_back("Multicolor.vert");
+                    f_shader_files.push_back("Multicolor.frag");
                 break;
                 case MateriaType::Chartlet2D:
-                    vShaderFiles.push_back("Chartlet2D.vert");
-                    fShaderFiles.push_back("Chartlet2D.frag");
+                    v_shader_files.push_back("Chartlet2D.vert");
+                    f_shader_files.push_back("Chartlet2D.frag");
                 break;
                 default:
                     return false;
@@ -362,7 +362,7 @@ namespace engine
         }
 
         //创建新的着色器
-        ShaderProgram & newShaderProgram = ShaderProgram::Create(vShaderFiles, fShaderFiles);
+        ShaderProgram & newShaderProgram = ShaderProgram::Create(v_shader_files, f_shader_files);
         if(!newShaderProgram.ready()){ return false; }
         
         

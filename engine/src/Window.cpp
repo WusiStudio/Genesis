@@ -316,17 +316,17 @@ namespace engine
         return m_windowPoaition;
     }
 
-    void Window::onKeyPress(function<void(int key, int scancode, int action, int mode)> callBack)
+    void Window::onKeyPress(function<void(int key, int scancode, int action, int mode)> call_back)
     {
-        m_onKeyPress = callBack;
+        m_onKeyPress = call_back;
     }
-    void Window::onSizeChange(function<void(const Size2 & size)> callBack)
+    void Window::onSizeChange(function<void(const Size2 & size)> call_back)
     {
-        m_onSizeChange = callBack;
+        m_onSizeChange = call_back;
     }
-    void Window::onPositionChange(function<void(const Vec2 & position)> callBack)
+    void Window::onPositionChange(function<void(const Vec2 & position)> call_back)
     {
-        m_onPositionChange = callBack;
+        m_onPositionChange = call_back;
     }
 
     void Window::show(void)

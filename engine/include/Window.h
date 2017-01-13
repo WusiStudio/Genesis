@@ -49,9 +49,9 @@ namespace engine
         Size2 size(void) const;
         Vec2 position(void) const;
 
-        void onKeyPress(function<void(int key, int scancode, int action, int mode)> callBack);
-        void onSizeChange(function<void(const Size2 & size)> callBack);
-        void onPositionChange(function<void(const Vec2 & position)> callBack);
+        void onKeyPress(function<void(int key, int scancode, int action, int mode)> call_back);
+        void onSizeChange(function<void(const Size2 & size)> call_back);
+        void onPositionChange(function<void(const Vec2 & position)> call_back);
 
         void show(void);
 

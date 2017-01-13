@@ -46,14 +46,14 @@ namespace engine
         return composition(dt);
     }
 
-    const bool CameraOutput::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+    const bool CameraOutput::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
 
         //拍照   (应该传屏幕大小信息)
         if(protograph(Matrix4(1.0f), Matrix4(1.0f))){ return false; }
 
         //绘制子元素
-        if(!Node::draw(eyeMatrix, screenMatrix)){ return false; }
+        if(!Node::draw(eye_matrix, screen_matrix)){ return false; }
 
         return true;
     }
@@ -63,11 +63,11 @@ namespace engine
         return ((CameraInterface *)m_camera)->composition(dp);
     }
 
-    const bool CameraOutput::protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const 
+    const bool CameraOutput::protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const 
     {
         if(!m_camera){ return true; }
 
-        return ((CameraInterface *)m_camera)->protograph(eyeMatrix, screenMatrix);
+        return ((CameraInterface *)m_camera)->protograph(eye_matrix, screen_matrix);
     }
 
     CameraOutput::CameraOutput(void)

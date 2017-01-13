@@ -260,12 +260,12 @@ namespace engine
         return result;
     }
 
-    Matrix4 Matrix4::CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & worldUp)
+    Matrix4 Matrix4::CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & world_up)
     {
         Matrix4 result(1.0f);
 
         Vec3 d = (position - target.convertToSize3()).normalize();
-        Vec3 r = worldUp.cross(d).normalize();
+        Vec3 r = world_up.cross(d).normalize();
         Vec3 u = d.cross(r).normalize();
 
         result[0][3] = 0 - position.x;

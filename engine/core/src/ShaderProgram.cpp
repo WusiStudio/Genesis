@@ -8,13 +8,13 @@ namespace engine
     //着色器缓存池
     map<string, ShaderProgram *> ShaderProgram::ms_shaderProgramsPool;
 
-    ShaderProgram & ShaderProgram::Create(const vector<const Shader *> & shaderList)
+    ShaderProgram & ShaderProgram::Create(const vector<const Shader *> & shader_list)
     {
 
         //* 待实现 __着色器缓存池__
 
         ShaderProgram & result = Create();
-        bool shaderProgramInit = result.initWithShaderList(shaderList);
+        bool shaderProgramInit = result.initWithshader_list(shader_list);
 
         assert(shaderProgramInit);
 
@@ -22,13 +22,13 @@ namespace engine
         return result;
     }
 
-    ShaderProgram & ShaderProgram::Create(const string & vShaderPath, const string & fShaderPath)
+    ShaderProgram & ShaderProgram::Create(const string & vShaderPath, const string & f_shader_path)
     {
 
         //* 待实现 __着色器缓存池__
 
         ShaderProgram & result = Create();
-        bool shaderProgramInit = result.initWithShaderFile(vShaderPath, fShaderPath);
+        bool shaderProgramInit = result.initWithShaderFile(vShaderPath, f_shader_path);
 
         assert(shaderProgramInit);
 
@@ -36,13 +36,13 @@ namespace engine
         return result; 
     }
 
-    ShaderProgram & ShaderProgram::Create(const vector<string> & vShaderFiles, const vector<string> & fShaderFiles)
+    ShaderProgram & ShaderProgram::Create(const vector<string> & v_shader_files, const vector<string> & f_shader_files)
     {
 
         //* 待实现 __着色器缓存池__
 
         ShaderProgram & result = Create();
-        bool shaderProgramInit = result.initWithShadersFile(vShaderFiles, fShaderFiles);
+        bool shaderProgramInit = result.initWithShadersFile(v_shader_files, f_shader_files);
 
         assert(shaderProgramInit);
 
@@ -60,9 +60,9 @@ namespace engine
         return true;
     }
 
-    const bool ShaderProgram::initWithShaderList(const vector<const Shader *> & shaderList)
+    const bool ShaderProgram::initWithshader_list(const vector<const Shader *> & shader_list)
     {
-        for(auto item : shaderList)
+        for(auto item : shader_list)
         {
             if(!item->compileIsSuccessful())
             {
@@ -76,13 +76,13 @@ namespace engine
         return true;
     }
 
-    const bool ShaderProgram::initWithShaderFile(const string & vShaderPath, const string & fShaderPath)
+    const bool ShaderProgram::initWithShaderFile(const string & vShaderPath, const string & f_shader_path)
     {
     
         Shader & vertexShader = vShaderPath.size() <= 0 ? Shader::Create(ShaderType::vertex) : Shader::Create(vShaderPath, ShaderType::vertex);
         if(!vertexShader.compile()){ return false; }
 
-        Shader & fragmentShader = fShaderPath.size() <= 0 ? Shader::Create(ShaderType::fragment) : Shader::Create(fShaderPath, ShaderType::fragment);
+        Shader & fragmentShader = f_shader_path.size() <= 0 ? Shader::Create(ShaderType::fragment) : Shader::Create(f_shader_path, ShaderType::fragment);
         if(!fragmentShader.compile()){ return false; }
 
         attachShader(vertexShader);
@@ -94,12 +94,12 @@ namespace engine
         return true;
     }
 
-    const bool ShaderProgram::initWithShadersFile(const vector<string> & vShaderFiles, const vector<string> & fShaderFiles)
+    const bool ShaderProgram::initWithShadersFile(const vector<string> & v_shader_files, const vector<string> & f_shader_files)
     {
-        Shader & vertexShader = vShaderFiles.size() <= 0 ? Shader::Create(ShaderType::vertex) : Shader::Create(vShaderFiles, ShaderType::vertex);
+        Shader & vertexShader = v_shader_files.size() <= 0 ? Shader::Create(ShaderType::vertex) : Shader::Create(v_shader_files, ShaderType::vertex);
         if(!vertexShader.compile()){ return false; }
 
-        Shader & fragmentShader = fShaderFiles.size() <= 0 ? Shader::Create(ShaderType::fragment) : Shader::Create(fShaderFiles, ShaderType::fragment);
+        Shader & fragmentShader = f_shader_files.size() <= 0 ? Shader::Create(ShaderType::fragment) : Shader::Create(f_shader_files, ShaderType::fragment);
         if(!fragmentShader.compile()){ return false; }
 
         attachShader(vertexShader);

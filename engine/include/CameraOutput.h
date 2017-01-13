@@ -27,10 +27,10 @@ namespace engine
 
         const bool tick(const float dt) override;
         //绘制
-        const bool draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const override;
+        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
         
         const bool composition(const float dp) override final;
-        const bool protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const override final;
+        const bool protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override final;
 
         CameraOutput(void);
         virtual ~CameraOutput(void);

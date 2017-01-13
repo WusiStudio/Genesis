@@ -30,16 +30,16 @@ namespace engine
         return result;
     }
 
-    Shader & Shader::Create(const string & fileName, const enum ShaderType type)
+    Shader & Shader::Create(const string & file_name, const enum ShaderType type)
     {
-        vector<string> fileList(1, fileName);
+        vector<string> fileList(1, file_name);
         return Create(fileList, type);
     }
 
-    Shader & Shader::Create(const vector<string> & shaderFiles, const enum ShaderType type)
+    Shader & Shader::Create(const vector<string> & shader_files, const enum ShaderType type)
     {
         Shader & result = Create();
-        bool shaderInit = result.initWithFiles(shaderFiles, type);
+        bool shaderInit = result.initWithFiles(shader_files, type);
 
         assert(shaderInit);
 
@@ -83,24 +83,24 @@ namespace engine
         return true;
     }
 
-    const bool Shader::initWithFiles(const vector<string> & shaderFiles, const enum ShaderType type)
+    const bool Shader::initWithFiles(const vector<string> & shader_files, const enum ShaderType type)
     {
 
         //获取每个文件的路径
         vector<string> filePathList;
-        for(auto fileName : shaderFiles)
+        for(auto file_name : shader_files)
         {
-            string shaderFilePath = File::PathIsExists(fileName) ? fileName : "";
+            string shaderFilePath = File::PathIsExists(file_name) ? file_name : "";
 
             if(shaderFilePath.size() <= 0)
             {
-                string tempPath = Appaction::AppactionPath() + "shader/" + fileName;
+                string tempPath = Appaction::AppactionPath() + "shader/" + file_name;
                 shaderFilePath = File::PathIsExists(tempPath) ? tempPath : "";
             }
 
             if(shaderFilePath.size() <= 0)
             {
-                Log.error("Shader: [{0}] Is Not Exists!", fileName);
+                Log.error("Shader: [{0}] Is Not Exists!", file_name);
                 return false;
             }  
             filePathList.push_back(shaderFilePath);

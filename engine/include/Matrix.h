@@ -201,7 +201,7 @@ namespace engine
         static Matrix4 CreateRotationMatrix(const Vec3 & angle);
         static Matrix4 CreateScaleMatrix(const Vec3 & scale);
 
-        static Matrix4 CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & worldUp);
+        static Matrix4 CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & world_up);
 
         static Matrix4 CreateOrthogonalMatrix(const Size2 & viewPortSize, const float near, const float far);
         static Matrix4 CreateProjectionMatrix(const Size2 & viewPortSize, const float near, const float far);

@@ -47,9 +47,9 @@ namespace engine
          return true;
      }
 
-     const bool Triangle::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+     const bool Triangle::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
      {
-        if(!Geometry::draw(eyeMatrix, screenMatrix)) return false;
+        if(!Geometry::draw(eye_matrix, screen_matrix)) return false;
         glDrawArrays(GL_TRIANGLES, 0, 3);
         return true;
      }

@@ -181,11 +181,11 @@ namespace engine
         return true;
     }
 
-    const bool BaseNode::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+    const bool BaseNode::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
         for(auto item : m_chidren)
         {
-            if(!item->draw(eyeMatrix, screenMatrix))
+            if(!item->draw(eye_matrix, screen_matrix))
             {
                 return false;
             }

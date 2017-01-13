@@ -22,9 +22,9 @@ namespace engine
     {
     public:
         
-        static ShaderProgram & Create(const vector<const Shader *> & shaderList);
-        static ShaderProgram & Create(const string & vShaderPath, const string & fShaderPath);
-        static ShaderProgram & Create(const vector<string> & vShaderFiles, const vector<string> & fShaderFiles);
+        static ShaderProgram & Create(const vector<const Shader *> & shader_list);
+        static ShaderProgram & Create(const string & vShaderPath, const string & f_shader_path);
+        static ShaderProgram & Create(const vector<string> & v_shader_files, const vector<string> & f_shader_files);
         
         //添加shader
         const bool attachShader(const Shader & shader) const;
@@ -51,9 +51,9 @@ namespace engine
         ShaderProgram(void);
         
         const bool init(void) override;
-        virtual const bool initWithShaderList(const vector<const Shader *> & shaderList);
-        virtual const bool initWithShaderFile(const string & vShaderPath, const string & fShaderPath);
-        virtual const bool initWithShadersFile(const vector<string> & vShaderFiles, const vector<string> & fShaderFiles);
+        virtual const bool initWithshader_list(const vector<const Shader *> & shader_list);
+        virtual const bool initWithShaderFile(const string & vShaderPath, const string & f_shader_path);
+        virtual const bool initWithShadersFile(const vector<string> & v_shader_files, const vector<string> & f_shader_files);
 
         GLuint getUniformLocation(const char * name) const;
         

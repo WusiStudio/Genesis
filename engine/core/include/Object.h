@@ -36,7 +36,7 @@ namespace engine
 
         virtual const bool init(void);
 
-        void initializeError(const int errorCode);
+        void initializeError(const int error_code);
 
     protected:
         

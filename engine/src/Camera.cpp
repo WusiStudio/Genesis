@@ -23,8 +23,8 @@ namespace engine
         return ((CameraInterface &)((World &)root())).composition(dp);
     }
 
-    const bool Camera::protograph(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+    const bool Camera::protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
-        return ((CameraInterface &)((World &)root())).protograph(m_lookAtMatrix * eyeMatrix, m_projectionMatrix * screenMatrix);
+        return ((CameraInterface &)((World &)root())).protograph(m_lookAtMatrix * eye_matrix, m_projectionMatrix * screen_matrix);
     }
 }

@@ -74,9 +74,9 @@ namespace engine
      }
 
 
-    const bool Circle::draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const
+    const bool Circle::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
      {
-        if(!Geometry::draw(eyeMatrix, screenMatrix)) return false;
+        if(!Geometry::draw(eye_matrix, screen_matrix)) return false;
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
         glDrawElements(GL_TRIANGLE_FAN, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
         return true;

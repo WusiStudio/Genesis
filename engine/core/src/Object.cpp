@@ -24,9 +24,9 @@ namespace engine
         return true;
     }
 
-    void Object::initializeError(const int errorCode)
+    void Object::initializeError(const int error_code)
     {
-        if(!errorCode){ return; }
-        m_initializeErrorCode = errorCode;
+        if(!error_code){ return; }
+        m_initializeErrorCode = error_code;
     }
 }

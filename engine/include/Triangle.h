@@ -16,7 +16,7 @@ namespace engine
         virtual const bool init(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3);
 
         const bool tick(const float dp) override;
-        const bool draw(const Matrix4 & eyeMatrix, const Matrix4 & screenMatrix) const override;
+        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
         
         ~Triangle(void){}
     private:

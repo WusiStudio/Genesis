@@ -14,7 +14,7 @@ namespace engine
     class Textrue2D : public Object
     {
     public:
-        static Textrue2D & Create(const string & fileName);
+        static Textrue2D & Create(const string & file_name);
         static Textrue2D & Create(const Image & img);
 
         const int textrueId(void) const;
@@ -22,7 +22,7 @@ namespace engine
         CREATEFUNC(Textrue2D);
 
         const bool init(void) override;
-        virtual const bool init(const string & fileName);
+        virtual const bool init(const string & file_name);
         virtual const bool init(const Image & img);
     private:
         GLuint m_textrueId;

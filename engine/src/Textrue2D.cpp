@@ -3,11 +3,11 @@
 
 namespace engine
 {
-    Textrue2D & Textrue2D::Create(const string & fileName)
+    Textrue2D & Textrue2D::Create(const string & file_name)
     {
         Textrue2D & result = Create();
 
-        bool textrue2DInit = result.init(fileName);
+        bool textrue2DInit = result.init(file_name);
 
         assert(textrue2DInit);
 
@@ -42,9 +42,9 @@ namespace engine
         return true;
     }
 
-    const bool Textrue2D::init(const string & fileName)
+    const bool Textrue2D::init(const string & file_name)
     {
-        Image & sourceImage = Image::Create(fileName);
+        Image & sourceImage = Image::Create(file_name);
 
         if(!init(sourceImage)){ return false; }
 
