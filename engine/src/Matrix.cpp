@@ -287,6 +287,42 @@ namespace engine
         return result;
     }
 
+    Matrix4 Matrix4::CreateOrthogonalMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far)
+    {
+        Matrix4 result(1.0f);
+
+        result[0][0] = 2.0f / (right - left);
+        result[1][1] = 2.0f / (top - bottom);
+        result[2][2] = 0 - 2.0f / (far - near);
+
+
+        result[0][3] = 0 - (right + left) / (right - left);
+        result[1][3] = 0 - (top + bottom) / (top - bottom);
+        result[2][3] = 0 - (far + near) / (far - near);
+
+        return result;
+    }
+
+    Matrix4 Matrix4::CreateProjectionMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far)
+    {
+        Matrix4 result(0.0f);
+
+        result[0][0] = near * 2.0f / (right - left);
+        result[1][1] = near * 2.0f / (top - bottom);
+        result[2][2] = 0 - (far + near) / (far - near);
+
+
+        // result[0][2] = (right + left) * 2 / (right - left);
+        // result[1][2] = (top + bottom) * 2 / (top - bottom);
+        result[2][3] = far * near * 2.0f / (far - near);
+
+        result[3][2] = -1.0f;
+
+        Log.info("result: {0}", result);
+
+        return result;
+    }
+
     Matrix4 Matrix4::CreateProjectionMatrix(const Size2 & viewPortSize, const float near, const float far)
     {
         Matrix4 result(0.0f);
@@ -299,22 +335,6 @@ namespace engine
         result[2][3] = 2.0f * near * far / (far - near);
 
         result[3][2] = -1.0f;
-
-        return result;
-    }
-
-    Matrix4 Matrix4::CreateOrthogonalMatrix(const Size2 & viewPortSize, const float near, const float far)
-    {
-        Matrix4 result(1.0f);
-
-        result[0][0] = 2.0f / viewPortSize.width;
-        result[1][1] = 2.0f / viewPortSize.height;
-        result[2][2] = 0 - 2.0f / (far - near);
-        result[2][3] = 0 - (far + near) / (far - near);
-
-
-        result[0][3] = -1.0f;
-        result[1][3] = -1.0f;
 
         return result;
     }

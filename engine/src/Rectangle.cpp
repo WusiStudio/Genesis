@@ -36,13 +36,6 @@ namespace engine
         return bindVaoData();
     }
 
-    const bool Rectangle::tick(const float dp)
-     {
-         if(!Geometry::tick(dp)){ return false; }
-
-         return true;
-     }
-
      const bool Rectangle::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
      {
         if(!Geometry::draw(eye_matrix, screen_matrix)) return false;

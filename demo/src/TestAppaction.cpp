@@ -9,6 +9,7 @@
 #include "Textrue2D.h"
 #include "Matrix.h"
 #include "Image.h"
+#include "Cube.h"
 
 #include "Uuid.h"
 
@@ -28,24 +29,24 @@ TestAppaction & TestAppaction::Instance(void)
  {
         window().fullScreen();
         window().cancelFullScreen(Size2(1440.0f / 2.0f, 900.0f / 2));
-        Triangle & triangle = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
-        window().append(triangle);
+        // Triangle & triangle = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
+        // window().append(triangle);
 
-        engine::Rectangle & rectangle = Rectangle::Create(350.0f);
-        rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
-        window().append(rectangle);
+        // engine::Rectangle & rectangle = Rectangle::Create(350.0f);
+        // rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
+        // window().append(rectangle);
 
-		Circle & fristCircle = Circle::Create(200.0f);
-        fristCircle.id("haha");
-        fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 10.0f));
-        window().append(fristCircle);
+		// Circle & fristCircle = Circle::Create(200.0f);
+        // fristCircle.id("haha");
+        // fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 10.0f));
+        // window().append(fristCircle);
 
-        Materia & materia = Materia::Create();
-        Image & _img = Image::Create("2.png");
-        Textrue2D & textrue2D = Textrue2D::Create(_img);
-        materia.chartlet2D(textrue2D);
+        // Materia & materia = Materia::Create();
+        // Image & _img = Image::Create("2.png");
+        // Textrue2D & textrue2D = Textrue2D::Create(_img);
+        // materia.chartlet2D(textrue2D);
 
-        fristCircle.bindMateria(materia);
+        // fristCircle.bindMateria(materia);
 
 
         Materia & colorMateria = Materia::Create();
@@ -55,10 +56,13 @@ TestAppaction & TestAppaction::Instance(void)
         };
         colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
-        rectangle.bindMateria(colorMateria);
-        triangle.bindMateria(colorMateria);
+        // rectangle.bindMateria(colorMateria);
+        // triangle.bindMateria(colorMateria);
 
-		// ScreenWorld::Instance().append(fristCircle);
+        Cube & cube = Cube::Create(Size3(300.0f));
+        cube.id("cube");
+        cube.bindMateria(colorMateria);
+        window().append(cube);
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
         // Log.info("location[0] = {0}", location[0]);
@@ -69,11 +73,11 @@ TestAppaction & TestAppaction::Instance(void)
 
         // Log.info("location = {0}", location);
 
-        Matrix2 matrix(Vec2(1.6666f, 3.152454f), Vec2(2.154f, 4.556f));
+        // Matrix2 matrix(Vec2(1.6666f, 3.152454f), Vec2(2.154f, 4.556f));
 
-        Matrix2 matrix2(matrix);
+        // Matrix2 matrix2(matrix);
 
-        matrix[0][0] += 2.356645f;
+        // matrix[0][0] += 2.356645f;
 
         // Log.info("matrix[0][0] = {0}", matrix[0][0]);
         // Log.info("matrix[1][1] = {0}", matrix[1][0]);
@@ -120,5 +124,13 @@ TestAppaction & TestAppaction::Instance(void)
             // haha->scale(1.0f + sin(temp / 500.0f) * .1f);
             haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, haha->position().z));
             haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
+        }
+
+        Cube * cube = (Cube *)window().find("cube");
+
+        if(cube)
+        {
+            cube->position(Vec3(windowSize.width / 2, windowSize.height / 2, cube->position().z));
+            cube->rotate(Vec3( .0f, temp * .002, temp * .002));
         }
  }

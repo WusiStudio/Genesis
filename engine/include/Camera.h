@@ -15,7 +15,7 @@ namespace engine
     public:
         CREATEFUNC(Camera);
     protected:
-        Camera(){}
+        Camera():m_target(0.0f){}
         virtual ~Camera(){}
         const bool init(void) override;
 
@@ -26,8 +26,6 @@ namespace engine
     private:
 
         Vec3 m_target;
-        Matrix4 m_lookAtMatrix;
-        Matrix4 m_projectionMatrix;
     };
 }
 

@@ -93,7 +93,7 @@ namespace engine
 
         //创建主摄像机
         Camera & tempCamera = Camera::Create();
-        tempCamera.position(Vec3(.0f, .0f, 1000.0f));
+        tempCamera.position(Vec3(0.0f, 0.0f, 1000.0f));
         append(tempCamera);
         m_mainCamera = &tempCamera;
 
@@ -140,7 +140,10 @@ namespace engine
         m_windowPoaition.y = (mode->height - m_windowSize.height) / 2;
         position(m_windowPoaition);
 
-        //启用多重采样 (未成功)
+        //启用多重采样
+        glEnable(GL_MULTISAMPLE);
+
+        //判断多重采样是否启用成功
         if(glIsEnabled(GL_MULTISAMPLE))
         {
             GLint buffers ,samples;
@@ -148,11 +151,26 @@ namespace engine
             glGetIntegerv(GL_SAMPLES,&samples);
 
             if(buffers > 0 && samples > 0)
-                glEnable(GL_MULTISAMPLE);
+            {
+                Log.info("Enabled Multisample! buffers: {0}, samples: {1}", buffers, samples);
+            }    
+        }
+        
+        //启用深度测试
+        glEnable(GL_DEPTH_TEST);
+        if(glIsEnabled(GL_DEPTH_TEST))
+        {
+            Log.info("Enabled Depth Test!");
         }
 
-        glEnable(GL_DEPTH_TEST);
-
+        //启用图元重启
+        glEnable(GL_PRIMITIVE_RESTART);
+        glPrimitiveRestartIndex(0xFFFF);
+        if(glIsEnabled(GL_PRIMITIVE_RESTART))
+        {
+            Log.info("Enabled Primitive Restart!");
+        }
+        
         // glfwSetErrorCallback(error_callback);
 
         //引擎按键处理
