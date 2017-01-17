@@ -159,6 +159,9 @@ namespace engine
         const Size2 operator+(const Size2 & param) const;
         const Size2 operator-(const Size2 & param) const;
 
+        const Size2 operator*(const float v) const;
+        const Size2 operator/(const float v) const;
+
         friend ostream & operator<<(ostream & _stream, const Size2 & param); 
 
         float width, height;
@@ -179,6 +182,9 @@ namespace engine
 
         const Size3 operator+(const Size3 & param) const;
         const Size3 operator-(const Size3 & param) const;
+
+        const Size3 operator*(const float v) const;
+        const Size3 operator/(const float v) const;
 
         friend ostream & operator<<(ostream & _stream, const Size3 & param);
         

@@ -297,6 +297,15 @@ namespace engine
         return Size2(width - param.width, height - param.height);
     }
 
+    const Size2 Size2::operator*(const float v) const
+    {
+        return Size2(width * v, height * v);
+    }
+    const Size2 Size2::operator/(const float v) const
+    {
+        return Size2(width / v, height / v);
+    }
+
     ostream & operator<<(ostream & _stream, const Size2 & param)
     {
         _stream << "Szie2(" << param.width << ", " << param.height <<")";
@@ -333,6 +342,15 @@ namespace engine
     const Size3 Size3::operator-(const Size3 & param) const
     {
         return Size3(width - param.width, height - param.height, depth + param.depth);
+    }
+
+    const Size3 Size3::operator*(const float v) const
+    {
+        return Size3(width * v, height * v, depth * v);
+    }
+    const Size3 Size3::operator/(const float v) const
+    {
+        return Size3(width / v, height / v, depth / v);
     }
 
     ostream & operator<<(ostream & _stream, const Size3 & param)

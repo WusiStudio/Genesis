@@ -53,6 +53,7 @@ TestAppaction & TestAppaction::Instance(void)
         ColorRGBA colors[] = {
             ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
             ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
+            
         };
         colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
@@ -122,7 +123,7 @@ TestAppaction & TestAppaction::Instance(void)
         { 
             // haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
             // haha->scale(1.0f + sin(temp / 500.0f) * .1f);
-            haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, haha->position().z));
+            haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, 0.0f));
             haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
         }
 
@@ -131,6 +132,6 @@ TestAppaction & TestAppaction::Instance(void)
         if(cube)
         {
             cube->position(Vec3(windowSize.width / 2, windowSize.height / 2, cube->position().z));
-            cube->rotate(Vec3( .0f, temp * .002, temp * .002));
+            cube->rotate(Vec3( .0f, temp * .0002, temp * .0002));
         }
  }

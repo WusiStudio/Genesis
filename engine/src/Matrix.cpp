@@ -312,13 +312,11 @@ namespace engine
         result[2][2] = 0 - (far + near) / (far - near);
 
 
-        // result[0][2] = (right + left) * 2 / (right - left);
-        // result[1][2] = (top + bottom) * 2 / (top - bottom);
-        result[2][3] = far * near * 2.0f / (far - near);
+        result[0][2] = (right + left) / (right - left);
+        result[1][2] = (top + bottom) / (top - bottom);
+        result[2][3] = 0 - far * near * 2.0f / (far - near);
 
         result[3][2] = -1.0f;
-
-        Log.info("result: {0}", result);
 
         return result;
     }
