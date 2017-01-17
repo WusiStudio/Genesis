@@ -14,10 +14,9 @@ namespace engine
     public:
         static Image & Create(const string & path);
 
-        const int width(void) const;
-        const int height(void) const;
-        const unsigned char * data(void) const;
-        
+        PROPERTY_R(int, width);
+        PROPERTY_R(int, height);
+        PROPERTY_R(const unsigned char *, data);
     protected:
         const bool init(void) override;
         virtual const bool init(const string & path);
@@ -26,8 +25,7 @@ namespace engine
     private:
         CREATEFUNC(Image);
 
-        int m_width, m_height, m_n;
-        const unsigned char * m_data;
+        int m_n;
     };
 }
 

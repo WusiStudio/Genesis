@@ -36,11 +36,6 @@ namespace engine
         return true;
     }
 
-    const ColorRGBA & Materia::color(void) const 
-    {
-        return m_color;
-    }
-
     const bool Materia::colors(const ColorRGBA * colors, const unsigned int count)
     {
 
@@ -62,11 +57,6 @@ namespace engine
     const ColorRGBA * Materia::colors(void) const 
     {
         return m_colors;
-    }
-
-    const unsigned int Materia::colorsCount(void) const 
-    {
-        return m_colorsCount; 
     }
 
     const bool Materia::chartlet2D(Textrue2D & textrue2D)

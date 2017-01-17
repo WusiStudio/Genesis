@@ -18,9 +18,7 @@ namespace engine
         Camera & camera(void) const;
         void camera(Camera & linkCamera);
 
-        void size(const Size2 & size);
-        const Size2 & size(void) const;
-
+        PROPERTY(Size2, size);
     protected:
 
         const bool init(void) override;
@@ -36,7 +34,6 @@ namespace engine
         virtual ~CameraOutput(void);
     private:
         Camera * m_camera;
-        Size2 m_size;
     };
 }
 

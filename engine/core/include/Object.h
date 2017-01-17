@@ -36,16 +36,14 @@ namespace engine
 
         virtual const bool init(void);
 
-        void initializeError(const int error_code);
-
+        //初始化错误码
+        PROPERTY_W(int, initializeError);
     protected:
         
         Object(void){}
         virtual ~Object(void){}
 
     private:
-        //初始化错误码
-        int m_initializeErrorCode;
     };
 }
 

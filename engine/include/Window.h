@@ -40,20 +40,24 @@ namespace engine
         void icon(const string & iconPath) const;
         void size(const Size2 & size) const;
         void sizeLimitSize(const Size2 & min, const Size2 & max) const;
-        void position(const Vec2 & position) const;
+        void position(const Vec2 & p_position) const;
 
         void fullScreen(void);
         void cancelFullScreen(const Size2 & size);
-        void cancelFullScreen(const Size2 & size, const Vec2 & position);
+        void cancelFullScreen(const Size2 & size, const Vec2 & p_position);
 
-        Size2 size(void) const;
-        Vec2 position(void) const;
+        // Size2 size(void) const;
+        // Vec2 position(void) const;
 
         void onKeyPress(function<void(int key, int scancode, int action, int mode)> call_back);
         void onSizeChange(function<void(const Size2 & size)> call_back);
         void onPositionChange(function<void(const Vec2 & position)> call_back);
 
         void show(void);
+
+
+        PROPERTY_R(Size2, size);
+        PROPERTY_R(Vec2, position);
 
     protected:
         virtual ~Window(void);
@@ -69,10 +73,6 @@ namespace engine
 
         //用于多窗口事件回调
         static vector<Window *> ms_windowPool;
-
-        //window property
-        Size2 m_windowSize;
-        Vec2 m_windowPoaition;
 
         Camera * m_mainCamera;
         CameraOutput * m_canvas;

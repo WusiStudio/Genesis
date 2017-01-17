@@ -13,6 +13,49 @@
 
 namespace engine
 {
+    
+    #define PROPERTY(type, name)\
+    private:\
+         type m_##name;\
+    public:\
+         inline type & name (void) { return m_##name; }\
+         inline void name (const type & p_##name) { m_##name = p_##name; }\
+         inline type const & name (void) const { return m_##name; }
+
+    #define PROPERTY_R(type, name)\
+    private:\
+         type m_##name;\
+    public:\
+         inline type & name (void) { return m_##name; }\
+         inline type const & name (void) const { return m_##name; }
+
+    #define PROPERTY_W(type, name)\
+    private:\
+         type m_##name;\
+    public:\
+         inline void name (const type & p_##name) { m_##name = p_##name; }
+
+    #define V_PROPERTY(visibility, type, name)\
+    private:\
+         type m_##name;\
+    visibility :\
+         inline type & name (void) { return m_##name; }\
+         inline void name (const type & p_##name) { m_##name = p_##name; }\
+         inline type const & name (void) const { return m_##name; }
+
+    #define V_PROPERTY_R(visibility, type, name)\
+    private:\
+         type m_##name;\
+    visibility :\
+         inline type & name (void) { return m_##name; }\
+         inline type const & name (void) const { return m_##name; }
+
+    #define V_PROPERTY_W(visibility, type, name)\
+    private:\
+         type m_##name;\
+    visibility :\
+         inline void name (const type & p_##name) { m_##name = p_##name; }
+
     class BaseObject
     {
     public:
@@ -21,12 +64,11 @@ namespace engine
         //释放
         void release(void);
 
-        int quoteCount(void);
+        //对象被引用次数
+        PROPERTY_R(int, quoteCount);
     protected:
         BaseObject(void);
     private:
-        //对象被引用次数
-        int m_quoteCount;
     };
 }
 

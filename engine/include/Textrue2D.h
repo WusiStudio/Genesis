@@ -17,7 +17,7 @@ namespace engine
         static Textrue2D & Create(const string & file_name);
         static Textrue2D & Create(const Image & img);
 
-        const int textrueId(void) const;
+        PROPERTY_R(GLuint, textrueId);
     protected:
         CREATEFUNC(Textrue2D);
 
@@ -25,7 +25,6 @@ namespace engine
         virtual const bool init(const string & file_name);
         virtual const bool init(const Image & img);
     private:
-        GLuint m_textrueId;
     };
 }
 

@@ -61,11 +61,6 @@ namespace engine
         return bindVaoData();
     }
 
-    const float Circle::radius(void)
-    {
-        return m_radius;
-    }
-
     const bool Circle::tick(const float dp)
      {
          if(!Geometry::tick(dp)) { return false; }

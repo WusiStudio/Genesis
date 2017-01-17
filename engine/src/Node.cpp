@@ -49,10 +49,10 @@ namespace engine
         worldCoordinateInvalid();
     }
 
-    const Vec3 & Node::position(void) const
-    {
-        return m_position;
-    }
+    // const Vec3 & Node::position(void) const
+    // {
+    //     return m_position;
+    // }
 
     void Node::rotate(const Vec3 & v)
     {
@@ -60,10 +60,10 @@ namespace engine
         posterityWorldCoordinateInvalid();
     }
 
-    const Vec3 & Node::rotate(void) const
-    {
-        return m_rotate;
-    }
+    // const Vec3 & Node::rotate(void) const
+    // {
+    //     return m_rotate;
+    // }
 
     void Node::scale(const Vec3 & v)
     {
@@ -71,10 +71,10 @@ namespace engine
         posterityWorldCoordinateInvalid();
     }
 
-    const Vec3 & Node::scale(void) const
-    {
-        return m_scale;
-    }
+    // const Vec3 & Node::scale(void) const
+    // {
+    //     return m_scale;
+    // }
 
     const Vec3 Node::convertToWorldSpace(const Vec3 & v)
     {

@@ -26,17 +26,7 @@ namespace engine
         m_camera = &linkCamera;
         m_camera->retain();
     }
-
-    void CameraOutput::size(const Size2 & size)
-    {
-        m_size = size;
-    }
-
-    const Size2 & CameraOutput::size(void) const
-    {
-        return m_size;
-    }
-
+    
     const bool CameraOutput::tick(const float dt)
     {
         if(!Node::tick(dt)){ return false; }

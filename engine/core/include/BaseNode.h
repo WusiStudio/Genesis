@@ -28,9 +28,6 @@ namespace engine
 
         BaseNode & root(void) const;
 
-        //父元素
-        BaseNode * parent(void) const;
-
         //从父元素删除自己
         const bool remove(void);
 
@@ -43,7 +40,9 @@ namespace engine
         //遍历子元素
         void each(function<bool(BaseNode & node)> cb) const;
 
-        void onTick(function<void(const float)> on_tick);
+        //父元素
+        PROPERTY_R(BaseNode *, parent);
+        PROPERTY_W(function<void(const float)>, onTick);
 
     protected:
         BaseNode(void);
@@ -62,10 +61,7 @@ namespace engine
         //
     private:
         string * m_id;
-        BaseNode * m_parent;
         list<BaseNode *> m_chidren;
-        function<void(const float)> m_onTick;
-
         static map<string, BaseNode *> ms_catalogById;
     };
 }

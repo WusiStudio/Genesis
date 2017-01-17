@@ -27,16 +27,18 @@ namespace engine
         static const Materia & Create(const ColorRGBA * colors, const unsigned int count);
 
         const bool color(const ColorRGBA & c);
-        const ColorRGBA & color(void) const;
         
         const bool colors(const ColorRGBA * colors, const unsigned int count);
         const ColorRGBA * colors(void) const;
-        const unsigned int colorsCount(void) const;
 
         const bool chartlet2D(Textrue2D & textrue2D);
         const Textrue2D * chartlet2D(void) const;
 
         const MateriaType &  materiaType(void) const;
+
+        //
+        PROPERTY_R(ColorRGBA, color);
+        PROPERTY_R(unsigned int, colorsCount);
     protected:
         Materia(void);
         virtual ~Materia(void);
@@ -44,10 +46,7 @@ namespace engine
     private:
         void clearData(void);
 
-
-        ColorRGBA m_color;
         ColorRGBA * m_colors;
-        unsigned int m_colorsCount;
         Textrue2D * m_textrue2D;
         MateriaType m_materiaType; 
 

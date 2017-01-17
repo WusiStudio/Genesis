@@ -59,21 +59,6 @@ namespace engine
         return true;
     }
 
-    const int Image::width(void) const
-    {
-        return m_width;
-    }
-    const int Image::height(void) const 
-    {
-        return m_height;
-    }
-    const unsigned char * Image::data(void) const 
-    {
-        if(!ready()) return nullptr;
-
-        return m_data;
-    }
-
     Image::Image(void)
     {
         m_data = nullptr;

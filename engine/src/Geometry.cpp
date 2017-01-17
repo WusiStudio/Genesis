@@ -110,16 +110,6 @@ namespace engine
         memset(m_indies, 0, sizeof(unsigned short) * m_indiesCount);
     }
 
-    const unsigned short Geometry::vertexsCount(void) const
-    {
-        return m_vertexsCount;
-    }
-
-    const unsigned short Geometry::indiesCount(void) const
-    {
-        return m_indiesCount;
-    }
-
     const GLuint Geometry::vertexArrayObject(void) const
     {
         return m_vertexArrayObject;

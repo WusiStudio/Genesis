@@ -11,6 +11,7 @@ namespace engine
     public:
         static Cube & Create(const Size3 & size);
 
+        PROPERTY(Size3, size);
     protected:
         CREATEFUNC(Cube);
 
@@ -20,7 +21,6 @@ namespace engine
         const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
     private:
-        Size3 m_size;
     };
 }
 

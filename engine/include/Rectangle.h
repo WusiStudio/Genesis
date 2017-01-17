@@ -11,7 +11,7 @@ namespace engine
     {
     public:
         static Rectangle & Create(const Size2 & size);
-
+        PROPERTY(Size2, size);
     protected:
         CREATEFUNC(Rectangle);
 
@@ -21,7 +21,6 @@ namespace engine
         const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
     private:
-        Size2 m_size;
     };
 }
 

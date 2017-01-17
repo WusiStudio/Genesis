@@ -16,9 +16,4 @@ namespace engine
     {
         -- m_quoteCount;
     }
-
-    int BaseObject::quoteCount(void)
-    {
-        return m_quoteCount;
-    }
 }

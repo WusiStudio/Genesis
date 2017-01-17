@@ -100,7 +100,7 @@ namespace engine
 
         m_canvas = &CameraOutput::Create();
         BaseNode::append(*m_canvas);
-        m_canvas->size(m_windowSize);
+        m_canvas->size(m_size);
         m_canvas->camera(*m_mainCamera);
 
         ms_windowPool.push_back(this);
@@ -120,8 +120,8 @@ namespace engine
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
         //创建窗口
-        m_windowSize = Size2((float)(int)size.width, (float)(int)size.height);
-        m_window = glfwCreateWindow((int)m_windowSize.width, (int)m_windowSize.height, title.c_str(), nullptr, nullptr);
+        m_size = Size2((float)(int)size.width, (float)(int)size.height);
+        m_window = glfwCreateWindow((int)m_size.width, (int)m_size.height, title.c_str(), nullptr, nullptr);
         if (m_window == nullptr)
         {
             Log.error("Failed to create GLFW window ({0})", title);
@@ -136,9 +136,9 @@ namespace engine
 
         //初始化窗口位置
         const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        m_windowPoaition.x = (mode->width - m_windowSize.width) / 2;
-        m_windowPoaition.y = (mode->height - m_windowSize.height) / 2;
-        position(m_windowPoaition);
+        m_position.x = (mode->width - m_size.width) / 2;
+        m_position.y = (mode->height - m_size.height) / 2;
+        position(m_position);
 
         //启用多重采样
         glEnable(GL_MULTISAMPLE);
@@ -201,8 +201,8 @@ namespace engine
                     continue;
                 }
 
-                itemWindow->m_windowSize = Size2((float)width, (float)height);
-                itemWindow->m_canvas->size(itemWindow->m_windowSize);
+                itemWindow->m_size = Size2((float)width, (float)height);
+                itemWindow->m_canvas->size(itemWindow->m_size);
 
                 #if defined(__APPLE__) && defined(__MACH__)
                     //不重新指定区域也行 还没有弄明白为什么这样
@@ -211,14 +211,14 @@ namespace engine
                     glViewport(0, 0, width, height);
                 #endif
 
-                // Log.info("window size : {0}", itemWindow->m_windowSize);
+                // Log.info("window size : {0}", itemWindow->m_size);
 
                 if(!itemWindow->m_onSizeChange)
                 {
                     break;
                 }
                 
-                itemWindow->m_onSizeChange(itemWindow->m_windowSize);
+                itemWindow->m_onSizeChange(itemWindow->m_size);
             }
         };
 
@@ -231,15 +231,15 @@ namespace engine
                     continue;
                 }
 
-                itemWindow->m_windowPoaition = Vec2((float)xpos, (float)ypos);
-                // Log.info("window pos : {0}", itemWindow->m_windowPoaition);
+                itemWindow->m_position = Vec2((float)xpos, (float)ypos);
+                // Log.info("window pos : {0}", itemWindow->m_position);
 
                 if(!itemWindow->m_onPositionChange)
                 {
                     break;
                 }
                 
-                itemWindow->m_onPositionChange(itemWindow->m_windowPoaition);
+                itemWindow->m_onPositionChange(itemWindow->m_position);
             }
         };
 
@@ -283,9 +283,9 @@ namespace engine
         glfwSetWindowSizeLimits(m_window, (int)min.width, (int)min.height, (int)max.width, (int)max.height);
     }
 
-    void Window::position(const Vec2 & position) const
+    void Window::position(const Vec2 & p_position) const
     {
-        glfwSetWindowPos(m_window, (int)position.x, (int)position.y);
+        glfwSetWindowPos(m_window, (int)p_position.x, (int)p_position.y);
     }
 
     void Window::fullScreen(void)
@@ -294,8 +294,8 @@ namespace engine
         const GLFWvidmode * mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         #if defined(__APPLE__) && defined(__MACH__)
-            m_windowPoaition = Vec2(.0f, .0f);
-            if(m_onPositionChange) m_onPositionChange(m_windowPoaition);
+            m_position = Vec2(.0f, .0f);
+            if(m_onPositionChange) m_onPositionChange(m_position);
         #endif
         m_fullScene = true;
     }
@@ -310,28 +310,19 @@ namespace engine
         cancelFullScreen(size, Vec2((mode->width - size.width) / 2, (mode->height - size.height) / 2));
     }
 
-    void Window::cancelFullScreen(const Size2 & size, const Vec2 & position)
+    void Window::cancelFullScreen(const Size2 & size, const Vec2 & p_position)
     {
         if(!m_fullScene)
         {
             return;
         }
         const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowMonitor(m_window, nullptr, (int)position.x, (int)position.y, (int)size.width, (int)size.height, mode->refreshRate);
+        glfwSetWindowMonitor(m_window, nullptr, (int)p_position.x, (int)p_position.y, (int)size.width, (int)size.height, mode->refreshRate);
         #if defined(__APPLE__) && defined(__MACH__)
-            m_windowPoaition = position;
-            if(m_onPositionChange) m_onPositionChange(m_windowPoaition);
+            m_position = p_position;
+            if(m_onPositionChange) m_onPositionChange(m_position);
         #endif
         m_fullScene = false;
-    }
-
-    Size2 Window::size(void) const
-    {
-        return m_windowSize;
-    }
-    Vec2 Window::position(void) const
-    {
-        return m_windowPoaition;
     }
 
     void Window::onKeyPress(function<void(int key, int scancode, int action, int mode)> call_back)
@@ -342,7 +333,7 @@ namespace engine
     {
         m_onSizeChange = call_back;
     }
-    void Window::onPositionChange(function<void(const Vec2 & position)> call_back)
+    void Window::onPositionChange(function<void(const Vec2 & p_position)> call_back)
     {
         m_onPositionChange = call_back;
     }

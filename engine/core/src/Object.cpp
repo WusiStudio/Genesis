@@ -5,12 +5,12 @@ namespace engine
 {
     const bool Object::ready(void) const
     {
-        return !m_initializeErrorCode;
+        return !m_initializeError;
     }
 
     const int Object::fault(void) const
     {
-        return m_initializeErrorCode;
+        return m_initializeError;
     }
 
     const bool Object::autoRelease(void)
@@ -20,13 +20,7 @@ namespace engine
 
     const bool Object::init(void)
     {
-        m_initializeErrorCode = 0;
+        m_initializeError = 0;
         return true;
-    }
-
-    void Object::initializeError(const int error_code)
-    {
-        if(!error_code){ return; }
-        m_initializeErrorCode = error_code;
     }
 }

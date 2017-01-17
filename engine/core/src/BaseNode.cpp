@@ -67,12 +67,6 @@ namespace engine
         return m_parent->remove(*this);
     }
 
-    BaseNode * BaseNode::parent(void) const
-    {
-        return m_parent;
-    }
-
-
     const bool BaseNode::clear(void)
     {
         while(!m_chidren.empty())
@@ -111,11 +105,6 @@ namespace engine
         {
             if(cb(*item)) break;
         }
-    }
-
-    void BaseNode::onTick(function<void(const float)> on_tick)
-    {
-        if(on_tick) m_onTick = on_tick;
     }
 
     const bool BaseNode::init(void)

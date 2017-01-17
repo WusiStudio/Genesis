@@ -26,9 +26,8 @@ namespace engine
         void vertexsCount(const unsigned short count);
         void indiesCount(const unsigned short count);
 
-        //获取数据大小
-        const unsigned short vertexsCount(void) const;
-        const unsigned short indiesCount(void) const;
+        V_PROPERTY_R(protected, unsigned short, vertexsCount);
+        V_PROPERTY_R(protected, unsigned short, indiesCount);
 
         //修改指定位置数据
         void vertex(const unsigned short index, const Vec3 & data);
@@ -71,7 +70,6 @@ namespace engine
         //顶点数据及顺序
         Vec3 * m_vertexs;
         unsigned short * m_indies;
-        unsigned short m_vertexsCount, m_indiesCount;
 
         // string m_customVertextShaderFile, m_customFragmentShaderFile;
         

@@ -29,20 +29,22 @@ namespace engine
 
         //位置
         void position(const Vec3 & v);
-        const Vec3 & position(void) const;
 
         //旋转
         void rotate(const Vec3 & v);
-        const Vec3 & rotate(void) const;
 
         //缩放
         void scale(const Vec3 & v);
-        const Vec3 & scale(void) const;
         
         //将当前坐标转为世界坐标
         const Vec3 convertToWorldSpace(const Vec3 & v);
         //将世界坐标转换为当前坐标
         const Vec3 convertToNodeSpace(const Vec3 & v);
+
+        //
+        PROPERTY_R(Vec3, position);
+        PROPERTY_R(Vec3, rotate);
+        PROPERTY_R(Vec3, scale);
         
     protected:
         Node(void);
@@ -68,9 +70,6 @@ namespace engine
 
 
         static const char * const msc_nodeType;
-
-        //位置 旋转 缩放
-        Vec3 m_position, m_rotate, m_scale;
 
         //累计旋转  累计缩放
         Vec3 m_accumulativeRotate, m_accumulativeScale;

@@ -29,12 +29,6 @@ namespace engine
         return result;
     }
 
-    const int Textrue2D::textrueId(void) const
-    {
-        return m_textrueId;
-    }
-
-
     const bool Textrue2D::init(void)
     {
         if(!Object::init()){ return false; }

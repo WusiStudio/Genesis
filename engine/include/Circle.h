@@ -12,8 +12,8 @@ namespace engine
         static Circle & Create(const float r);
 
         const bool radius(const float r);
-        const float radius(void);
 
+        PROPERTY_R(float, radius);
     protected:
 
         Circle(void);
@@ -28,7 +28,6 @@ namespace engine
         const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
     private:
-        float m_radius;
         float m_density;
     };
 }
