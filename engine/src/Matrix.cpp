@@ -234,17 +234,17 @@ namespace engine
 
         //绕y轴旋转
         rotationY[0][0] = cos(y);
-        rotationY[0][2] = -sin(y);
+        rotationY[0][2] = sin(y);
 
-        rotationY[0][0] = sin(y);
+        rotationY[2][0] = -sin(y);
         rotationY[2][2] = cos(y);
 
         //绕z轴旋转
-        rotationY[0][0] = cos(z);
-        rotationY[0][1] = -sin(z);
+        rotationZ[0][0] = cos(z);
+        rotationZ[0][1] = -sin(z);
 
-        rotationY[1][0] = sin(z);
-        rotationY[1][1] = cos(z);
+        rotationZ[1][0] = sin(z);
+        rotationZ[1][1] = cos(z);
 
         return rotationX * rotationY * rotationZ;
     }

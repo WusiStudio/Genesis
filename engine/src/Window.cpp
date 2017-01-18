@@ -93,7 +93,7 @@ namespace engine
 
         //创建主摄像机
         Camera & tempCamera = Camera::Create();
-        tempCamera.position(Vec3(0.0f, 0.0f, 1000.0f));
+        tempCamera.position(Vec3(0.0f, 0.0f, 1500.0f));
         append(tempCamera);
         m_mainCamera = &tempCamera;
 

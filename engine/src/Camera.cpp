@@ -31,8 +31,8 @@ namespace engine
         Matrix4 lookAtMatrix = Matrix4::CreateLookAtMatrix(position(), t_target, m_up);
 
         //透视矩阵
-        Vec4 rightTop = lookAtMatrix * Vec4(viewPortSize.width, viewPortSize.height, 100.0f, 1.0f);
-        Matrix4 projectionMatrix = Matrix4::CreateProjectionMatrix(rightTop[0] - viewPortSize.width, rightTop[0], rightTop[1], rightTop[1] - viewPortSize.height, 500.0f, 1500.0f);
+        Vec4 rightTop = lookAtMatrix * Vec4(viewPortSize.width, viewPortSize.height, 300.0f, 1.0f);
+        Matrix4 projectionMatrix = Matrix4::CreateProjectionMatrix(rightTop[0] - viewPortSize.width, rightTop[0], rightTop[1], rightTop[1] - viewPortSize.height, 300.0f, 1800.0f);
         
         return ((CameraInterface &)((World &)root())).protograph(lookAtMatrix, projectionMatrix * screen_matrix);
     }

@@ -132,6 +132,6 @@ TestAppaction & TestAppaction::Instance(void)
         if(cube)
         {
             cube->position(Vec3(windowSize.width / 2, windowSize.height / 2, cube->position().z));
-            cube->rotate(Vec3( .0f, temp * .0002, temp * .0002));
+            cube->rotate(Vec3( temp * .0002, temp * .0002, temp * .0002));
         }
  }
