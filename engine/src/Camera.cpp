@@ -28,7 +28,7 @@ namespace engine
 
         //观察矩阵
         Vec3 m_up = Matrix4::CreateRotationMatrix(accumulativeRotateOffset().convertToVec3()) * Vec3(.0f, 1.0f, .0f);
-        Matrix4 lookAtMatrix = Matrix4::CreateLookAtMatrix(position(), t_target, m_up);
+        Matrix4 lookAtMatrix = Matrix4::CreateLookAtMatrix(position() + Size3(viewPortSize.width / 2, viewPortSize.height / 2, .0f), t_target, m_up);
 
         //透视矩阵
         Vec4 rightTop = lookAtMatrix * Vec4(viewPortSize.width, viewPortSize.height, 300.0f, 1.0f);
