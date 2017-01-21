@@ -30,7 +30,7 @@ AUX_SOURCE_DIRECTORY(log/src DIR_SRCS)
 ADD_LIBRARY(${PROJECT_NAME} ${DIR_SRCS})
 
 #输出路径-----------------------------------------------
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_ROOT_DIR}/build/bin)
+# SET(LIBRARY_OUTPUT_PATH ${PROJECT_ROOT_DIR}/build/bin)
 
 #链接库-------------------------------------------------
 IF(WIN32)

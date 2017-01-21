@@ -13,7 +13,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 ADD_LIBRARY(glad glad/glad.h glad.c)
 
 #输出路径
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_ROOT_DIR}/build/bin)
+# SET(LIBRARY_OUTPUT_PATH ${PROJECT_ROOT_DIR}/build/bin)
 
 #设置编译选项
 if(WIN32)
