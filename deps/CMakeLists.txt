@@ -2,6 +2,8 @@ CMAKE_MINIMUM_REQUIRED (VERSION 3.4)
 
 PROJECT (deps)
 
+ADD_SUBDIRECTORY(freetype)
+
 SET(BUILD_TESTING flase)
 
 #指定头文件路径

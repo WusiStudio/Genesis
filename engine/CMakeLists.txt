@@ -34,14 +34,14 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_ROOT_DIR}/build/bin)
 
 #链接库-------------------------------------------------
 IF(WIN32)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg freetype)
 ELSEIF(APPLE)
     FIND_LIBRARY(frameworkCocoa Cocoa)
     FIND_LIBRARY(frameworkIOKit IOKit)
     FIND_LIBRARY(frameworkCoreVideo CoreVideo)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg freetype pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
 ELSEIF(UNIX)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 glad wsimg pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 glad wsimg freetype pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
 ENDIF()
 
 #拷贝资源-----------------------------------------------

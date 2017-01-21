@@ -41,10 +41,10 @@ TestAppaction & TestAppaction::Instance(void)
         // fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 10.0f));
         // window().append(fristCircle);
 
-        // Materia & materia = Materia::Create();
-        // Image & _img = Image::Create("2.png");
-        // Textrue2D & textrue2D = Textrue2D::Create(_img);
-        // materia.chartlet2D(textrue2D);
+        Materia & materia = Materia::Create();
+        Image & _img = Image::Create("2.png");
+        Textrue2D & textrue2D = Textrue2D::Create(_img);
+        materia.chartlet2D(textrue2D);
 
         // fristCircle.bindMateria(materia);
 
@@ -62,7 +62,8 @@ TestAppaction & TestAppaction::Instance(void)
 
         Cube & cube = Cube::Create(Size3(300.0f));
         cube.id("cube");
-        cube.bindMateria(colorMateria);
+        cube.scale(3.0f);
+        cube.bindMateria(materia);
         window().append(cube);
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
@@ -132,6 +133,6 @@ TestAppaction & TestAppaction::Instance(void)
         if(cube)
         {
             cube->position(Vec3(windowSize.width / 2, windowSize.height / 2, cube->position().z));
-            cube->rotate(Vec3( temp * .0002, temp * .0002, temp * .0002));
+            cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
         }
  }
