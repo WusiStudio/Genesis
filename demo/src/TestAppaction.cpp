@@ -132,7 +132,6 @@ TestAppaction & TestAppaction::Instance(void)
 
         if(cube)
         {
-            cube->position(Vec3(windowSize.width / 2, windowSize.height / 2, cube->position().z));
             cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
         }
  }

@@ -312,8 +312,8 @@ namespace engine
         result[2][2] = 0 - (far + near) / (far - near);
 
 
-        result[0][2] = (right + left) / (right - left);
-        result[1][2] = (top + bottom) / (top - bottom);
+        result[0][2] = (right + left) / (right - left) - 1.0f;
+        result[1][2] = (top + bottom) / (top - bottom) - 1.0f;
         result[2][3] = 0 - far * near * 2.0f / (far - near);
 
         result[3][2] = -1.0f;
