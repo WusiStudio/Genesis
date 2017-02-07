@@ -19,7 +19,7 @@ namespace engine
         CREATEFUNC(Node);
 
         //类型
-        const char * nodeType(void) const override final;
+        virtual const char * nodeType(void) const override final;
         
         //添加子元素
         const bool append(Node & child);
@@ -49,13 +49,13 @@ namespace engine
     protected:
         Node(void);
         virtual ~Node(void);
-        const bool init(void) override;
+        virtual const bool init(void) override;
 
         const Size3 accumulativeRotateOffset(void) const;
         const Size3 accumulativeScaleOffset(void) const;
         const Size3 worldCoordinateOffset(void) const;
 
-        const bool tick(const float dt) override;
+        virtual const bool tick(const float dt) override;
         
     private:
 

@@ -21,14 +21,14 @@ namespace engine
         PROPERTY(Size2, size);
     protected:
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
 
-        const bool tick(const float dt) override;
+        virtual const bool tick(const float dt) override;
         //绘制
-        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+        virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
         
-        const bool composition(const float dp) override final;
-        const bool protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override final;
+        virtual const bool composition(const float dp) override final;
+        virtual const bool protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override final;
 
         CameraOutput(void);
         virtual ~CameraOutput(void);

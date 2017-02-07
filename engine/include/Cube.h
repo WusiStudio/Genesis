@@ -15,10 +15,10 @@ namespace engine
     protected:
         CREATEFUNC(Cube);
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool init(const Size3 & size);
 
-        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+        virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
     private:
     };

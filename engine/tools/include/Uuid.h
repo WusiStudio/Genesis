@@ -24,7 +24,7 @@ namespace engine
             friend ostream & operator<<(ostream & _out, const Uuid & _uuid);
         protected:
             Uuid();
-            const bool init(void) override;
+            virtual const bool init(void) override;
             virtual const bool init(const Uuid & _uuid);
         private:
             unsigned short _data[16];

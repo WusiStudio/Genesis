@@ -42,7 +42,7 @@ namespace engine
 
         Shader(void);
         virtual ~Shader(void);
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool initWithType(const enum ShaderType type);
         // virtual const bool init(const string & file_name, const enum ShaderType type);
         virtual const bool initWithFiles(const vector<string> & shader_files, const enum ShaderType type);

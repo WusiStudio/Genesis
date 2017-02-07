@@ -20,7 +20,7 @@ namespace engine
     protected:
         Geometry(void);
         virtual ~Geometry(void);
-        const bool init(void) override;
+        virtual const bool init(void) override;
 
         //指定数据大小
         void vertexsCount(const unsigned short count);
@@ -57,8 +57,8 @@ namespace engine
 
         const Materia & materia(void) const;
 
-        const bool tick(const float dp) override;
-        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+        virtual const bool tick(const float dp) override;
+        virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
     private:
 
         static Materia * DefaultMateria(void);

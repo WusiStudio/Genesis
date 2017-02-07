@@ -26,7 +26,7 @@ namespace engine
         static Window & Create(const Size2 & size, const string & title);
 
         //类型
-        const char *  nodeType(void) const override final;
+        virtual const char *  nodeType(void) const override final;
 
         //查找指定id的子元素
         Node * find(const string & id);
@@ -63,7 +63,7 @@ namespace engine
         virtual ~Window(void);
         CREATEFUNC(Window);
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool initWithInfo(const Size2 & size, const string & title);
 
     private:

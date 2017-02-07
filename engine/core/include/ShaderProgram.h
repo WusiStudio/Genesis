@@ -50,7 +50,7 @@ namespace engine
 
         ShaderProgram(void);
         
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool initWithshader_list(const vector<const Shader *> & shader_list);
         virtual const bool initWithShaderFile(const string & vShaderPath, const string & f_shader_path);
         virtual const bool initWithShadersFile(const vector<string> & v_shader_files, const vector<string> & f_shader_files);

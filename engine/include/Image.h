@@ -18,7 +18,7 @@ namespace engine
         PROPERTY_R(int, height);
         PROPERTY_R(const unsigned char *, data);
     protected:
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool init(const string & path);
         Image(void);
         virtual ~Image(void);

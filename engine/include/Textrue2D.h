@@ -21,7 +21,7 @@ namespace engine
     protected:
         CREATEFUNC(Textrue2D);
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool init(const string & file_name);
         virtual const bool init(const Image & img);
     private:

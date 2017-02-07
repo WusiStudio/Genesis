@@ -42,7 +42,7 @@ namespace engine
     protected:
         Materia(void);
         virtual ~Materia(void);
-        const bool init(void) override;
+        virtual const bool init(void) override;
     private:
         void clearData(void);
 

@@ -15,10 +15,10 @@ namespace engine
     protected:
         CREATEFUNC(Rectangle);
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool init(const Size2 & size);
 
-        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+        virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
     private:
     };

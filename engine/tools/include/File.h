@@ -31,7 +31,7 @@ namespace engine
             const bool open(const string & filePath, const int mode = ios::in | ios::out);
             
         protected:
-            const bool init(void) override;
+            virtual const bool init(void) override;
             virtual const bool initWithFilePath(const string & filePath);
             
             File(void);

@@ -48,7 +48,7 @@ namespace engine
         BaseNode(void);
         virtual ~BaseNode(void);
 
-        const bool init(void) override;
+        virtual const bool init(void) override;
 
         //添加子元素
         const bool append(BaseNode & child);

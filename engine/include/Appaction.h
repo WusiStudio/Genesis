@@ -12,7 +12,7 @@ namespace engine
     class Appaction : public Object
     {
     public: 
-        const bool init(void) override;
+        virtual const bool init(void) override;
 
         //运行程序
         void run(int argc, char ** argv);

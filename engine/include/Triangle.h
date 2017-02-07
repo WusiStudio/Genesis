@@ -12,11 +12,11 @@ namespace engine
         static Triangle & Create(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3);
     protected:
         CREATEFUNC(Triangle);
-        const bool init(void) override;
+        virtual const bool init(void) override;
         virtual const bool init(const Vec3 & vertex_1, const Vec3 & vertex_2, const Vec3 & vertex_3);
 
-        const bool tick(const float dp) override;
-        const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+        virtual const bool tick(const float dp) override;
+        virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
         
         ~Triangle(void){}
     private:
