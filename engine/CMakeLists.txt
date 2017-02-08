@@ -19,6 +19,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/log/include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(core/src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(tools/src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(${PROJECT_ROOT_DIR}/deps/glad DIR_SRCS)
 
 #-modules
 AUX_SOURCE_DIRECTORY(log/src DIR_SRCS)
@@ -31,14 +32,14 @@ ADD_LIBRARY(${PROJECT_NAME} ${DIR_SRCS})
 
 #链接库-------------------------------------------------
 IF(WIN32)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad freetype)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 freetype)
 ELSEIF(APPLE)
     FIND_LIBRARY(frameworkCocoa Cocoa)
     FIND_LIBRARY(frameworkIOKit IOKit)
     FIND_LIBRARY(frameworkCoreVideo CoreVideo)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad freetype pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 freetype pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
 ELSEIF(UNIX)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 glad freetype pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 freetype pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
 ENDIF()
 
 #拷贝资源-----------------------------------------------
