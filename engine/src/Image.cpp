@@ -2,18 +2,32 @@
 #include "File.h"
 #include "WSLog.h"
 #include "Appaction.h"
-#include "wsimg.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 namespace engine
 {
     using WsTools::Log;
-    using tools::File;
     
     Image & Image::Create(const string & path)
     {
         Image & result = Create();
 
-        bool imageInit = result.init(path);
+        bool imageInit = result.initWithPath(path);
+
+        assert(imageInit);
+
+        if(!imageInit){ result.initializeError(1); }
+
+        return result;
+    }
+
+    Image & Image::Create(const vector<char> & binary_data)
+    {
+        Image & result = Create();
+
+        bool imageInit = result.initWidthBinaryData(binary_data);
 
         assert(imageInit);
 
@@ -32,7 +46,7 @@ namespace engine
         return true;
     }
 
-    const bool Image::init(const string & path)
+    const bool Image::initWithPath(const string & path)
     {
         
         string checkPath = File::PathIsExists(path) ? path : "";
@@ -49,12 +63,22 @@ namespace engine
             return false;
         }
 
-        struct wsimg_info img_info;
-        m_data = wsimg_read_data(checkPath.c_str(), &img_info);
-        if(!m_data) { return false; }
+        return initWidthBinaryData(File::ReadAll(checkPath));
+    }
 
-        m_width = img_info.width;
-        m_height = img_info.height;
+    const bool Image::initWidthBinaryData(const vector<char> & binary_data)
+    {
+        if( binary_data.size() == 0 ) 
+        {
+            return false;
+        }
+
+        m_data = stbi_load_from_memory( reinterpret_cast<const unsigned char*>(&binary_data[0]), static_cast<int>(binary_data.size()), &m_width, &m_height, &m_n, 4 );
+        if(m_data == nullptr || m_width <= 0 || m_height <= 0 || m_n <= 0)
+        {
+            Log.error("Could not read image data!");
+            return false;
+        }
 
         return true;
     }
@@ -68,7 +92,7 @@ namespace engine
     {
         if(m_data)
         {
-            wsimg_free(m_data);
+            stbi_image_free( (void *)m_data );
             m_data = nullptr;
         }
     }

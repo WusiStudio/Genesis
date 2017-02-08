@@ -149,14 +149,14 @@ namespace engine
         vertexs(data, m_vertexsCount, 0);
     }
     
-    void Geometry::vertexs(const Vec3 * data, const unsigned short count, const unsigned short startIndex)
+    void Geometry::vertexs(const Vec3 * data, const unsigned short count, const unsigned short start_index)
     {
-        memcpy(m_vertexs + startIndex, data, (m_vertexsCount - startIndex) * sizeof(Vec3));
+        memcpy(m_vertexs + start_index, data, (m_vertexsCount - start_index) * sizeof(Vec3));
     }
 
-    void Geometry::indies(const unsigned short * data, const unsigned short count, const unsigned short startIndex)
+    void Geometry::indies(const unsigned short * data, const unsigned short count, const unsigned short start_index)
     {
-        memcpy(m_indies + startIndex, data, (m_indiesCount - startIndex) * sizeof(unsigned short));
+        memcpy(m_indies + start_index, data, (m_indiesCount - start_index) * sizeof(unsigned short));
     }
 
     void Geometry::indies(const unsigned short * data)

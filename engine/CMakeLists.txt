@@ -2,8 +2,6 @@ CMAKE_MINIMUM_REQUIRED (VERSION 3.4)
 
 PROJECT (genesis VERSION 0.0.1)
 
-ADD_SUBDIRECTORY(image)
-
 SET(BUILD_TESTING flase)
 
 #指定头文件路径-----------------------------------------
@@ -16,7 +14,6 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/tools/include)
 
 #-modules
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/log/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/image/include)
 
 #读取Src目录--------------------------------------------
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
@@ -34,14 +31,14 @@ ADD_LIBRARY(${PROJECT_NAME} ${DIR_SRCS})
 
 #链接库-------------------------------------------------
 IF(WIN32)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg freetype)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad freetype)
 ELSEIF(APPLE)
     FIND_LIBRARY(frameworkCocoa Cocoa)
     FIND_LIBRARY(frameworkIOKit IOKit)
     FIND_LIBRARY(frameworkCoreVideo CoreVideo)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad wsimg freetype pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} glfw3 glad freetype pthread ${frameworkCocoa} ${frameworkIOKit} ${frameworkCoreVideo})
 ELSEIF(UNIX)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 glad wsimg freetype pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} GL glfw3 glad freetype pthread dl X11 Xi Xrandr Xxf86vm Xcursor Xinerama)
 ENDIF()
 
 #拷贝资源-----------------------------------------------

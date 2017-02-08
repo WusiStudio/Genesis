@@ -7,7 +7,6 @@
 
 namespace engine
 {
-    using tools::File;
     using WsTools::Log;
 
     using std::smatch;

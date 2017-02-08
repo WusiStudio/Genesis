@@ -38,8 +38,8 @@ namespace engine
         void indies(const unsigned short * data);
 
         //指定位置写入指定长度的数据
-        void vertexs(const Vec3 * data, const unsigned short count, const unsigned short startIndex = 0);
-        void indies(const unsigned short * data, const unsigned short count, const unsigned short startIndex = 0);
+        void vertexs(const Vec3 * data, const unsigned short count, const unsigned short start_index = 0);
+        void indies(const unsigned short * data, const unsigned short count, const unsigned short start_index = 0);
 
         //数据起始地址
         const Vec3 * vertexs(void) const;
