@@ -9,9 +9,6 @@ SET(PROJECT_ROOT_DIR ${PROJECT_SOURCE_DIR})
 # 默认Debug 模式
 SET(CMAKE_BUILD_TYPE "Debug")
 
-# 外部库
-ADD_SUBDIRECTORY(deps)
-
 # 引擎
 ADD_SUBDIRECTORY(engine)
 

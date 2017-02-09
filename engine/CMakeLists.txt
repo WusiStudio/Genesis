@@ -4,25 +4,30 @@ PROJECT (genesis VERSION 0.0.1)
 
 SET(BUILD_TESTING flase)
 
-#指定头文件路径-----------------------------------------
-INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/deps)
+# 外部库
+ADD_SUBDIRECTORY(render/deps)
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/core/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/core/interface)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/tools/include)
+#指定头文件路径-----------------------------------------
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common/tools/include)
+
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/render/deps)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/render/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/render/core/include)
 
 #-modules
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/log/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common/log/include)
 
 #读取Src目录--------------------------------------------
-AUX_SOURCE_DIRECTORY(src DIR_SRCS)
-AUX_SOURCE_DIRECTORY(core/src DIR_SRCS)
-AUX_SOURCE_DIRECTORY(tools/src DIR_SRCS)
-AUX_SOURCE_DIRECTORY(${PROJECT_ROOT_DIR}/deps/glad DIR_SRCS)
+AUX_SOURCE_DIRECTORY(common/src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(common/tools/src DIR_SRCS)
+
+AUX_SOURCE_DIRECTORY(render/src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(render/core/src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(render/deps/glad DIR_SRCS)
 
 #-modules
-AUX_SOURCE_DIRECTORY(log/src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(common/log/src DIR_SRCS)
 
 #编译文件-----------------------------------------------
 ADD_LIBRARY(${PROJECT_NAME} ${DIR_SRCS})
@@ -44,11 +49,11 @@ ENDIF()
 
 #拷贝资源-----------------------------------------------
 IF(WIN32)
-    FILE(COPY ${PROJECT_SOURCE_DIR}/shader DESTINATION ${PROJECT_ROOT_DIR}/build/bin/${CMAKE_BUILD_TYPE})
-    FILE(COPY ${PROJECT_SOURCE_DIR}/source DESTINATION ${PROJECT_ROOT_DIR}/build/bin/${CMAKE_BUILD_TYPE})
+    FILE(COPY ${PROJECT_SOURCE_DIR}/render/shader DESTINATION ${PROJECT_ROOT_DIR}/build/bin/${CMAKE_BUILD_TYPE})
+    FILE(COPY ${PROJECT_SOURCE_DIR}/render/source DESTINATION ${PROJECT_ROOT_DIR}/build/bin/${CMAKE_BUILD_TYPE})
 ELSE()
-    FILE(COPY ${PROJECT_SOURCE_DIR}/shader DESTINATION ${PROJECT_ROOT_DIR}/build/bin)
-    FILE(COPY ${PROJECT_SOURCE_DIR}/source DESTINATION ${PROJECT_ROOT_DIR}/build/bin)
+    FILE(COPY ${PROJECT_SOURCE_DIR}/render/shader DESTINATION ${PROJECT_ROOT_DIR}/build/bin)
+    FILE(COPY ${PROJECT_SOURCE_DIR}/render/source DESTINATION ${PROJECT_ROOT_DIR}/build/bin)
 ENDIF()
 
 

@@ -1,3 +1,4 @@
-[submodule "engine/log"]
-	path = engine/log
+
+[submodule "engine/common/log"]
+	path = engine/common/log
 	url = git@github.com:WusiStudio/Log.git
