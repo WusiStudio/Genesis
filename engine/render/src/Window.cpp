@@ -5,6 +5,11 @@
 #include "WSLog.h"
 #include "Gc.h"
 
+#include "Vec.h"
+#include "Rectangle.h"
+#include "Materia.h"
+#include "Color.h"
+
 #include <algorithm>
 
 namespace engine
@@ -93,10 +98,10 @@ namespace engine
 
         //创建主摄像机
         Camera & tempCamera = Camera::Create();
-        tempCamera.position(Vec3(0.0f, 0.0f, 1500.0f));
+        tempCamera.target(Vec3(.0f, .0f, .0f));
+        tempCamera.position(Vec3(.0f, .0f, 1500.0f));
         append(tempCamera);
         m_mainCamera = &tempCamera;
-
 
         m_canvas = &CameraOutput::Create();
         BaseNode::append(*m_canvas);
@@ -252,6 +257,21 @@ namespace engine
         //窗口位置
         glfwSetWindowPosCallback(m_window, staticWindowPosCallBack);
 
+        // //GUI Test
+        // engine::Rectangle & gui = engine::Rectangle::Create(Size2(200.0f, 200.0f));
+        // Materia & colorMateria = Materia::Create();
+        // colorMateria.color(ColorRGBA(1.0f, 1.0f));
+        // gui.bindMateria(colorMateria);
+        // gui.position(Vec3(.0f, .0f, -310.0f));
+        // m_mainCamera->append(gui);
+
+        // Rectangle & haha = Rectangle::Create(100.0f);
+        // Materia & hcm = Materia::Create();
+        // hcm.color(ColorRGBA(.33f, 1.0f));
+        // haha.bindMateria(hcm);
+        // haha.position(Vec3(.0f, .0f, 1.0f));
+        // gui.append(haha);
+
         return true;
     }
 
@@ -260,7 +280,7 @@ namespace engine
         glfwSetWindowTitle(m_window, title.c_str());
     }
 
-    void Window::icon(const string & iconPath) const
+    void Window::icon(const string & icon_path) const
     {
         // GLFWimage images[2];
         // images[0] = load_icon("my_icon.png");

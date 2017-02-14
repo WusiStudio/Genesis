@@ -37,7 +37,7 @@ namespace engine
         const bool remove(Node & child);
 
         void title(const string & title) const;
-        void icon(const string & iconPath) const;
+        void icon(const string & icon_path) const;
         void size(const Size2 & size) const;
         void sizeLimitSize(const Size2 & min, const Size2 & max) const;
         void position(const Vec2 & p_position) const;

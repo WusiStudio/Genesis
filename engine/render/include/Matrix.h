@@ -205,7 +205,6 @@ namespace engine
 
         static Matrix4 CreateOrthogonalMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far);
         static Matrix4 CreateProjectionMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far);
-        static Matrix4 CreateProjectionMatrix(const Size2 & viewPortSize, const float near, const float far);
 
     };
 }

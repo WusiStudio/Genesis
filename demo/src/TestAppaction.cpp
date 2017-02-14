@@ -62,9 +62,11 @@ TestAppaction & TestAppaction::Instance(void)
 
         Cube & cube = Cube::Create(Size3(300.0f));
         cube.id("cube");
-        cube.scale(3.0f);
+        cube.scale(1.0f);
         cube.bindMateria(materia);
         window().append(cube);
+
+        Log.info("我: {0}", (int)L'我');
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
         // Log.info("location[0] = {0}", location[0]);

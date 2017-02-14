@@ -1,5 +1,7 @@
 #include "Matrix.h"
 #include <cmath>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
 
 namespace engine
 {
@@ -284,6 +286,20 @@ namespace engine
         result[1][2] = d.y;
         result[2][2] = d.z;
 
+        glm::mat4 haha = glm::lookAt(glm::vec3(position.x, position.y, position.z), glm::vec3(target.x, target.y, target.z), glm::vec3(world_up.x, world_up.y, world_up.z));
+
+        result[0][3] = haha[3][0];
+        result[1][3] = haha[3][1];
+        result[2][3] = haha[3][2];
+
+        Log.info("result: {0}", result);
+        Log.info("[{0}, {1}, {2}, {3}\n {4}, {5}, {6}, {7}\n {8}, {9}, {10}, {11}\n {12}, {13}, {14}, {15}]", 
+             haha[0][0], haha[0][1], haha[0][2], haha[0][3],
+             haha[1][0], haha[1][1], haha[1][2], haha[1][3],
+             haha[2][0], haha[2][1], haha[2][2], haha[2][3],
+             haha[3][0], haha[3][1], haha[3][2], haha[3][3]
+        );
+
         return result;
     }
 
@@ -312,25 +328,9 @@ namespace engine
         result[2][2] = 0 - (far + near) / (far - near);
 
 
-        result[0][2] = (right + left) / (right - left) - 1.0f;
-        result[1][2] = (top + bottom) / (top - bottom) - 1.0f;
+        result[0][2] = (right + left) / (right - left);
+        result[1][2] = (top + bottom) / (top - bottom);
         result[2][3] = 0 - far * near * 2.0f / (far - near);
-
-        result[3][2] = -1.0f;
-
-        return result;
-    }
-
-    Matrix4 Matrix4::CreateProjectionMatrix(const Size2 & viewPortSize, const float near, const float far)
-    {
-        Matrix4 result(0.0f);
-
-        result[0][0] = 2.0f * near / viewPortSize.width;
-
-        result[1][1] = 2.0f * near / viewPortSize.height;
-
-        result[2][2] = 0 - (near + far) / (far - near);
-        result[2][3] = 2.0f * near * far / (far - near);
 
         result[3][2] = -1.0f;
 
