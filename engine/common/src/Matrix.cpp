@@ -5,6 +5,9 @@
 
 namespace engine
 {
+
+    Matrix4 _mat4ToMatrix4(const glm::mat4 & copy);
+
     //------------------------------------------------------------------
     Matrix2::Matrix2(void) : Matrix()
     {
@@ -214,9 +217,9 @@ namespace engine
     {
         Matrix4 result(1.0f);
 
-        result[0][3] = size.width;
-        result[1][3] = size.height;
-        result[2][3] = size.depth;
+        result[3][0] = size.width;
+        result[3][1] = size.height;
+        result[3][2] = size.depth;
 
         return result;
     }
@@ -264,76 +267,90 @@ namespace engine
 
     Matrix4 Matrix4::CreateLookAtMatrix(const Vec3 & position, const Vec3 & target, const Vec3 & world_up)
     {
-        Matrix4 result(1.0f);
+        // Matrix4 result(1.0f);
 
-        Vec3 d = (position - target.convertToSize3()).normalize();
-        Vec3 r = world_up.cross(d).normalize();
-        Vec3 u = d.cross(r).normalize();
+        // Vec3 d = (position - target.convertToSize3()).normalize();
+        // Vec3 r = world_up.cross(d).normalize();
+        // Vec3 u = d.cross(r).normalize();
 
-        result[0][3] = 0 - position.x;
-        result[1][3] = 0 - position.y;
-        result[2][3] = 0 - position.z;
+        // result[0][3] = 0 - position.x;
+        // result[1][3] = 0 - position.y;
+        // result[2][3] = 0 - position.z;
 
-        result[0][0] = r.x;
-        result[1][0] = r.y;
-        result[2][0] = r.z;
+        // result[0][0] = r.x;
+        // result[1][0] = r.y;
+        // result[2][0] = r.z;
 
-        result[0][1] = u.x;
-        result[1][1] = u.y;
-        result[2][1] = u.z;
+        // result[0][1] = u.x;
+        // result[1][1] = u.y;
+        // result[2][1] = u.z;
 
-        result[0][2] = d.x;
-        result[1][2] = d.y;
-        result[2][2] = d.z;
+        // result[0][2] = d.x;
+        // result[1][2] = d.y;
+        // result[2][2] = d.z;
 
-        glm::mat4 haha = glm::lookAt(glm::vec3(position.x, position.y, position.z), glm::vec3(target.x, target.y, target.z), glm::vec3(world_up.x, world_up.y, world_up.z));
-
-        result[0][3] = haha[3][0];
-        result[1][3] = haha[3][1];
-        result[2][3] = haha[3][2];
-
-        Log.info("result: {0}", result);
-        Log.info("[{0}, {1}, {2}, {3}\n {4}, {5}, {6}, {7}\n {8}, {9}, {10}, {11}\n {12}, {13}, {14}, {15}]", 
-             haha[0][0], haha[0][1], haha[0][2], haha[0][3],
-             haha[1][0], haha[1][1], haha[1][2], haha[1][3],
-             haha[2][0], haha[2][1], haha[2][2], haha[2][3],
-             haha[3][0], haha[3][1], haha[3][2], haha[3][3]
-        );
-
-        return result;
+        return _mat4ToMatrix4(glm::lookAt(glm::vec3(position.x, position.y, position.z), glm::vec3(target.x, target.y, target.z), glm::vec3(world_up.x, world_up.y, world_up.z)));
     }
 
     Matrix4 Matrix4::CreateOrthogonalMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far)
     {
-        Matrix4 result(1.0f);
+        // Matrix4 result(1.0f);
 
-        result[0][0] = 2.0f / (right - left);
-        result[1][1] = 2.0f / (top - bottom);
-        result[2][2] = 0 - 2.0f / (far - near);
+        // result[0][0] = 2.0f / (right - left);
+        // result[1][1] = 2.0f / (top - bottom);
+        // result[2][2] = 0 - 2.0f / (far - near);
 
 
-        result[0][3] = 0 - (right + left) / (right - left);
-        result[1][3] = 0 - (top + bottom) / (top - bottom);
-        result[2][3] = 0 - (far + near) / (far - near);
+        // result[0][3] = 0 - (right + left) / (right - left);
+        // result[1][3] = 0 - (top + bottom) / (top - bottom);
+        // result[2][3] = 0 - (far + near) / (far - near);
 
-        return result;
+        return _mat4ToMatrix4(glm::ortho(left, right, top, bottom, near, far));
     }
 
-    Matrix4 Matrix4::CreateProjectionMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far)
+    // Matrix4 Matrix4::CreateProjectionMatrix(const float left, const float right, const float top, const float bottom, const float near, const float far)
+    // {
+    //     Matrix4 result(0.0f);
+
+    //     result[0][0] = near * 2.0f / (right - left);
+    //     result[1][1] = near * 2.0f / (top - bottom);
+    //     result[2][2] = 0 - (far + near) / (far - near);
+
+
+    //     result[0][2] = (right + left) / (right - left);
+    //     result[1][2] = (top + bottom) / (top - bottom);
+    //     result[2][3] = 0 - far * near * 2.0f / (far - near);
+
+    //     result[3][2] = -1.0f;
+
+    //     glm::mat4 proj = glm::perspective(45.0f, (float)(right - left)/(float)(top - bottom), near, far);
+
+    //     result[0][0] = proj[0][0];
+    //     result[1][1] = proj[1][1];
+
+    //     Log.info("result: {0}", result);
+    //     Log.info("[{0}, {1}, {2}, {3}\n {4}, {5}, {6}, {7}\n {8}, {9}, {10}, {11}\n {12}, {13}, {14}, {15}]", 
+    //          proj[0][0], proj[0][1], proj[0][2], proj[0][3],
+    //          proj[1][0], proj[1][1], proj[1][2], proj[1][3],
+    //          proj[2][0], proj[2][1], proj[2][2], proj[2][3],
+    //          proj[3][0], proj[3][1], proj[3][2], proj[3][3]
+    //     );
+
+
+    //     return result;
+    // }
+
+
+    Matrix4 Matrix4::CreateProjectionMatrix(const float  fovy, const float  aspect, const float near, const float far)
     {
-        Matrix4 result(0.0f);
+        return _mat4ToMatrix4(glm::perspective(fovy, aspect, near, far));
+    }
 
-        result[0][0] = near * 2.0f / (right - left);
-        result[1][1] = near * 2.0f / (top - bottom);
-        result[2][2] = 0 - (far + near) / (far - near);
-
-
-        result[0][2] = (right + left) / (right - left);
-        result[1][2] = (top + bottom) / (top - bottom);
-        result[2][3] = 0 - far * near * 2.0f / (far - near);
-
-        result[3][2] = -1.0f;
-
-        return result;
+    Matrix4 _mat4ToMatrix4(const glm::mat4 & copy)
+    {
+        return Matrix4(Vec4(copy[0][0], copy[0][1], copy[0][2], copy[0][3]), 
+                        Vec4(copy[1][0], copy[1][1], copy[1][2], copy[1][3]),
+                        Vec4(copy[2][0], copy[2][1], copy[2][2], copy[2][3]),
+                        Vec4(copy[3][0], copy[3][1], copy[3][2], copy[3][3]));
     }
 }

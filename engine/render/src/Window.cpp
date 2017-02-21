@@ -62,18 +62,28 @@ namespace engine
 
     Node * Window::find(const string & id)
     {
-        return (Node *)m_world->find(id);
+        return (Node *)m_gui->find(id);
     }
 
     //添加子节点
     const bool Window::append(Node & child)
     {
-        return m_world->append(child);
+        return m_gui->append(child);
     }
     //删除子节点
     const bool Window::remove(Node & child)
     {
-        return m_world->remove(child);
+        return m_gui->remove(child);
+    }
+
+    World & Window::gui(void) const
+    {
+        return (World &)*m_gui;
+    }
+
+    World & Window::world(void) const
+    {
+        return (World &)*m_world;
     }
 
     Window & Window::Create(const Size2 & size, const string & title)
@@ -93,13 +103,14 @@ namespace engine
         if(!Object::init()) { return false; }
 
         //window world
-        m_world = &World::Create();
-        m_world->retain();
+        m_gui = &World::Create();
+        m_gui->retain();
 
         //创建主摄像机
         Camera & tempCamera = Camera::Create();
         tempCamera.target(Vec3(.0f, .0f, .0f));
         tempCamera.position(Vec3(.0f, .0f, 1500.0f));
+        tempCamera.cameraType(CameraType::Orthogonal);
         append(tempCamera);
         m_mainCamera = &tempCamera;
 
@@ -107,6 +118,20 @@ namespace engine
         BaseNode::append(*m_canvas);
         m_canvas->size(m_size);
         m_canvas->camera(*m_mainCamera);
+
+        m_world = &World::Create();
+        m_world->retain();
+        
+        Camera & worldMainCamera = Camera::Create();
+        worldMainCamera.target(Vec3(.0f, .0f, .0f));
+        worldMainCamera.position(Vec3(.0f, .0f, 1500.0f));
+        m_world->append(worldMainCamera);
+
+        CameraOutput & threeDWorldOutput = CameraOutput::Create();
+        // threeDWorldOutput.position(Vec3(.0f, .0f, 1200.0f));
+        // threeDWorldOutput.size(m_size);
+        threeDWorldOutput.camera(worldMainCamera);
+        append(threeDWorldOutput);
 
         ms_windowPool.push_back(this);
 
@@ -256,21 +281,6 @@ namespace engine
 
         //窗口位置
         glfwSetWindowPosCallback(m_window, staticWindowPosCallBack);
-
-        // //GUI Test
-        // engine::Rectangle & gui = engine::Rectangle::Create(Size2(200.0f, 200.0f));
-        // Materia & colorMateria = Materia::Create();
-        // colorMateria.color(ColorRGBA(1.0f, 1.0f));
-        // gui.bindMateria(colorMateria);
-        // gui.position(Vec3(.0f, .0f, -310.0f));
-        // m_mainCamera->append(gui);
-
-        // Rectangle & haha = Rectangle::Create(100.0f);
-        // Materia & hcm = Materia::Create();
-        // hcm.color(ColorRGBA(.33f, 1.0f));
-        // haha.bindMateria(hcm);
-        // haha.position(Vec3(.0f, .0f, 1.0f));
-        // gui.append(haha);
 
         return true;
     }

@@ -29,6 +29,7 @@ TestAppaction & TestAppaction::Instance(void)
  {
         window().fullScreen();
         window().cancelFullScreen(Size2(1440.0f / 2.0f, 900.0f / 2));
+        
         // Triangle & triangle = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
         // window().append(triangle);
 
@@ -36,17 +37,17 @@ TestAppaction & TestAppaction::Instance(void)
         // rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
         // window().append(rectangle);
 
-		// Circle & fristCircle = Circle::Create(200.0f);
-        // fristCircle.id("haha");
-        // fristCircle.position(Vec3(window().size().width * 0.5f, window().size().height * 0.5f, 10.0f));
-        // window().append(fristCircle);
+		Circle & fristCircle = Circle::Create(20.0f);
+        fristCircle.id("haha");
+        fristCircle.position(Vec3(window().size().width * 0.5 - 20.0f, .0f, 10.0f));
+        window().append(fristCircle);
 
         Materia & materia = Materia::Create();
         Image & _img = Image::Create("2.png");
         Textrue2D & textrue2D = Textrue2D::Create(_img);
         materia.chartlet2D(textrue2D);
 
-        // fristCircle.bindMateria(materia);
+        fristCircle.bindMateria(materia);
 
 
         Materia & colorMateria = Materia::Create();
@@ -64,9 +65,12 @@ TestAppaction & TestAppaction::Instance(void)
         cube.id("cube");
         cube.scale(1.0f);
         cube.bindMateria(materia);
-        window().append(cube);
+        window().world().append(cube);
 
         Log.info("我: {0}", (int)L'我');
+        Log.info("cube: {0}", &cube);
+
+
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
         // Log.info("location[0] = {0}", location[0]);
@@ -117,21 +121,18 @@ TestAppaction & TestAppaction::Instance(void)
 
  void TestAppaction::update(const float dt)
  {
-        Node * haha = (Node *)window().find("haha");
+        Node * haha = (Node *)window().world().find("haha");
         static float temp = .0f;
         Size2 windowSize = window().size();
         temp += dt;
 
         if(haha) 
         { 
-            // haha->rotate(Vec3(0.0f, 0.0f, (haha->rotate().z > PI * 2 ? haha->rotate().z - PI * 2 : haha->rotate().z) + 0.01));
-            // haha->scale(1.0f + sin(temp / 500.0f) * .1f);
             haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, 0.0f));
             haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
         }
 
-        Cube * cube = (Cube *)window().find("cube");
-
+        Cube * cube = (Cube *)window().world().find("cube");
         if(cube)
         {
             cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));

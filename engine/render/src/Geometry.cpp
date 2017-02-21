@@ -286,7 +286,6 @@ namespace engine
 
     const bool Geometry::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
-
         //绘制子节点
         if(!Node::draw(eye_matrix, screen_matrix)){ return false; }
 

@@ -36,6 +36,9 @@ namespace engine
         //删除子节点
         const bool remove(Node & child);
 
+        World & gui(void) const;
+        World & world(void) const;
+
         void title(const string & title) const;
         void icon(const string & icon_path) const;
         void size(const Size2 & size) const;
@@ -80,6 +83,7 @@ namespace engine
         GLFWwindow * m_window;
 
         //
+        World * m_gui;
         World * m_world;
         
         //-------   Event  -------//

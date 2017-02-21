@@ -8,7 +8,7 @@ namespace engine
 
     Circle::Circle(void)
     {
-        m_density = 0.05f;
+        m_density = 0.5f;
     }
 
     Circle & Circle::Create(const float r)

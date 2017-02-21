@@ -57,6 +57,7 @@ namespace engine
             glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, nullptr);
             glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, (const void *)(9 * sizeof(GLushort)));
         }
+
         return true;
     }
 

@@ -38,9 +38,8 @@ namespace engine
 
     const bool CameraOutput::draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
-
         //拍照   (应该传屏幕大小信息)
-        if(protograph(Matrix4::CreateTranslationMatrix(size()), Matrix4(1.0f))){ return false; }
+        if(!protograph(Matrix4::CreateTranslationMatrix(size()), Matrix4(1.0f))){ return false; }
 
         //绘制子元素
         if(!Node::draw(eye_matrix, screen_matrix)){ return false; }
