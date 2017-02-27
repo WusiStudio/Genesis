@@ -86,7 +86,7 @@ namespace engine
             {
                 for(unsigned int n = 0; n < dimension; ++n)
                 {
-                    result[i] += v[n] * operator[](i)[n];
+                    result[i] += v[n] * operator[](n)[i];
                 }
             }
             return result;

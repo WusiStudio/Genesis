@@ -21,6 +21,8 @@ namespace engine
     
     class Window : public BaseNode
     {
+        PROPERTY_R(Size2, size);
+        PROPERTY_R(Vec2, position);
     public:
         static const vector<Window *> & windowPool(void);
         static Window & Create(const Size2 & size, const string & title);
@@ -37,7 +39,6 @@ namespace engine
         const bool remove(Node & child);
 
         World & gui(void) const;
-        World & world(void) const;
 
         void title(const string & title) const;
         void icon(const string & icon_path) const;
@@ -49,19 +50,11 @@ namespace engine
         void cancelFullScreen(const Size2 & size);
         void cancelFullScreen(const Size2 & size, const Vec2 & p_position);
 
-        // Size2 size(void) const;
-        // Vec2 position(void) const;
-
         void onKeyPress(function<void(int key, int scancode, int action, int mode)> call_back);
         void onSizeChange(function<void(const Size2 & size)> call_back);
         void onPositionChange(function<void(const Vec2 & position)> call_back);
 
         void show(void);
-
-
-        PROPERTY_R(Size2, size);
-        PROPERTY_R(Vec2, position);
-
     protected:
         virtual ~Window(void);
         CREATEFUNC(Window);
@@ -77,14 +70,14 @@ namespace engine
         //用于多窗口事件回调
         static vector<Window *> ms_windowPool;
 
-        Camera * m_mainCamera;
-        CameraOutput * m_canvas;
-
-        GLFWwindow * m_window;
-
         //
         World * m_gui;
-        World * m_world;
+        Camera * m_guiCamera;
+        CameraOutput * m_guiCameraOutput;
+
+        CameraOutput * m_worldCameraOutput;
+
+        GLFWwindow * m_window;
         
         //-------   Event  -------//
         //widnow event

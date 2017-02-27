@@ -19,6 +19,8 @@ namespace engine
 
     class Materia : public Object
     {
+        PROPERTY_R(ColorRGBA, color);
+        PROPERTY_R(unsigned int, colorsCount);
     public:
         CREATEFUNC(Materia);
         static const Materia & defaultMateria(void);
@@ -35,10 +37,6 @@ namespace engine
         const Textrue2D * chartlet2D(void) const;
 
         const MateriaType &  materiaType(void) const;
-
-        //
-        PROPERTY_R(ColorRGBA, color);
-        PROPERTY_R(unsigned int, colorsCount);
     protected:
         Materia(void);
         virtual ~Materia(void);

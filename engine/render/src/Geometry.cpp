@@ -303,7 +303,7 @@ namespace engine
         // Log.info("rotationMatrix: {0}", rotationMatrix);
 
         //m
-        Matrix4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
+        Matrix4 modelMatrix = rotationMatrix * scaleMatrix * translationMatrix;
 
         //v
         Matrix4 viewMatrix = eye_matrix;

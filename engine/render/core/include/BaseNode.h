@@ -19,8 +19,10 @@ namespace engine
 
     class BaseNode : public Object
     {
+        //父元素
+        PROPERTY_R(BaseNode *, parent);
+        PROPERTY_W(function<void(const float)>, onTick);
     public:
-    
         virtual const char * nodeType(void) const = 0;
 
         void id(const string & id);
@@ -39,10 +41,6 @@ namespace engine
         
         //遍历子元素
         void each(function<bool(BaseNode & node)> cb) const;
-
-        //父元素
-        PROPERTY_R(BaseNode *, parent);
-        PROPERTY_W(function<void(const float)>, onTick);
 
     protected:
         BaseNode(void);

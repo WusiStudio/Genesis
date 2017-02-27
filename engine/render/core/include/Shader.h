@@ -23,7 +23,6 @@ namespace engine
     class Shader : public Object
     {
     public:
-
         friend class ShaderProgram;
         
         static Shader & Create(const enum ShaderType type);
@@ -54,7 +53,7 @@ namespace engine
         static string VertexShaderCode(void);
         static string FragmentShaderCode(void);
 
-        static string m_versionKey, m_globalCodeKey, m_mainCodeKey;
+        static string ms_versionKey, ms_globalCodeKey, ms_mainCodeKey;
         
         //编译是否成功
         const bool compileIsSuccessful(void) const;

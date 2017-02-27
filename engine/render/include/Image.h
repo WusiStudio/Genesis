@@ -13,13 +13,12 @@ namespace engine
 
     class Image : public Object
     {
-    public:
-        static Image & Create(const string & path);
-        static Image & Create(const vector<char> & binary_data);
-
         PROPERTY_R(int, width);
         PROPERTY_R(int, height);
         PROPERTY_R(const unsigned char *, data);
+    public:
+        static Image & Create(const string & path);
+        static Image & Create(const vector<char> & binary_data);
     protected:
         virtual const bool init(void) override;
         virtual const bool initWithPath(const string & path);

@@ -8,12 +8,11 @@ namespace engine
 {
     class Circle : public Geometry
     {
+        PROPERTY_R(float, radius);
     public:
         static Circle & Create(const float r);
 
         const bool radius(const float r);
-
-        PROPERTY_R(float, radius);
     protected:
 
         Circle(void);

@@ -12,13 +12,12 @@ namespace engine
 {
     class CameraOutput : public Node, protected CameraInterface
     {
+        PROPERTY(Size2, size);
     public:
         CREATEFUNC(CameraOutput);
 
         Camera & camera(void) const;
         void camera(Camera & linkCamera);
-
-        PROPERTY(Size2, size);
     protected:
 
         virtual const bool init(void) override;

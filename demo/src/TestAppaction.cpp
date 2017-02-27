@@ -37,10 +37,16 @@ TestAppaction & TestAppaction::Instance(void)
         // rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
         // window().append(rectangle);
 
+        Node & node = Node::Create();
+        node.position(Vec3(window().size().width * 0.5 - 20.0f, .0f, .0f));
+
+        Log.info("{0}->position() : {1}", &node, node.position());
+
 		Circle & fristCircle = Circle::Create(20.0f);
         fristCircle.id("haha");
-        fristCircle.position(Vec3(window().size().width * 0.5 - 20.0f, .0f, 10.0f));
-        window().append(fristCircle);
+
+        node.append(fristCircle);
+        window().append(node);
 
         Materia & materia = Materia::Create();
         Image & _img = Image::Create("2.png");
@@ -49,27 +55,24 @@ TestAppaction & TestAppaction::Instance(void)
 
         fristCircle.bindMateria(materia);
 
-
-        Materia & colorMateria = Materia::Create();
-        ColorRGBA colors[] = {
-            ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
-            ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
+        // Materia & colorMateria = Materia::Create();
+        // ColorRGBA colors[] = {
+        //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
+        //     ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
             
-        };
-        colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
+        // };
+        // colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
 
         // rectangle.bindMateria(colorMateria);
         // triangle.bindMateria(colorMateria);
 
-        Cube & cube = Cube::Create(Size3(300.0f));
-        cube.id("cube");
-        cube.scale(1.0f);
-        cube.bindMateria(materia);
-        window().world().append(cube);
+        // Cube & cube = Cube::Create(Size3(300.0f));
+        // cube.id("cube");
+        // cube.scale(1.0f);
+        // cube.bindMateria(materia);
+        // window().world().append(cube);
 
         Log.info("我: {0}", (int)L'我');
-        Log.info("cube: {0}", &cube);
-
 
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
@@ -121,18 +124,18 @@ TestAppaction & TestAppaction::Instance(void)
 
  void TestAppaction::update(const float dt)
  {
-        Node * haha = (Node *)window().world().find("haha");
+        Node * haha = (Node *)window().find("haha");
         static float temp = .0f;
         Size2 windowSize = window().size();
         temp += dt;
 
         if(haha) 
         { 
-            haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, 0.0f));
-            haha->rotate(Vec3(0.0f, 0.0f, sin(temp / 500.0f) * .2f));
+            // haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, 0.0f));
+            haha->rotate(Vec3(.0f, sin(temp / 500.0f) * PI / 2, .0f));
         }
 
-        Cube * cube = (Cube *)window().world().find("cube");
+        Cube * cube = (Cube *)window().find("cube");
         if(cube)
         {
             cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));

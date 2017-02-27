@@ -15,6 +15,8 @@ namespace engine
 {
     class Geometry : public Node
     {
+        V_PROPERTY_R(protected, unsigned short, vertexsCount);
+        V_PROPERTY_R(protected, unsigned short, indiesCount);
     public:
         const bool bindMateria(Materia & m);
     protected:
@@ -25,9 +27,6 @@ namespace engine
         //指定数据大小
         void vertexsCount(const unsigned short count);
         void indiesCount(const unsigned short count);
-
-        V_PROPERTY_R(protected, unsigned short, vertexsCount);
-        V_PROPERTY_R(protected, unsigned short, indiesCount);
 
         //修改指定位置数据
         void vertex(const unsigned short index, const Vec3 & data);

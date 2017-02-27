@@ -66,19 +66,19 @@ namespace engine
     const bool File::init()
     {
         if(!Object::init()) { return false; }
-        this->_filePath = nullptr;
+        this->m_filePath = nullptr;
         return true;
     }
 
     const bool File::initWithFilePath(const string & file_path)
     {
-        this->_filePath = new string(file_path);
+        this->m_filePath = new string(file_path);
         return true;
     }
 
     const bool File::open(const int mode)
     {
-        if(!this->_filePath){ return false; }
+        if(!this->m_filePath){ return false; }
         
         return true;
     }
@@ -90,15 +90,15 @@ namespace engine
 
     File::File(void)
     {
-        _filePath = nullptr;
+        m_filePath = nullptr;
     }
 
     File::~File(void)
     {
-        if(this->_filePath)
+        if(this->m_filePath)
         {
-            delete this->_filePath;
-            this->_filePath = nullptr;
+            delete this->m_filePath;
+            this->m_filePath = nullptr;
         }
     }
 }

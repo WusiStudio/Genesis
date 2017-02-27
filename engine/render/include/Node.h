@@ -14,10 +14,12 @@ namespace engine
     
     class Node : public BaseNode
     {
+        PROPERTY_R(Vec3, position);
+        PROPERTY_R(Vec3, rotate);
+        PROPERTY_R(Vec3, scale);
     public:
-        
+    
         CREATEFUNC(Node);
-
         //类型
         virtual const char * nodeType(void) const override final;
         
@@ -40,11 +42,6 @@ namespace engine
         const Vec3 convertToWorldSpace(const Vec3 & v);
         //将世界坐标转换为当前坐标
         const Vec3 convertToNodeSpace(const Vec3 & v);
-
-        //
-        PROPERTY_R(Vec3, position);
-        PROPERTY_R(Vec3, rotate);
-        PROPERTY_R(Vec3, scale);
         
     protected:
         Node(void);

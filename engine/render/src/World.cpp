@@ -15,6 +15,18 @@ namespace engine
         return ms_worldPool;
     }
 
+    World * World::getWorldById(const string & id)
+    {
+        for(auto item : ms_worldPool)
+        {
+            if(item->id() == id)
+            {
+                return item;
+            }
+        }
+        return nullptr;
+    }
+
     const char *  World::nodeType(void) const
     {
         return msc_nodeType;

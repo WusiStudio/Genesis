@@ -14,9 +14,9 @@ namespace engine
     using std::stringstream;
     using std::sregex_iterator;
 
-    string Shader::m_versionKey = "#version";
-    string Shader::m_globalCodeKey = "#globalCode";
-    string Shader::m_mainCodeKey = "#mainCode";
+    string Shader::ms_versionKey = "#version";
+    string Shader::ms_globalCodeKey = "#globalCode";
+    string Shader::ms_mainCodeKey = "#mainCode";
 
     Shader & Shader::Create(const enum ShaderType type)
     {
@@ -73,8 +73,8 @@ namespace engine
             return false;
         }
 
-        source.replace(source.find(m_globalCodeKey), m_globalCodeKey.size(), "");
-        source.replace(source.find(m_mainCodeKey), m_mainCodeKey.size(), "");
+        source.replace(source.find(ms_globalCodeKey), ms_globalCodeKey.size(), "");
+        source.replace(source.find(ms_mainCodeKey), ms_mainCodeKey.size(), "");
 
         const GLchar * p_source = source.c_str();
         glShaderSource(m_shaderId, 1, &p_source, nullptr);
@@ -185,9 +185,9 @@ namespace engine
         sversionCode << "#version " << version << " core";
 
         //替换占位符
-        source.replace(source.find(m_versionKey), m_versionKey.size(), sversionCode.str());
-        source.replace(source.find(m_globalCodeKey), m_globalCodeKey.size(), globalCode);
-        source.replace(source.find(m_mainCodeKey), m_mainCodeKey.size(), mainCode);
+        source.replace(source.find(ms_versionKey), ms_versionKey.size(), sversionCode.str());
+        source.replace(source.find(ms_globalCodeKey), ms_globalCodeKey.size(), globalCode);
+        source.replace(source.find(ms_mainCodeKey), ms_mainCodeKey.size(), mainCode);
 
         // Log.info("source code: {0}", source);
             

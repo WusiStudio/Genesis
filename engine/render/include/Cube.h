@@ -8,10 +8,9 @@ namespace engine
 {
     class Cube : public Geometry
     {
+        PROPERTY(Size3, size);
     public:
         static Cube & Create(const Size3 & size);
-
-        PROPERTY(Size3, size);
     protected:
         CREATEFUNC(Cube);
 
@@ -19,8 +18,7 @@ namespace engine
         virtual const bool init(const Size3 & size);
 
         virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
-
-    private:
+        
     };
 }
 

@@ -42,7 +42,7 @@ namespace engine
         virtual ~File(void);
         
     private:
-        string * _filePath;
+        string * m_filePath;
     };
 }
 

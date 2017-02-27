@@ -17,6 +17,7 @@ namespace engine
 
         CREATEFUNC(World);
         static const vector<World *> & worldPool();
+        static World * getWorldById(const string & id);
 
         //类型
         virtual const char *  nodeType(void) const override final;

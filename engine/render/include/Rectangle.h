@@ -9,9 +9,9 @@ namespace engine
 {
     class Rectangle : public Geometry
     {
+        PROPERTY(Size2, size);
     public:
         static Rectangle & Create(const Size2 & size);
-        PROPERTY(Size2, size);
     protected:
         CREATEFUNC(Rectangle);
 
@@ -19,8 +19,6 @@ namespace engine
         virtual const bool init(const Size2 & size);
 
         virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
-
-    private:
     };
 }
 

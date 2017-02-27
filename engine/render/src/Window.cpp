@@ -22,9 +22,10 @@ namespace engine
     Window::Window(void)
     {
         m_window = nullptr;
-        m_mainCamera = nullptr;
-        m_canvas = nullptr;
-        m_world = nullptr;
+        m_guiCamera = nullptr;
+        m_guiCameraOutput = nullptr;
+
+        m_worldCameraOutput = nullptr;
         m_onKeyPress = nullptr;
         m_onSizeChange = nullptr;
         m_onPositionChange = nullptr;
@@ -34,9 +35,7 @@ namespace engine
     }
 
     Window::~Window(void)
-    {
-        if(m_world){ m_world->release(); }  
-              
+    {         
         m_show = false;
         if(m_window)
         {
@@ -81,11 +80,6 @@ namespace engine
         return (World &)*m_gui;
     }
 
-    World & Window::world(void) const
-    {
-        return (World &)*m_world;
-    }
-
     Window & Window::Create(const Size2 & size, const string & title)
     {
         Window & result = Create();
@@ -107,31 +101,21 @@ namespace engine
         m_gui->retain();
 
         //创建主摄像机
-        Camera & tempCamera = Camera::Create();
-        tempCamera.target(Vec3(.0f, .0f, .0f));
-        tempCamera.position(Vec3(.0f, .0f, 1500.0f));
-        tempCamera.cameraType(CameraType::Orthogonal);
-        append(tempCamera);
-        m_mainCamera = &tempCamera;
+        m_guiCamera = &Camera::Create();
+        m_guiCamera->target(Vec3(.0f, .0f, .0f));
+        m_guiCamera->position(Vec3(.0f, .0f, 1500.0f));
+        m_guiCamera->cameraType(CameraType::Orthogonal);
+        append(*m_guiCamera);
 
-        m_canvas = &CameraOutput::Create();
-        BaseNode::append(*m_canvas);
-        m_canvas->size(m_size);
-        m_canvas->camera(*m_mainCamera);
+        m_guiCameraOutput = &CameraOutput::Create();
+        BaseNode::append(*m_guiCameraOutput);
+        m_guiCameraOutput->size(m_size);
+        m_guiCameraOutput->camera(*m_guiCamera);
 
-        m_world = &World::Create();
-        m_world->retain();
-        
-        Camera & worldMainCamera = Camera::Create();
-        worldMainCamera.target(Vec3(.0f, .0f, .0f));
-        worldMainCamera.position(Vec3(.0f, .0f, 1500.0f));
-        m_world->append(worldMainCamera);
-
-        CameraOutput & threeDWorldOutput = CameraOutput::Create();
+         m_worldCameraOutput = &CameraOutput::Create();
         // threeDWorldOutput.position(Vec3(.0f, .0f, 1200.0f));
         // threeDWorldOutput.size(m_size);
-        threeDWorldOutput.camera(worldMainCamera);
-        append(threeDWorldOutput);
+        append(*m_worldCameraOutput);
 
         ms_windowPool.push_back(this);
 
@@ -232,7 +216,7 @@ namespace engine
                 }
 
                 itemWindow->m_size = Size2((float)width, (float)height);
-                itemWindow->m_canvas->size(itemWindow->m_size);
+                itemWindow->m_guiCamera->viewPortSize(itemWindow->m_size);
 
                 #if defined(__APPLE__) && defined(__MACH__)
                     //不重新指定区域也行 还没有弄明白为什么这样
