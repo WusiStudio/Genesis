@@ -10,16 +10,23 @@
 
 namespace engine
 {
+    enum CoordinateSystem{
+        Screen = 0,
+        OpenGL
+    };
+
     class CameraOutput : public Node, protected CameraInterface
     {
-        PROPERTY(Size2, size);
+        PROPERTY_R(Size2, size);
+        PROPERTY(CoordinateSystem, coordinate);
     public:
         CREATEFUNC(CameraOutput);
 
         Camera & camera(void) const;
         void camera(Camera & linkCamera);
-    protected:
 
+        void size(const Size2 & size);
+    protected:
         virtual const bool init(void) override;
 
         virtual const bool tick(const float dt) override;

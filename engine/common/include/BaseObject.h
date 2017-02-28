@@ -2,6 +2,9 @@
 #ifndef __BASE_OBJECT_H__
 #define __BASE_OBJECT_H__
 
+#include <vector>
+
+using std::vector;
 
 // 所有的类都由此父类派生 （功能类除外）
 
@@ -26,6 +29,7 @@ namespace engine
 
     #define DEFINE_PROPERTY(type, name) private:\
                     type m_##name;
+
     #define DEFINE_PROPERTY_R(visibility, type, name) visibility :\
                     inline type & name (void) { return m_##name; }\
                     inline type const & name (void) const { return m_##name; }

@@ -39,6 +39,7 @@ namespace engine
         const bool remove(Node & child);
 
         World & gui(void) const;
+        const bool bindCamera(Camera & camera);
 
         void title(const string & title) const;
         void icon(const string & icon_path) const;

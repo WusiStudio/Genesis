@@ -24,6 +24,7 @@ namespace engine
         PROPERTY(float, near);
         PROPERTY(float, far);
         PROPERTY(Vec3, target);
+        PROPERTY(Vec3, up);
 
     public:
         CREATEFUNC(Camera);

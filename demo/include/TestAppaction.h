@@ -18,6 +18,8 @@ protected:
     //程序开始
     virtual void start(void);
 
+    void onWindowSizeChange(const Size2 & window_size);
+
     //每一帧
     virtual void update(const float dt);
 

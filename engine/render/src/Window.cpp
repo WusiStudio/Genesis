@@ -80,6 +80,12 @@ namespace engine
         return (World &)*m_gui;
     }
 
+    const bool Window::bindCamera(Camera & camera)
+    {
+        m_worldCameraOutput->camera(camera);
+        return true;
+    }
+
     Window & Window::Create(const Size2 & size, const string & title)
     {
         Window & result = Create();
@@ -103,7 +109,8 @@ namespace engine
         //创建主摄像机
         m_guiCamera = &Camera::Create();
         m_guiCamera->target(Vec3(.0f, .0f, .0f));
-        m_guiCamera->position(Vec3(.0f, .0f, 1500.0f));
+        m_guiCamera->position(Vec3(.0f, .0f, 500.0f));
+        m_guiCamera->up(Vec3(.0f, 1.0f, .0f));
         m_guiCamera->cameraType(CameraType::Orthogonal);
         append(*m_guiCamera);
 
@@ -111,10 +118,9 @@ namespace engine
         BaseNode::append(*m_guiCameraOutput);
         m_guiCameraOutput->size(m_size);
         m_guiCameraOutput->camera(*m_guiCamera);
+        m_guiCameraOutput->coordinate(CoordinateSystem::Screen);
 
-         m_worldCameraOutput = &CameraOutput::Create();
-        // threeDWorldOutput.position(Vec3(.0f, .0f, 1200.0f));
-        // threeDWorldOutput.size(m_size);
+        m_worldCameraOutput = &CameraOutput::Create();
         append(*m_worldCameraOutput);
 
         ms_windowPool.push_back(this);
@@ -216,7 +222,8 @@ namespace engine
                 }
 
                 itemWindow->m_size = Size2((float)width, (float)height);
-                itemWindow->m_guiCamera->viewPortSize(itemWindow->m_size);
+                itemWindow->m_guiCameraOutput->size(itemWindow->m_size);
+                itemWindow->m_worldCameraOutput->size(itemWindow->m_size);
 
                 #if defined(__APPLE__) && defined(__MACH__)
                     //不重新指定区域也行 还没有弄明白为什么这样

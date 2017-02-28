@@ -16,7 +16,6 @@ namespace engine
     public:
 
         CREATEFUNC(World);
-        static const vector<World *> & worldPool();
         static World * getWorldById(const string & id);
 
         //类型

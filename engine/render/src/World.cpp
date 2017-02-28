@@ -10,11 +10,6 @@ namespace engine
     vector<World *> World::ms_worldPool;
     const char * const World::msc_nodeType = "World";
 
-    const vector<World *> & World::worldPool()
-    {
-        return ms_worldPool;
-    }
-
     World * World::getWorldById(const string & id)
     {
         for(auto item : ms_worldPool)

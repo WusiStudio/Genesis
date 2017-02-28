@@ -28,19 +28,15 @@ TestAppaction & TestAppaction::Instance(void)
  void TestAppaction::start(void)
  {
         window().fullScreen();
+        window().onSizeChange([this](const Size2 & window_size){
+            onWindowSizeChange(window_size);
+        });
+
         window().cancelFullScreen(Size2(1440.0f / 2.0f, 900.0f / 2));
         
-        // Triangle & triangle = Triangle::Create(Vec2(.0f, .0f), Vec2(400.0f, .0f), Vec2(.0f, 300.0f));
-        // window().append(triangle);
-
-        // engine::Rectangle & rectangle = Rectangle::Create(350.0f);
-        // rectangle.position(Vec3(500.0f, 500.0f, 5.0f));
-        // window().append(rectangle);
 
         Node & node = Node::Create();
-        node.position(Vec3(window().size().width * 0.5 - 20.0f, .0f, .0f));
-
-        Log.info("{0}->position() : {1}", &node, node.position());
+        node.position(Vec3(20.0f, window().size().height - 20.0f, .0f));
 
 		Circle & fristCircle = Circle::Create(20.0f);
         fristCircle.id("haha");
@@ -55,6 +51,20 @@ TestAppaction & TestAppaction::Instance(void)
 
         fristCircle.bindMateria(materia);
 
+
+        //world
+        World & gameWorld = World::Create();
+        gameWorld.id("gameWorld");
+
+        Camera & gameWorldCamera = Camera::Create();
+        gameWorldCamera.position(Vec3(800.0f, .0f, .0f));
+        gameWorldCamera.viewPortSize(window().size());
+        gameWorldCamera.target(Vec3(.0f, .0f, .0f));
+        gameWorld.append(gameWorldCamera);
+
+        window().bindCamera(gameWorldCamera);
+
+
         // Materia & colorMateria = Materia::Create();
         // ColorRGBA colors[] = {
         //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
@@ -66,13 +76,13 @@ TestAppaction & TestAppaction::Instance(void)
         // rectangle.bindMateria(colorMateria);
         // triangle.bindMateria(colorMateria);
 
-        // Cube & cube = Cube::Create(Size3(300.0f));
-        // cube.id("cube");
-        // cube.scale(1.0f);
-        // cube.bindMateria(materia);
-        // window().world().append(cube);
+        Cube & cube = Cube::Create(Size3(300.0f));
+        cube.id("cube");
+        cube.scale(1.0f);
+        cube.bindMateria(materia);
+        gameWorld.append(cube);
 
-        Log.info("我: {0}", (int)L'我');
+        // Log.info("我: {0}", (int)L'我');
 
 
         // Vec3 location(1.0f, 2.0f, 3.0f);
@@ -122,6 +132,15 @@ TestAppaction & TestAppaction::Instance(void)
 
  }
 
+ void TestAppaction::onWindowSizeChange(const Size2 & window_size)
+ {
+     Node * haha = (Node *)window().find("haha");
+     if(haha)
+     {
+         ((Node *)haha->parent())->position(Vec3(20.0f, window_size.height - 20.0f, .0f));
+     }
+ }
+
  void TestAppaction::update(const float dt)
  {
         Node * haha = (Node *)window().find("haha");
@@ -135,9 +154,13 @@ TestAppaction & TestAppaction::Instance(void)
             haha->rotate(Vec3(.0f, sin(temp / 500.0f) * PI / 2, .0f));
         }
 
-        Cube * cube = (Cube *)window().find("cube");
-        if(cube)
+        World * gameWorld = World::getWorldById("gameWorld");
+        if(gameWorld)
         {
-            cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
+            Cube * cube = (Cube *)(gameWorld->find("cube"));
+            if(cube)
+            {
+                cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
+            }
         }
  }

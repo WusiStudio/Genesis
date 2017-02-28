@@ -10,6 +10,7 @@ namespace engine
         m_viewPortSize = Size2(1440.0f / 2.0f, 900.0f / 2);
         m_near = .1f;
         m_far = 1800.0f;
+        m_up = Vec3(.0f, 1.0f, .0f);
 
         return true;
     }
@@ -28,8 +29,8 @@ namespace engine
     const bool Camera::protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const
     {
         //观察矩阵
-        Vec3 m_up = Matrix4::CreateRotationMatrix(accumulativeRotateOffset().convertToVec3()) * Vec3(.0f, 1.0f, .0f);
-        Matrix4 lookAtMatrix = Matrix4::CreateLookAtMatrix(position(), m_target, m_up);
+        Vec3 up = Matrix4::CreateRotationMatrix(accumulativeRotateOffset().convertToVec3()) * m_up;
+        Matrix4 lookAtMatrix = Matrix4::CreateLookAtMatrix(position(), m_target, up);
         
         Matrix4 projectionMatrix;
 

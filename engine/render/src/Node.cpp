@@ -60,21 +60,11 @@ namespace engine
         posterityWorldCoordinateInvalid();
     }
 
-    // const Vec3 & Node::rotate(void) const
-    // {
-    //     return m_rotate;
-    // }
-
     void Node::scale(const Vec3 & v)
     {
         m_scale = v;
         posterityWorldCoordinateInvalid();
     }
-
-    // const Vec3 & Node::scale(void) const
-    // {
-    //     return m_scale;
-    // }
 
     const Vec3 Node::convertToWorldSpace(const Vec3 & v)
     {
