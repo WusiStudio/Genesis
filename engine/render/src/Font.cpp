@@ -1,7 +1,46 @@
 #include "Font.h"
+#include "WSLog.h"
+#include "Appaction.h"
 
 namespace engine
 {
+
+    //----------------------------------------------------------------------------------
+    //                                  * Cache *
+    //----------------------------------------------------------------------------------
+
+    FontChartletCache & FontChartletCache::Create(const Uuid & uuid, const int font_size)
+    {
+
+        //查询缓存对象
+        map<const int, FontChartletCache *> & objectMap = *(ms_objectPool.find(uuid.toString()) == ms_objectPool.end() ? 
+            new map<const int, FontChartletCache *>() : ms_objectPool[uuid.toString()]);
+
+        if(objectMap.find(font_size) != objectMap.end())
+        {
+            return *objectMap[font_size];
+        }
+
+        //创建新缓存对象
+        FontChartletCache & result = Create();
+        objectMap[font_size] = &result;
+        result.retain();
+
+        return result;
+    }
+
+    const bool FontChartletCache::init(void)
+    {
+        if(!Object::init()){ return false; }
+
+        return true;
+    }
+
+
+
+    //----------------------------------------------------------------------------------
+    //                                  * Font *
+    //----------------------------------------------------------------------------------
 
     FT_Library Font::ms_ft = nullptr;
 
@@ -19,7 +58,15 @@ namespace engine
 
     Font & Font::Create(const string & file_path)
     {
-        return Create();
+        Font & result = Create();
+
+        bool fontInit = result.initWithFilePath(file_path);
+
+        assert(fontInit);
+
+        if(!fontInit){ result.initializeError(1); }
+
+        return result;
     }
 
     const bool Font::init(void)
@@ -34,12 +81,26 @@ namespace engine
 
     const bool Font::initWithFilePath(const string & file_path)
     {
-        if(FT_New_Face(ms_ft, file_path.c_str(), 0, &m_face))
+        string checkPath = File::PathIsExists(file_path) ? file_path : "";
+
+        if(checkPath.size() <= 0)
+        {
+            string temp = Appaction::AppactionPath() + "source/font/" + file_path;
+            checkPath = File::PathIsExists(temp) ? temp : "";
+        }
+
+        if(checkPath.size() <= 0)
+        {
+            Log.error("Path: [{0}] Is Not Exists!", file_path);
+            return false;
+        }
+
+        if(FT_New_Face(ms_ft, checkPath.c_str(), 0, &m_face))
         {
             return false;
         }
 
-        FT_Set_Pixel_Sizes(m_face, 0, 48); 
+        // FT_Set_Pixel_Sizes(m_face, 0, 48); 
 
         return true;
     }

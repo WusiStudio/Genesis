@@ -9,55 +9,61 @@ namespace engine
 {
     namespace tools
     {
-        Uuid & Uuid::Create(const Uuid & _uuid)
+
+        Uuid * Uuid::ms_empty = nullptr;
+        Uuid Uuid::Empty(void)
         {
-            Uuid & result = Create();
-            bool uuidInit = result.init(_uuid);
-
-            assert(uuidInit);
-
-            if(!uuidInit){ result.initializeError(1); }
-            return result;
+            if(!ms_empty)
+            {
+                ms_empty = new Uuid();
+                memset(ms_empty->m_data, 0, sizeof(ms_empty->m_data));
+            }
+            return *ms_empty;
         }
 
-        const bool Uuid::init(void)
+        Uuid::Uuid(void)
         {
-            if(!Object::init()){ return false; }
-            
-            for(size_t i = 0; i < sizeof(_data) / sizeof(unsigned short); ++i)
+            for(size_t i = 0; i < sizeof(m_data) / sizeof(unsigned char); ++i)
             {
                 random_device rd;
                 uniform_int_distribution<int> dis(0x00, 0xFF);
-                _data[i] = dis(rd);
+                m_data[i] = dis(rd);
             }
-            return true;
         }
 
-        const bool Uuid::init(const Uuid & _uuid)
+        Uuid::Uuid(const Uuid & uuid)
         {
-            memcpy(_data, _uuid._data, sizeof(_uuid._data));
+            memcpy(m_data, uuid.m_data, sizeof(uuid.m_data));
+        }
 
-            return true;
+        Uuid::Uuid(const unsigned char * data)
+        {
+            memcpy(m_data, data, sizeof(m_data));
         }
 
         const string Uuid::toString(void) const
         {
             char temp[33] = {0};
-            for(unsigned short i = 0; i < 16; ++i)
+            for(size_t i = 0; i < 16; ++i)
             {
-                sprintf(temp + 2 * i, "%02X", _data[i]);
+                sprintf(temp + 2 * i, "%02X", m_data[i]);
             }
             return temp;
         }
 
-        ostream & operator<< (ostream & _out, const Uuid & _uuid)
+        ostream & operator<< (ostream & out, const Uuid & uuid)
         {
-            return _out << _uuid.toString();
+            return out << uuid.toString();
         }
 
-        Uuid::Uuid()
+        const bool Uuid::operator==(const Uuid & u) const
         {
-            memset(_data, 0, sizeof(_data));
+            for(size_t i = 0; i < sizeof(m_data) / sizeof(unsigned char); ++i)
+            {
+                if(m_data[i] != u.m_data[i]) return false;
+            }
+
+            return true;
         }
     }
 }

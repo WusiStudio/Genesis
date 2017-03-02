@@ -53,7 +53,7 @@ namespace engine
 
         if(checkPath.size() <= 0)
         {
-            string temp = Appaction::AppactionPath() + "source/" + path;
+            string temp = Appaction::AppactionPath() + "source/picture/" + path;
             checkPath = File::PathIsExists(temp) ? temp : "";
         }
         

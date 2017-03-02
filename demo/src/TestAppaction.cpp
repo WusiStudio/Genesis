@@ -12,6 +12,8 @@
 #include "Cube.h"
 
 #include "Uuid.h"
+#include "Tool.h"
+#include "File.h"
 
 #include <iostream>
 
@@ -82,7 +84,33 @@ TestAppaction & TestAppaction::Instance(void)
         cube.bindMateria(materia);
         gameWorld.append(cube);
 
+
+
+        File & pictrue2 = File::Create(Appaction::AppactionPath() + "source/picture/2.png");
+        Log.info("pictrue2.uuid() = {0}", pictrue2.uuid());
+
+        File & pictrue3 = File::Create(Appaction::AppactionPath() + "source/picture/3.png");
+        Log.info("pictrue3.uuid() = {0}", pictrue3.uuid());
+
+
         // Log.info("我: {0}", (int)L'我');
+
+
+        // string str("我没问题啊，可以输出字符啊");
+        // Log.info("str.length: {0}, {1}", str.length(), str);
+        // wstring wstr = /*L"我没问题啊，可以输出字符啊";*/ tools::sTOWs(str);
+        // Log.info("wstr.length: {0}", wstr.length());
+
+        // Log.info("sizeof(wchar_t) = {0}, sizeof(int) = {1}", sizeof(wchar_t), sizeof(int));
+        // Log.info("wstr.find(L\"我\"): {0}", wstr.find(L"可以"));
+
+        // std::wcout << wstr << endl;
+
+        // for(int i = 0; i < wstr.length(); ++i)
+        // {
+        //     const wchar_t * wc = (const wchar_t *)wstr.c_str();
+        //     cout << (int)*(wc + i) << endl;
+        // }
 
 
         // Vec3 location(1.0f, 2.0f, 3.0f);

@@ -2,7 +2,7 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include "Object.h"
+#include "BaseObject.h"
 #include <string>
 
 using std::string;

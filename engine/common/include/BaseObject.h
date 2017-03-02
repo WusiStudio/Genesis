@@ -2,9 +2,7 @@
 #ifndef __BASE_OBJECT_H__
 #define __BASE_OBJECT_H__
 
-#include <vector>
-
-using std::vector;
+#include "ConfigFile.h"
 
 // 所有的类都由此父类派生 （功能类除外）
 

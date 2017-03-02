@@ -63,6 +63,15 @@ namespace engine
         return result;
     }
 
+    const Uuid File::uuid(void) const
+    {
+        ifstream uuid_ifstream(*m_filePath, std::ios::binary);
+
+        MD5 tempMD5(uuid_ifstream);
+
+        return tempMD5.digest();
+    }
+
     const bool File::init()
     {
         if(!Object::init()) { return false; }
@@ -72,6 +81,7 @@ namespace engine
 
     const bool File::initWithFilePath(const string & file_path)
     {
+        if(!PathIsExists(file_path)){ return false; }
         this->m_filePath = new string(file_path);
         return true;
     }
@@ -79,13 +89,14 @@ namespace engine
     const bool File::open(const int mode)
     {
         if(!this->m_filePath){ return false; }
+
+        m_fileIStream = ifstream(*m_filePath, mode);
+        if(m_fileIStream.fail())
+        {
+            return false;
+        }
         
         return true;
-    }
-
-    const bool File::open(const string & file_path, const int mode)
-    {
-        return true; 
     }
 
     File::File(void)

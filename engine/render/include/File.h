@@ -3,6 +3,8 @@
 #define __FILE_H__
 
 #include "Object.h"
+#include "Uuid.h"
+#include "MD5.h"
 #include <string>
 #include <fstream>
 #include <vector>
@@ -14,7 +16,8 @@ using std::vector;
 
 namespace engine
 {
-
+    using tools::Uuid;
+    using tools::MD5;
     class File: public Object
     {
     public:
@@ -28,13 +31,14 @@ namespace engine
         //以文本格式读取整个文件
         static string ReadAllText(const string & file_path);
 
-        CREATEFUNC(File);
         static File & Create(const string & file_path);
+
+        const Uuid uuid(void) const;
     
         const bool open(const int mode = ios::in | ios::out);
-        const bool open(const string & file_path, const int mode = ios::in | ios::out);
         
     protected:
+        CREATEFUNC(File);
         virtual const bool init(void) override;
         virtual const bool initWithFilePath(const string & file_path);
         
@@ -43,6 +47,7 @@ namespace engine
         
     private:
         string * m_filePath;
+        ifstream m_fileIStream;
     };
 }
 

@@ -63,5 +63,13 @@ namespace engine
 
         return true;
      }
+
+     Textrue2D::~Textrue2D()
+     {
+        if(glIsTexture(m_textrueId) == GL_TRUE)
+        {
+            glDeleteTextures(1, &m_textrueId);
+        }
+     }
     
 }

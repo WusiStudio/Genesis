@@ -2,7 +2,7 @@
 #ifndef __UUID_H__
 #define __UUID_H__
 
-#include "Object.h"
+#include "Struct.h"
 #include <iostream>
 #include <string>
 
@@ -13,21 +13,27 @@ namespace engine
 {
     namespace tools
     {
-        class Uuid : public Object
+        struct Uuid : public Struct
         {
         public:
-            CREATEFUNC(Uuid);
-            static Uuid & Create(const Uuid & _uuid);
+
+            
+            static Uuid Empty(void);
+
+            Uuid(void);
+            Uuid(const Uuid & uuid);
+            Uuid(const unsigned char * data);
+
+            ~Uuid(){}
 
             const string toString(void) const;
 
-            friend ostream & operator<<(ostream & _out, const Uuid & _uuid);
+            friend ostream & operator<<(ostream & out, const Uuid & uuid);
+            const bool operator==(const Uuid & u) const;
         protected:
-            Uuid();
-            virtual const bool init(void) override;
-            virtual const bool init(const Uuid & _uuid);
         private:
-            unsigned short _data[16];
+            static Uuid * ms_empty;
+            unsigned char m_data[16];
         };
     }
 }
