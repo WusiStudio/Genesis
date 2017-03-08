@@ -190,6 +190,10 @@ namespace engine
         {
             Log.info("Enabled Primitive Restart!");
         }
+
+        //启用混合
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
         
         // glfwSetErrorCallback(error_callback);
 

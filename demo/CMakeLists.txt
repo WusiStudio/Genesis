@@ -7,6 +7,7 @@ INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/common/include)
 INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/common/tools/include)
 
 INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/render/deps)
+INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/render/deps/freetype/include)
 INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/render/include)
 INCLUDE_DIRECTORIES(${PROJECT_ROOT_DIR}/engine/render/core/include)
 

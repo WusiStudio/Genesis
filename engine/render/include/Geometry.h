@@ -56,15 +56,24 @@ namespace engine
 
         const Materia & materia(void) const;
 
+        //
+        ShaderProgram & shaderProgram(void) const;
+
+        //自定义shader
+        virtual ShaderProgram & customShaderProgram(void);
+        virtual const bool customVaoData(void);
+
+        //创建并使用当前设置所需要的着色器
+        const bool updateShaderProgram(void);
+
         virtual const bool tick(const float dp) override;
         virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
+
+        //
+        const bool texCoords(Vec2 * tex_coords) const;
     private:
 
         static Materia * DefaultMateria(void);
-        //创建并使用当前设置所需要的着色器
-        const bool updateShaderProgram(void);
-        //
-        const bool texCoords(Vec2 * tex_coords) const;
 
         //顶点数据及顺序
         Vec3 * m_vertexs;

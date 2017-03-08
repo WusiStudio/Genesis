@@ -60,7 +60,6 @@ namespace engine
 
     void Geometry::vertexsCount(const unsigned short count)
     {
-        
         m_vertexsCount = 0;
         if(m_vertexs) { delete[] m_vertexs; }
 
@@ -204,9 +203,57 @@ namespace engine
         glBindVertexArray(m_vertexArrayObject);
         glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
 
-        MateriaType materiaType = m_materia->materiaType();
+        if(!customVaoData()){ return false; }
 
-        Vec2 * tempTexCoords = nullptr;
+        glBindVertexArray(0);
+
+        return true;
+    }
+
+    const Materia & Geometry::materia(void) const
+    {
+        return * m_materia;
+    }
+
+    ShaderProgram & Geometry::shaderProgram(void) const
+    {
+        return *m_shaderProgram;
+    }
+
+    ShaderProgram & Geometry::customShaderProgram(void)
+    {
+        vector<string> v_shader_files, f_shader_files;
+
+        if(m_materia)
+        {
+            switch(m_materia->materiaType())
+            {
+                case MateriaType::Purity:
+                    v_shader_files.push_back("MPurity.vert");
+                    f_shader_files.push_back("MPurity.frag");
+                break;
+                case MateriaType::Multicolor:
+                    v_shader_files.push_back("Multicolor.vert");
+                    f_shader_files.push_back("Multicolor.frag");
+                break;
+                case MateriaType::Chartlet2D:
+                    v_shader_files.push_back("Chartlet2D.vert");
+                    f_shader_files.push_back("Chartlet2D.frag");
+                break;
+            }
+        }
+
+        //创建新的着色器
+        ShaderProgram & newShaderProgram = ShaderProgram::Create(v_shader_files, f_shader_files);
+
+        return newShaderProgram;
+    }
+
+    const bool Geometry::customVaoData(void)
+    {
+         MateriaType materiaType = m_materia->materiaType();
+
+         Vec2 * tempTexCoords = nullptr;
 
         switch(materiaType)
         {
@@ -267,15 +314,30 @@ namespace engine
             return false;
         }
 
-
-        glBindVertexArray(0);
-
         return true;
     }
 
-    const Materia & Geometry::materia(void) const
+    const bool Geometry::updateShaderProgram(void)
     {
-        return * m_materia;
+        ShaderProgram & newShaderProgram = customShaderProgram();
+        if(!newShaderProgram.ready()){ return false; }
+        
+        //解除链接
+        if(m_shaderProgram != nullptr)
+        {
+            m_shaderProgram->release();
+            m_shaderProgram = nullptr;
+        }
+
+        //建立新的链接
+        m_shaderProgram = &newShaderProgram;
+        newShaderProgram.autoRelease();
+        newShaderProgram.retain();
+
+        //更新shader程序后重新绑定数据
+        if(!bindVaoData()){ return false; }
+
+        return true;
     }
 
     const bool Geometry::tick(const float dp)
@@ -325,52 +387,6 @@ namespace engine
         return true;
     }
 
-    const bool Geometry::updateShaderProgram(void)
-    {
-        vector<string> v_shader_files, f_shader_files;
-
-        if(m_materia)
-        {
-            switch(m_materia->materiaType())
-            {
-                case MateriaType::Purity:
-                    v_shader_files.push_back("MPurity.vert");
-                    f_shader_files.push_back("MPurity.frag");
-                break;
-                case MateriaType::Multicolor:
-                    v_shader_files.push_back("Multicolor.vert");
-                    f_shader_files.push_back("Multicolor.frag");
-                break;
-                case MateriaType::Chartlet2D:
-                    v_shader_files.push_back("Chartlet2D.vert");
-                    f_shader_files.push_back("Chartlet2D.frag");
-                break;
-                default:
-                    return false;
-            }
-        }
-
-        //创建新的着色器
-        ShaderProgram & newShaderProgram = ShaderProgram::Create(v_shader_files, f_shader_files);
-        if(!newShaderProgram.ready()){ return false; }
-        
-        
-        //解除链接
-        if(m_shaderProgram != nullptr)
-        {
-            m_shaderProgram->release();
-            m_shaderProgram = nullptr;
-        }
-
-        //建立新的链接
-        m_shaderProgram = &newShaderProgram;
-        newShaderProgram.autoRelease();
-        newShaderProgram.retain();
-
-        //更新shader程序后重新绑定数据
-        return bindVaoData();
-    }
-
     const bool Geometry::texCoords(Vec2 * tex_coords) const
     {
         Vec3 * minMax[4];
@@ -407,8 +423,8 @@ namespace engine
 
         for(int i = 0; i < m_vertexsCount; ++i)
         {
-            tex_coords[i].x = (minMax[2]->x - m_vertexs[i].x) / geometrySize.width;
-            tex_coords[i].y = (minMax[3]->y - m_vertexs[i].y) / geometrySize.height;
+            tex_coords[i].x = (m_vertexs[i].x - minMax[0]->x) / geometrySize.width;
+            tex_coords[i].y = 1.0f - (m_vertexs[i].y - minMax[1]->y) / geometrySize.height;
         }
 
         return true;

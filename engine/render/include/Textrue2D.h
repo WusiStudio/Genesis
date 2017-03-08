@@ -4,6 +4,7 @@
 
 #include "Object.h"
 #include "Image.h"
+#include "Vec.h"
 #include <glad/glad.h>
 #include <string>
 
@@ -17,6 +18,7 @@ namespace engine
     public:
         static Textrue2D & Create(const string & file_name);
         static Textrue2D & Create(const Image & img);
+        static Textrue2D & Create(const vector<char> & bmp_data, const Size2 & size);
 
     protected:
         CREATEFUNC(Textrue2D);
@@ -24,8 +26,9 @@ namespace engine
         virtual ~Textrue2D();
 
         virtual const bool init(void) override;
-        virtual const bool init(const string & file_name);
-        virtual const bool init(const Image & img);
+        virtual const bool initWithFineName(const string & file_name);
+        virtual const bool initWithImage(const Image & img);
+        virtual const bool initWithBmpData(const vector<char> & bmp_data, const Size2 & size);
     };
 }
 

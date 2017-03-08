@@ -14,6 +14,9 @@
 #include "Uuid.h"
 #include "Tool.h"
 #include "File.h"
+#include "Font.h"
+#include "Character.h"
+#include "Label.h"
 
 #include <iostream>
 
@@ -91,6 +94,39 @@ TestAppaction & TestAppaction::Instance(void)
 
         File & pictrue3 = File::Create(Appaction::AppactionPath() + "source/picture/3.png");
         Log.info("pictrue3.uuid() = {0}", pictrue3.uuid());
+
+
+        Font & font = Font::Create("default.ttf");
+        CharacterInfo & characterInfo = font.loadCharacterInfo((int)L'我', 24);
+
+        Textrue2D & fontTextrue = *characterInfo.textrue2D();
+
+        Materia & fontMateria = Materia::Create();
+        fontMateria.chartlet2D(fontTextrue);
+
+        engine::Rectangle & f_char = engine::Rectangle::Create(18.0f);
+        f_char.bindMateria(fontMateria);
+        f_char.position(Vec3( 50.0f ));
+
+        window().append(f_char);
+
+        Character & character = Character::Create(characterInfo);
+        character.position(Vec2(100.0f));
+        window().append(character);
+
+
+
+        Materia & colorMateria = Materia::Create();
+        colorMateria.color(ColorRGBA(.0f, 1.0f, .0f, 1.0f));
+
+
+        Label & label = Label::Create();
+        label.bindMateria(colorMateria);
+        label.fontSize(50);
+        label.text("四个二带俩王");
+        // label.position(Vec2(30.0f, 15.0f));
+        window().append(label);
+        
 
 
         // Log.info("我: {0}", (int)L'我');

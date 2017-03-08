@@ -30,13 +30,13 @@ namespace engine
         const bool remove(Node & child);
 
         //位置
-        void position(const Vec3 & v);
+        virtual void position(const Vec3 & v);
 
         //旋转
-        void rotate(const Vec3 & v);
+        virtual void rotate(const Vec3 & v);
 
         //缩放
-        void scale(const Vec3 & v);
+        virtual void scale(const Vec3 & v);
         
         //将当前坐标转为世界坐标
         const Vec3 convertToWorldSpace(const Vec3 & v);
