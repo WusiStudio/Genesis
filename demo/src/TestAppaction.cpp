@@ -17,6 +17,7 @@
 #include "Font.h"
 #include "Character.h"
 #include "Label.h"
+#include "Fps.h"
 
 #include <iostream>
 
@@ -49,11 +50,7 @@ TestAppaction & TestAppaction::Instance(void)
         node.append(fristCircle);
         window().append(node);
 
-        Materia & materia = Materia::Create();
-        Image & _img = Image::Create("2.png");
-        Textrue2D & textrue2D = Textrue2D::Create(_img);
-        materia.chartlet2D(textrue2D);
-
+        Materia & materia = Materia::Create("2.png");
         fristCircle.bindMateria(materia);
 
 
@@ -70,50 +67,13 @@ TestAppaction & TestAppaction::Instance(void)
         window().bindCamera(gameWorldCamera);
 
 
-        // Materia & colorMateria = Materia::Create();
-        // ColorRGBA colors[] = {
-        //     ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f),
-        //     ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)
-            
-        // };
-        // colorMateria.colors(colors, sizeof(colors) / sizeof(ColorRGBA));
-
-        // rectangle.bindMateria(colorMateria);
-        // triangle.bindMateria(colorMateria);
+        Materia & container_materia = Materia::Create("container.png");
 
         Cube & cube = Cube::Create(Size3(300.0f));
         cube.id("cube");
         cube.scale(1.0f);
-        cube.bindMateria(materia);
+        cube.bindMateria(container_materia);
         gameWorld.append(cube);
-
-
-
-        File & pictrue2 = File::Create(Appaction::AppactionPath() + "source/picture/2.png");
-        Log.info("pictrue2.uuid() = {0}", pictrue2.uuid());
-
-        File & pictrue3 = File::Create(Appaction::AppactionPath() + "source/picture/3.png");
-        Log.info("pictrue3.uuid() = {0}", pictrue3.uuid());
-
-
-        Font & font = Font::Create("default.ttf");
-        CharacterInfo & characterInfo = font.loadCharacterInfo((int)L'我', 24);
-
-        Textrue2D & fontTextrue = *characterInfo.textrue2D();
-
-        Materia & fontMateria = Materia::Create();
-        fontMateria.chartlet2D(fontTextrue);
-
-        engine::Rectangle & f_char = engine::Rectangle::Create(18.0f);
-        f_char.bindMateria(fontMateria);
-        f_char.position(Vec3( 50.0f ));
-
-        window().append(f_char);
-
-        Character & character = Character::Create(characterInfo);
-        character.position(Vec2(100.0f));
-        window().append(character);
-
 
 
         Materia & colorMateria = Materia::Create();
@@ -121,12 +81,17 @@ TestAppaction & TestAppaction::Instance(void)
 
 
         Label & label = Label::Create();
+        label.id("label");
         label.bindMateria(colorMateria);
         label.fontSize(50);
         label.text("四个二带俩王");
         // label.position(Vec2(30.0f, 15.0f));
         window().append(label);
         
+
+        Fps & fps = Fps::Create();
+        fps.position(200.0f);
+        window().append(fps);
 
 
         // Log.info("我: {0}", (int)L'我');
@@ -215,7 +180,7 @@ TestAppaction & TestAppaction::Instance(void)
         if(haha) 
         { 
             // haha->position(Vec3(windowSize.width / 2 + sin(temp / 500.0f) * 100.0f, windowSize.height / 2, 0.0f));
-            haha->rotate(Vec3(.0f, sin(temp / 500.0f) * PI / 2, .0f));
+            haha->rotate(Vec3(.0f, sin(temp / 1000.0f) * PI / 2, .0f));
         }
 
         World * gameWorld = World::getWorldById("gameWorld");
@@ -225,6 +190,12 @@ TestAppaction & TestAppaction::Instance(void)
             if(cube)
             {
                 cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
+            }
+
+            Label * label = dynamic_cast<Label *>(window().find("label"));
+            if(label)
+            {
+                label->rotate(Vec3(.0f, sin(temp / 1000.0f) * PI / 4, .0f));
             }
         }
  }

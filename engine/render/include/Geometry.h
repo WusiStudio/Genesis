@@ -30,14 +30,26 @@ namespace engine
 
         //修改指定位置数据
         void vertex(const unsigned short index, const Vec3 & data);
+        void vertex(const unsigned short index, const Vec3 & p_vertex, const Vec3 & p_normal, const Vec2 & p_uv);
+        void normal(const unsigned short index, const Vec3 & data);
+        void uv(const unsigned short index, const Vec2 & data);
+
         void indie(const unsigned short index, const unsigned short data);
 
         //全部数据一次写入
         void vertexs(const Vec3 * data);
+        void vertexs(const Vec3 * p_vertexs, const Vec3 * p_normals, const Vec2 * p_uvs);
+        void normals(const Vec3 * data);
+        void uvs(const Vec2 * data);
+
         void indies(const unsigned short * data);
 
         //指定位置写入指定长度的数据
         void vertexs(const Vec3 * data, const unsigned short count, const unsigned short start_index = 0);
+        void vertexs(const Vec3 * p_vertexs, const Vec3 * p_normals, const Vec2 * p_uvs, const unsigned short count, const unsigned short start_index = 0);
+        void normals(const Vec3 * data, const unsigned short count, const unsigned short start_index = 0);
+        void uvs(const Vec2 * data, const unsigned short count, const unsigned short start_index = 0);
+
         void indies(const unsigned short * data, const unsigned short count, const unsigned short start_index = 0);
 
         //数据起始地址
@@ -77,6 +89,8 @@ namespace engine
 
         //顶点数据及顺序
         Vec3 * m_vertexs;
+        Vec3 * m_normals;
+        Vec2 * m_uvs;
         unsigned short * m_indies;
 
         // string m_customVertextShaderFile, m_customFragmentShaderFile;

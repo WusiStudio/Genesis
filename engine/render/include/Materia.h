@@ -25,8 +25,11 @@ namespace engine
         CREATEFUNC(Materia);
         static const Materia & defaultMateria(void);
 
-        static const Materia & Create(const ColorRGBA & c);
-        static const Materia & Create(const ColorRGBA * colors, const unsigned int count);
+        static Materia & Create(const ColorRGBA & c);
+        static Materia & Create(const ColorRGBA * colors, const unsigned int count);
+        static Materia & Create(Textrue2D & textrue2D);
+        static Materia & Create(const Image & image);
+        static Materia & Create(const string & img_path);
 
         const bool color(const ColorRGBA & c);
         
@@ -41,6 +44,11 @@ namespace engine
         Materia(void);
         virtual ~Materia(void);
         virtual const bool init(void) override;
+        virtual const bool initWithColor(const ColorRGBA & c);
+        virtual const bool initWithColors(const ColorRGBA * colors, const unsigned int count);
+        virtual const bool initWithTextrue2D(Textrue2D & textrue2D);
+        virtual const bool initWithImage(const Image & image);
+        virtual const bool initWithImagePath(const string & img_path);
     private:
         void clearData(void);
 

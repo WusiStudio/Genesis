@@ -103,7 +103,7 @@ namespace engine
     {
         for(auto item : m_chidren)
         {
-            if(cb(*item)) break;
+            if(!cb(*item)) break;
         }
     }
 

@@ -27,7 +27,10 @@ namespace engine
     const bool Rectangle::init(const Size2 & size)
     {
         m_size = size;
-        Vec3 tempVertexs[4] = {Vec3(-m_size.width / 2, -m_size.height / 2), Vec3(m_size.width / 2, -m_size.height / 2), Vec3(m_size.width / 2, m_size.height / 2), Vec3(-m_size.width / 2, m_size.height / 2)};
+        float widthHalf = m_size.width / 2;
+        float heightHalf = m_size.height / 2;
+
+        Vec3 tempVertexs[4] = {Vec3(-widthHalf, -heightHalf), Vec3(widthHalf, -heightHalf), Vec3(widthHalf, heightHalf), Vec3(-widthHalf, heightHalf)};
         vertexs(tempVertexs);
 
         unsigned short tempIndies[4] = {0, 1, 3, 2};

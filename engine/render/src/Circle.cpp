@@ -56,6 +56,11 @@ namespace engine
             indie(i + 1, i + 1);
         }
 
+        Vec2 * tUvs = new Vec2[vertexsCount()];
+        texCoords(tUvs);
+        uvs(tUvs);
+        delete[] tUvs;
+
         indie(vertexsCount(), 1);
 
         return bindVaoData();

@@ -43,7 +43,9 @@ namespace engine
     {
         m_vertexs = nullptr;
         m_indies = nullptr;
-        m_materia = DefaultMateria();
+        m_normals = nullptr;
+        m_uvs = nullptr;
+
         m_shaderProgram = nullptr;
 
         m_vertexArrayObject = m_vertexBufferObject = m_indiesBufferObject = 0;
@@ -54,6 +56,7 @@ namespace engine
     {
         if(!Node::init()){ return false; }
 
+        m_materia = DefaultMateria();
         updateShaderProgram();
         return true;
     }
@@ -62,16 +65,26 @@ namespace engine
     {
         m_vertexsCount = 0;
         if(m_vertexs) { delete[] m_vertexs; }
+        if(m_normals) { delete[] m_normals; }
+        if(m_uvs) { delete[] m_uvs; }
 
         if(!count)
         {
             m_vertexs = nullptr;
+            m_normals = nullptr;
+            m_uvs = nullptr;
             return;
         }
 
         m_vertexs = new Vec3[count];
-        if(!m_vertexs){ return; }
-
+        m_normals = new Vec3[count];
+        m_uvs = new Vec2[count];
+        if(!m_vertexs || !m_normals || !m_uvs)
+        {
+            Log.error("System Error: malloc memory fail!");
+            return;
+        }
+        
 
         //申请顶点数组对象
         while(!m_vertexArrayObject)
@@ -126,31 +139,115 @@ namespace engine
     {
         if(index >= m_vertexsCount)
         {
-            //错误信息
+            Log.critical("Set vertex out!");
             return;
         }
         *(m_vertexs + index) = data;
+    }
+
+    void Geometry::vertex(const unsigned short index, const Vec3 & p_vertex, const Vec3 & p_normal, const Vec2 & p_uv)
+    {
+        if(index >= m_vertexsCount)
+        {
+            Log.critical("Set vertex, normal and uv out!");
+            return;
+        }
+        *(m_vertexs + index) = p_vertex;
+        *(m_normals + index) = p_normal;
+        *(m_uvs + index) = p_uv;
     }
 
     void Geometry::indie(const unsigned short index, const unsigned short data)
     {
         if(index >= m_indiesCount)
         {
-            //错误信息
+            Log.critical("Set india out!");
             return;
         }
         *(m_indies + index) = data;
     }
 
+    void Geometry::normal(const unsigned short index, const Vec3 & data)
+    {
+        if(index >= m_vertexsCount)
+        {
+            Log.critical("Set normal out!");
+            return;
+        }
+        *(m_normals + index) = data;
+    }
+
+    void Geometry::uv(const unsigned short index, const Vec2 & data)
+    {
+        if(index >= m_vertexsCount)
+        {
+            Log.critical("Set uv out!");
+            return;
+        }
+        *(m_uvs + index) = data;
+    }
 
     void Geometry::vertexs(const Vec3 * data)
     {
-        vertexs(data, m_vertexsCount, 0);
+        vertexs(data, m_vertexsCount);
+    }
+
+    void Geometry::vertexs(const Vec3 * p_vertexs, const Vec3 * p_normals, const Vec2 * p_uvs)
+    {
+        vertexs(p_vertexs, p_normals, p_uvs, m_vertexsCount);
     }
     
     void Geometry::vertexs(const Vec3 * data, const unsigned short count, const unsigned short start_index)
     {
-        memcpy(m_vertexs + start_index, data, (m_vertexsCount - start_index) * sizeof(Vec3));
+        if(start_index + count > m_vertexsCount)
+        {
+            Log.critical("Set vertexs out!");
+            return;
+        }
+        memcpy(m_vertexs + start_index, data, count * sizeof(Vec3));
+    }
+
+    void Geometry::vertexs(const Vec3 * p_vertexs, const Vec3 * p_normals, const Vec2 * p_uvs, const unsigned short count, const unsigned short start_index)
+    {
+        if(start_index + count > m_vertexsCount)
+        {
+            Log.critical("Set vertexs,normals and uvs out!");
+            return;
+        }
+
+        vertexs(p_vertexs, count, start_index);
+        normals(p_normals, count, start_index);
+        uvs(p_uvs, count, start_index);
+    }
+
+    void Geometry::normals(const Vec3 * data)
+    {
+        normals(data, m_vertexsCount);
+    }
+
+    void Geometry::normals(const Vec3 * data, const unsigned short count, const unsigned short start_index)
+    {
+        if(start_index + count > m_vertexsCount)
+        {
+            Log.critical("Set normals out!");
+            return;
+        }
+        memcpy(m_normals + start_index, data, count * sizeof(Vec3));
+    }
+
+    void Geometry::uvs(const Vec2 * data)
+    {
+        uvs(data, m_vertexsCount);
+    }
+
+    void Geometry::uvs(const Vec2 * data, const unsigned short count, const unsigned short start_index)
+    {
+        if(start_index + count > m_vertexsCount)
+        {
+            Log.critical("Set uvs out!");
+            return;
+        }
+        memcpy(m_uvs + start_index, data, count * sizeof(Vec2));
     }
 
     void Geometry::indies(const unsigned short * data, const unsigned short count, const unsigned short start_index)
@@ -288,23 +385,19 @@ namespace engine
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
-                glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
-                glEnableVertexAttribArray(1);
+                glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(3);
             break;
             case MateriaType::Chartlet2D:
 
-                tempTexCoords = new Vec2[m_vertexsCount];
-                
-                if(!texCoords(tempTexCoords)) { return false; }
-
                 glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec2) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
-                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec2) * m_vertexsCount), tempTexCoords);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec2) * m_vertexsCount), m_uvs);
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
-                glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
-                glEnableVertexAttribArray(1);
+                glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(2);
 
                 delete[] tempTexCoords;
             break;
@@ -433,13 +526,12 @@ namespace engine
     Geometry::~Geometry(void)
     {
         if(m_vertexs){ delete[] m_vertexs; }
-        
+        if(m_normals){ delete[]m_normals; }
+        if(m_uvs){ delete[] m_uvs; }
         if(m_indies){ delete[] m_indies; }
 
         if(m_vertexBufferObject){ glDeleteBuffers(1, &m_vertexBufferObject); }
-
         if(m_vertexBufferObject){ glDeleteBuffers(1, &m_indiesBufferObject); }
-
         if(m_vertexBufferObject){ glDeleteVertexArrays(1, &m_vertexArrayObject); }
 
         if(m_materia) { m_materia->release(); }
