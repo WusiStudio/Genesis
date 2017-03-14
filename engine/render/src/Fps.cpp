@@ -9,10 +9,10 @@ namespace engine
 {
     int Fps::sm_drawFpsCount = 60;
 
-
     Fps::Fps(void)
     {
         m_dataOffset = 0;
+        m_label = nullptr;
     }
 
     const bool Fps::init(void)
@@ -36,8 +36,8 @@ namespace engine
         append(label);
         m_label = &label;
 
-        ColorRGBA * colors = new ColorRGBA[sm_drawFpsCount * 2 + 6];
-        vertexsCount(sm_drawFpsCount * 2 + 6);
+        ColorRGBA * colors = new ColorRGBA[(unsigned int)(sm_drawFpsCount * 2 + 6)];
+        vertexsCount((unsigned short)(sm_drawFpsCount * 2 + 6));
 
         ColorRGBA contentColor(.2f, .8f, .0f, .4f);
         ColorRGBA borderColor(1.0f, .0f, .0f, 1.0f);
@@ -46,8 +46,8 @@ namespace engine
         for(short i = 0; i < sm_drawFpsCount; ++i)
         {
             float x = -widthHalf + unitWidth * i;
-            vertex(i * 2, Vec3(x, -heightHalf));
-            vertex(i * 2 + 1, Vec3(x, -heightHalf));
+            vertex((unsigned short)(i * 2), Vec3(x, -heightHalf));
+            vertex((unsigned short)(i * 2 + 1), Vec3(x, -heightHalf));
 
             colors[i * 2] = contentColor;
             colors[i * 2 + 1] = contentColor;
@@ -56,10 +56,10 @@ namespace engine
         }
 
         //边框线
-        vertex(sm_drawFpsCount * 2 + 0, Vec3(-widthHalf, -heightHalf));
-        vertex(sm_drawFpsCount * 2 + 1, Vec3(widthHalf, -heightHalf));
-        vertex(sm_drawFpsCount * 2 + 2, Vec3(widthHalf, heightHalf));
-        vertex(sm_drawFpsCount * 2 + 3, Vec3(-widthHalf, heightHalf));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 0), Vec3(-widthHalf, -heightHalf));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 1), Vec3(widthHalf, -heightHalf));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 2), Vec3(widthHalf, heightHalf));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 3), Vec3(-widthHalf, heightHalf));
 
         colors[sm_drawFpsCount * 2 + 0] = borderColor;
         colors[sm_drawFpsCount * 2 + 1] = borderColor;
@@ -68,8 +68,8 @@ namespace engine
 
         //
         
-        vertex(sm_drawFpsCount * 2 + 4, Vec3(-widthHalf, fpsBaseLinePosY));
-        vertex(sm_drawFpsCount * 2 + 5, Vec3(widthHalf, fpsBaseLinePosY));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 4), Vec3(-widthHalf, fpsBaseLinePosY));
+        vertex((unsigned short)(sm_drawFpsCount * 2 + 5), Vec3(widthHalf, fpsBaseLinePosY));
 
         colors[sm_drawFpsCount * 2 + 4] = baseLineColor;
         colors[sm_drawFpsCount * 2 + 5] = baseLineColor;
@@ -95,16 +95,19 @@ namespace engine
 
         string sfps = strs.str();
         auto dotIndex = sfps.find('.');
-        if(dotIndex != -1)
+        if(dotIndex != -1 && sfps.length() - dotIndex > 2)
         {
             sfps = sfps.substr(0, dotIndex + 3);
         }
 
-        m_label->text("FPS: " + sfps);
-
-        if(m_fpsList.size() >= sm_drawFpsCount)
+        if(m_label)
         {
-            m_fpsList[m_dataOffset] = fps;
+            m_label->text("FPS: " + sfps);
+        }
+        
+        if((int)m_fpsList.size() >= sm_drawFpsCount)
+        {
+            m_fpsList[(unsigned int)m_dataOffset] = fps;
             m_dataOffset = (m_dataOffset + 1) % sm_drawFpsCount;
         }else{
             m_fpsList.push_back(fps);
@@ -117,10 +120,10 @@ namespace engine
         //更新VAO
         for(short i = 0; i < sm_drawFpsCount; ++i)
         {
-            short fpsIndex = (m_dataOffset + i) % sm_drawFpsCount;
-            if(fpsIndex >= m_fpsList.size()) break;
-            float postY = m_size.height / 3 * 2 * m_fpsList[fpsIndex] / 60.0f - heightHalf;
-            vertex(i * 2, Vec3(-widthHalf + unitWidth * i, postY > heightHalf ? heightHalf : postY));
+            short fpsIndex = (short)((m_dataOffset + i) % sm_drawFpsCount);
+            if(fpsIndex >= (short)m_fpsList.size()) break;
+            float postY = m_size.height / 3 * 2 * m_fpsList[(unsigned int)fpsIndex] / 60.0f - heightHalf;
+            vertex((unsigned short)(i * 2), Vec3(-widthHalf + unitWidth * i, postY > heightHalf ? heightHalf : postY));
         }
 
         return bindVaoData();
@@ -134,5 +137,10 @@ namespace engine
         glDrawArrays(GL_LINES, sm_drawFpsCount * 2 + 4, 2);
         
         return true;
+    }
+
+    Fps::~Fps(void)
+    {
+        if(m_label) { m_label->release(); }
     }
 }

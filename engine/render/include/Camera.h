@@ -21,15 +21,15 @@ namespace engine
     {
         PROPERTY(CameraType, cameraType);
         PROPERTY(Size2, viewPortSize);
-        PROPERTY(float, near);
-        PROPERTY(float, far);
+        PROPERTY(float, viewNear);
+        PROPERTY(float, viewFar);
         PROPERTY(Vec3, target);
         PROPERTY(Vec3, up);
 
     public:
         CREATEFUNC(Camera);
     protected:
-        Camera():m_target(0.0f){}
+        Camera();
         virtual ~Camera(){}
         virtual const bool init(void) override;
 
@@ -37,6 +37,8 @@ namespace engine
 
         virtual const bool composition(const float dp) override final;
         virtual const bool protograph(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override final;
+    private:
+        // float m_near, m_far;
     };
 
 }

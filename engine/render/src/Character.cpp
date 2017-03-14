@@ -3,6 +3,12 @@
 
 namespace engine
 {
+
+    Character::Character(void)
+    {
+        m_characterInfo = nullptr;
+    }
+
     Character & Character::Create(const CharacterInfo & characterInfo)
     {
         Character & result = Create();
@@ -46,12 +52,12 @@ namespace engine
     }
     const int Character::bearingX(void) const
     {
-        return (int)(m_characterInfo->bearing().x);
+        return m_characterInfo ? (int)(m_characterInfo->bearing().x) : 0;
     }
 
     const int Character::bearingY(void) const
     {
-        return (int)(m_characterInfo->bearing().y - m_characterInfo->size().height + m_characterInfo->fontSize() / 4);
+        return m_characterInfo ? (int)(m_characterInfo->bearing().y - m_characterInfo->size().height + m_characterInfo->fontSize() / 4) : 0;
     }
 
     ShaderProgram & Character::customShaderProgram(void)
@@ -113,8 +119,12 @@ namespace engine
         if(!Geometry::draw(eye_matrix, screen_matrix)) return false;
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, (GLuint)m_characterInfo->textrue2D()->textrueId());
 
+        if(m_characterInfo)
+        {
+            glBindTexture(GL_TEXTURE_2D, (GLuint)m_characterInfo->textrue2D()->textrueId());
+        }
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiesBufferObject());
         glDrawElements(GL_TRIANGLE_STRIP, indiesCount(), GL_UNSIGNED_SHORT, nullptr);
         return true;

@@ -23,10 +23,9 @@ namespace engine
 
     Label::~Label(void)
     {
-        if(m_characterBox)
-        {
-            m_characterBox->release();
-        }
+        if(m_characterBox) { m_characterBox->release(); }
+        if(m_font)  { m_font->release(); }
+        if(m_materia) m_materia->release();
     }
 
     const bool Label::init(void)
@@ -58,7 +57,12 @@ namespace engine
 
     const bool Label::bindMateria(Materia & m)
     {
+        if(m_materia)
+        {
+            m_materia->release();
+        }
         m_materia = &m;
+        m_materia->retain();
         m_characterBox->each([this](BaseNode & node) -> bool{
             Character * character = dynamic_cast<Character *>(&node);
             if(!character) return true;
@@ -91,7 +95,7 @@ namespace engine
         {
             //渲染文字变化，重新排列文字
             if(!m_characterBox->clear()){ Log.error("Label Clear Fault!"); }
-            m_characterBoxSize = Size2(.0f, m_fontSize * 3 / 2);
+            m_characterBoxSize = Size2(.0f, (float)m_fontSize * 3 / 2);
 
             wstring wstr = sTOWs(m_text);
             for(size_t i = 0; i < wstr.size(); ++i)
@@ -102,11 +106,8 @@ namespace engine
                 {
                     Character & character = Character::Create(characterInfo);
 
-                    if(m_materia)
-                    {
-                        character.bindMateria(*m_materia);
-                    }
-
+                    if(m_materia) { character.bindMateria(*m_materia); }
+                    character.retain();
                     m_characterCache.push_back(&character);
                 }else{
                     m_characterCache[i]->characterInfo(characterInfo);

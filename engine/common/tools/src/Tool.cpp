@@ -1,5 +1,8 @@
 #include "Tool.h"
 #include <locale>
+#include "WSLog.h"
+
+using WsTools::Log;
 
 namespace engine
 {
@@ -58,8 +61,14 @@ namespace engine
 
         wstring sTOWs(const string & s)
         {
-            std::locale old_loc = std::locale::global(std::locale(LOCAL));   
- 
+            std::locale old_loc;
+            try{
+               old_loc = std::locale::global(std::locale(LOCAL));   
+            }catch(...)
+            {
+                // Log.error("获取本地编码错误");
+            }
+            
             const char* src_str = s.c_str();   
         
             const size_t buffer_size = s.size() + 1;   
@@ -77,6 +86,10 @@ namespace engine
             std::locale::global(old_loc);   
         
             return result; 
+
+            // std::wstring result(s.length(), L' ');
+            // std::copy(s.begin(), s.end(), result.begin());
+            // return result;
         }
     }
 }

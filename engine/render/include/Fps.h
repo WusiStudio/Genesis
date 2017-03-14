@@ -18,7 +18,7 @@ namespace engine
     protected:
 
         Fps(void);
-
+        virtual ~Fps(void);
         const bool bindMateria(Materia & m);
         const bool init(void) override;
 

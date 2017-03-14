@@ -45,6 +45,7 @@ namespace engine
         m_indies = nullptr;
         m_normals = nullptr;
         m_uvs = nullptr;
+        m_materia = nullptr;
 
         m_shaderProgram = nullptr;
 

@@ -2,14 +2,19 @@
 
 namespace engine
 {
+
+    Camera::Camera(void): m_target(.0f)
+    {
+    }
+
     const bool Camera::init(void)
     {
         if(!Node::init()){ return false; }
 
         m_cameraType = CameraType::Projection;
         m_viewPortSize = Size2(1440.0f / 2.0f, 900.0f / 2);
-        m_near = .1f;
-        m_far = 1800.0f;
+        m_viewNear = .1f;
+        m_viewFar = 1800.0f;
         m_up = Vec3(.0f, 1.0f, .0f);
 
         return true;
@@ -35,9 +40,9 @@ namespace engine
         Matrix4 projectionMatrix;
 
         if(m_cameraType == CameraType::Orthogonal)
-            projectionMatrix = Matrix4::CreateOrthogonalMatrix(-m_viewPortSize.width / 2, m_viewPortSize.width / 2, -m_viewPortSize.height / 2, m_viewPortSize.height / 2, m_near, m_far);
+            projectionMatrix = Matrix4::CreateOrthogonalMatrix(-m_viewPortSize.width / 2, m_viewPortSize.width / 2, -m_viewPortSize.height / 2, m_viewPortSize.height / 2, m_viewNear, m_viewFar);
         else if(m_cameraType == CameraType::Projection)
-            projectionMatrix = Matrix4::CreateProjectionMatrix(45.0f, m_viewPortSize.width / m_viewPortSize.height, m_near, m_far);
+            projectionMatrix = Matrix4::CreateProjectionMatrix(45.0f, m_viewPortSize.width / m_viewPortSize.height, m_viewNear, m_viewFar);
 
         return ((CameraInterface &)((World &)root())).protograph(lookAtMatrix, projectionMatrix * screen_matrix);
     }

@@ -29,7 +29,7 @@ namespace engine
         virtual const bool tick(const float dp) override;
         virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
 
-        Character(void){ }
+        Character(void);
         virtual ~Character(void){ };
     private:
         CharacterInfo * m_characterInfo;

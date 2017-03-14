@@ -66,6 +66,8 @@ namespace engine
 
     map<const string, map<const int, FontChartletCache *> *> FontChartletCache::ms_objectPool;
 
+
+
     FontChartletCache & FontChartletCache::Create(const string & font_name, const int font_size)
     {
 
@@ -129,7 +131,12 @@ namespace engine
         return true;
     }
 
-    FontChartletCache::~FontChartletCache()
+    FontChartletCache::FontChartletCache(void)
+    {
+        m_fontSize = 16;
+    }
+
+    FontChartletCache::~FontChartletCache(void)
     {
         for(auto item : m_cachePool)
         {
@@ -239,5 +246,10 @@ namespace engine
         }
 
         return true;
+    }
+
+    Font::Font(void)
+    {
+        m_fontName = "";
     }
 }

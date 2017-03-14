@@ -48,7 +48,8 @@ namespace engine
     protected:
         virtual const bool init(void) override;
         virtual const bool initWithFontInfo(const string & font_name, const int font_size);
-        virtual ~FontChartletCache();
+        FontChartletCache(void);
+        virtual ~FontChartletCache(void);
     private:
         CREATEFUNC(FontChartletCache);
         static map<const string, map<const int, FontChartletCache *> *> ms_objectPool;
@@ -71,8 +72,9 @@ namespace engine
 
         virtual const bool init(void) override;
         virtual const bool initWithFilePath(const string & file_path);
+        Font(void);
+        virtual ~Font(void){}
     private:
-        Font(){}
         static FT_Library ms_ft;
 
         string m_fontName;

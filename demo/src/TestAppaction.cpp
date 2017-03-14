@@ -78,14 +78,13 @@ TestAppaction & TestAppaction::Instance(void)
 
         Materia & colorMateria = Materia::Create();
         colorMateria.color(ColorRGBA(.0f, 1.0f, .0f, 1.0f));
+
         
         Fps & fps = Fps::Create();
         fps.position(Vec2(80.0f, 50.0f));
         window().append(fps);
 
-
         // Log.info("我: {0}", (int)L'我');
-
 
         // string str("我没问题啊，可以输出字符啊");
         // Log.info("str.length: {0}, {1}", str.length(), str);
