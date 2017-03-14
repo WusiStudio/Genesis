@@ -16,6 +16,13 @@ namespace engine
         return result;
     }
 
+    const bool Character::characterInfo(const CharacterInfo & characterInfo)
+    {
+        if(!initWithCharacterInfo(characterInfo)) return false;
+
+        return true;
+    }
+
     void Character::position(const Vec3 & v)
     {
         Node::position(Vec3(v.x + bearingX() + m_size.width / 2, v.y + bearingY() + m_size.height / 2));
@@ -33,7 +40,7 @@ namespace engine
         m_size = characterInfo.size();
         m_characterInfo = (CharacterInfo *)&characterInfo;
 
-        if(!Rectangle::init(m_size)){ return false; }
+        if(!Rectangle::initWithSize(m_size)){ return false; }
         
         return true;
     }

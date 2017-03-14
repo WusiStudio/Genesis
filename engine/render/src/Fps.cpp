@@ -19,7 +19,7 @@ namespace engine
     {
         if(!Geometry::init()) { return false; }
 
-         m_size = Size2(120.0f, 80.0f);
+         m_size = Size2(70.0f, 40.0f);
 
         float widthHalf = m_size.width / 2;
         float heightHalf = m_size.height / 2;
@@ -39,9 +39,9 @@ namespace engine
         ColorRGBA * colors = new ColorRGBA[sm_drawFpsCount * 2 + 6];
         vertexsCount(sm_drawFpsCount * 2 + 6);
 
-        ColorRGBA contentColor(.2f, .8f, .0f, .8f);
+        ColorRGBA contentColor(.2f, .8f, .0f, .4f);
         ColorRGBA borderColor(1.0f, .0f, .0f, 1.0f);
-        ColorRGBA baseLineColor(.8f, .8f, .2f, 1.0f);
+        ColorRGBA baseLineColor(.9f, .8f, .0f, .9f);
         //
         for(short i = 0; i < sm_drawFpsCount; ++i)
         {
@@ -97,10 +97,10 @@ namespace engine
         auto dotIndex = sfps.find('.');
         if(dotIndex != -1)
         {
-            sfps = sfps.substr(0, dotIndex + 2);
+            sfps = sfps.substr(0, dotIndex + 3);
         }
 
-        // m_label->text("FPS: " + sfps);
+        m_label->text("FPS: " + sfps);
 
         if(m_fpsList.size() >= sm_drawFpsCount)
         {

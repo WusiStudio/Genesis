@@ -78,19 +78,9 @@ TestAppaction & TestAppaction::Instance(void)
 
         Materia & colorMateria = Materia::Create();
         colorMateria.color(ColorRGBA(.0f, 1.0f, .0f, 1.0f));
-
-
-        Label & label = Label::Create();
-        label.id("label");
-        label.bindMateria(colorMateria);
-        label.fontSize(50);
-        label.text("四个二带俩王");
-        // label.position(Vec2(30.0f, 15.0f));
-        window().append(label);
         
-
         Fps & fps = Fps::Create();
-        fps.position(200.0f);
+        fps.position(Vec2(80.0f, 50.0f));
         window().append(fps);
 
 

@@ -7,7 +7,7 @@ namespace engine
     {
         Rectangle & result = Create();
 
-        bool rectangleInit = result.init(size);
+        bool rectangleInit = result.initWithSize(size);
 
         assert(rectangleInit);
 
@@ -24,7 +24,7 @@ namespace engine
         return true;
     }
 
-    const bool Rectangle::init(const Size2 & size)
+    const bool Rectangle::initWithSize(const Size2 & size)
     {
         m_size = size;
         float widthHalf = m_size.width / 2;

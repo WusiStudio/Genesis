@@ -12,6 +12,7 @@ namespace engine
         PROPERTY(Size2, size);
     public:
         static Character & Create(const CharacterInfo & characterInfo);
+        const bool characterInfo(const CharacterInfo & characterInfo);
         void position(const Vec3 & v) override;
     protected:
         CREATEFUNC(Character);

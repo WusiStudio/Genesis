@@ -16,7 +16,7 @@ namespace engine
         CREATEFUNC(Rectangle);
 
         virtual const bool init(void) override;
-        virtual const bool init(const Size2 & size);
+        virtual const bool initWithSize(const Size2 & size);
 
         virtual const bool draw(const Matrix4 & eye_matrix, const Matrix4 & screen_matrix) const override;
     };

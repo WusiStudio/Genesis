@@ -70,12 +70,18 @@ namespace engine
     {
 
         //查询缓存对象
-        map<const int, FontChartletCache *> & objectMap = *(ms_objectPool.find(font_name) == ms_objectPool.end() ? 
-            new map<const int, FontChartletCache *>() : ms_objectPool[font_name]);
-
-        if(objectMap.find(font_size) != objectMap.end())
+        map<const int, FontChartletCache *> * objectMap = nullptr;
+        if(ms_objectPool.find(font_name) == ms_objectPool.end())
         {
-            return *objectMap[font_size];
+            objectMap = new map<const int, FontChartletCache *>();
+            ms_objectPool[font_name] = objectMap;
+        }else{
+            objectMap = ms_objectPool[font_name];
+        }
+
+        if(objectMap->find(font_size) != objectMap->end())
+        {
+            return *(*objectMap)[font_size];
         }
 
         //创建新缓存对象
@@ -87,7 +93,7 @@ namespace engine
 
         if(!FontChartletCacheInit) { result.initializeError(1); }
 
-        objectMap[font_size] = &result;
+        (*objectMap)[font_size] = &result;
         result.retain();
 
         return result;

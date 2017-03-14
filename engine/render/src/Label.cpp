@@ -1,8 +1,6 @@
 #include "Label.h"
 
 #include "Tool.h"
-#include "Character.h"
-
 
 namespace engine
 {
@@ -98,17 +96,27 @@ namespace engine
             wstring wstr = sTOWs(m_text);
             for(size_t i = 0; i < wstr.size(); ++i)
             {
-                CharacterInfo & characterInfo = m_font->loadCharacterInfo(wstr.at(i), m_fontSize);
-                Character & character = Character::Create(characterInfo);
 
-                if(m_materia)
+                CharacterInfo & characterInfo = m_font->loadCharacterInfo(wstr.at(i), m_fontSize);
+                if(m_characterCache.size() <= i)
                 {
-                    character.bindMateria(*m_materia);
+                    Character & character = Character::Create(characterInfo);
+
+                    if(m_materia)
+                    {
+                        character.bindMateria(*m_materia);
+                    }
+
+                    m_characterCache.push_back(&character);
+                }else{
+                    m_characterCache[i]->characterInfo(characterInfo);
                 }
 
-                character.position(Vec2(m_characterBoxSize.width, .0f));
+                (*m_characterCache[i]).position(Vec2(m_characterBoxSize.width, .0f));
+
                 m_characterBoxSize.width += characterInfo.advance();
-                m_characterBox->append(character);
+                m_characterBox->append(*m_characterCache[i]);
+
             }
 
             m_refresh = false;

@@ -7,7 +7,11 @@
 #include "Vec.h"
 #include "Font.h"
 #include "Materia.h"
+#include "Character.h"
 
+#include <vector>
+
+using std::vector;
 namespace engine
 {
     class Label: public Node
@@ -52,6 +56,7 @@ namespace engine
         Node * m_characterBox;
         Font * m_font;
         Materia * m_materia;
+        vector<Character *> m_characterCache;
     };
 }
 
