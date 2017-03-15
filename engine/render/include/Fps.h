@@ -27,8 +27,14 @@ namespace engine
         
     private:
         static int sm_drawFpsCount;
+        static float sm_StatisticalInterval;
         Label * m_label;
         int m_dataOffset;
+
+        float m_cacheSumFps;
+        int m_cacheFpsCount;
+        float m_cacheTime;
+
         vector<float> m_fpsList;
     };
 }

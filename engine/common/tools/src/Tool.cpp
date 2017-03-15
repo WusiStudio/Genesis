@@ -35,9 +35,79 @@ namespace engine
             return result;
         }
 
+        const unsigned getStringSize(const string & str, const string & coding){
+            unsigned result = 0;
+            if(coding == "utf-8")
+            {
+                for(size_t i = 0; i < str.length();)
+                {
+                    size_t byte = 0;
+                    unsigned char temp = str.at(i);
+                    unsigned char offset = 1 << 7;
+                    while(temp & offset)
+                    {
+                        ++byte;
+                        offset = offset >> 1;
+                    }
+
+                    i += byte == 0 ? 1 : byte;
+                    ++result;
+                }
+            }else
+            {
+                //其他编码类型还没有做
+                result = str.length();
+            }
+            return result;
+        }
+
+        vector<unsigned int> unicode(const string & str, const string & coding)
+        {
+            vector<unsigned int> result;
+            if(coding == "utf-8")
+            {
+                for(size_t i = 0; i < str.length();)
+                {
+                    unsigned int sCode = 0;
+                    size_t byte = 0;
+                    unsigned char temp = str.at(i);
+                    unsigned char offset = 1 << 7;
+
+                    while(temp & offset)
+                    {
+                        ++byte;
+                        offset = offset >> 1;
+                    }
+
+                    if(!byte) byte = 1;
+
+                    for(size_t n = 0; n < byte; ++n)
+                    {
+                        if(n) sCode = sCode << 8;
+                        temp = str.at(i + n);
+                        for(int j = 1; j < 8; ++j)
+                        {
+                            offset = 1 << (8 - j);
+                            if((temp ^ offset) & offset)
+                            {
+                                sCode = (sCode | (temp << j & 0x00FF)) >> j;
+                                break;
+                            }
+                        }
+                    }
+                    result.push_back(sCode);
+                    i += byte;
+                }
+            }
+
+            return result;
+        }
+
         //宽字与普通字符转换
         string wsToS(const wstring & ws)
         {
+
+            //系统转码不可靠 得改
             std::locale old_loc = std::locale::global(std::locale(LOCAL));   
  
             const wchar_t* src_wstr = ws.c_str();   
@@ -59,37 +129,21 @@ namespace engine
             return result;  
         }
 
-        wstring sTOWs(const string & s)
+        wstring sTOWs(const string & s, const string & coding)
         {
-            std::locale old_loc;
-            try{
-               old_loc = std::locale::global(std::locale(LOCAL));   
-            }catch(...)
+            //对 unicode 函数支持编码格式有效
+            vector<unsigned int> unicodeSource = unicode(s, coding);
+            const size_t buffer_size = unicodeSource.size() + 1;  
+            wchar_t * dst_wstr = new wchar_t[buffer_size];
+            wmemset(dst_wstr, 0, buffer_size);
+            for(size_t i = 0; i < buffer_size - 1; ++i)
             {
-                // Log.error("获取本地编码错误");
+                dst_wstr[i] = (wchar_t)unicodeSource[i];
             }
-            
-            const char* src_str = s.c_str();   
-        
-            const size_t buffer_size = s.size() + 1;   
-        
-            wchar_t* dst_wstr = new wchar_t[buffer_size];   
-        
-            wmemset(dst_wstr, 0, buffer_size);   
-        
-            mbstowcs(dst_wstr, src_str, buffer_size);   
-        
-            std::wstring result = dst_wstr;   
-        
-            delete []dst_wstr;   
-        
-            std::locale::global(old_loc);   
-        
-            return result; 
 
-            // std::wstring result(s.length(), L' ');
-            // std::copy(s.begin(), s.end(), result.begin());
-            // return result;
+            std::wstring result = dst_wstr;  
+            delete[] dst_wstr;
+            return result;
         }
     }
 }

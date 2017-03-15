@@ -7,12 +7,19 @@ using std::stringstream;
 
 namespace engine
 {
+    //显示60个fps数据
     int Fps::sm_drawFpsCount = 60;
+    //每300毫秒统计一次fps
+    float Fps::sm_StatisticalInterval = 300.0f;
 
     Fps::Fps(void)
     {
         m_dataOffset = 0;
         m_label = nullptr;
+
+        m_cacheSumFps = .0f;
+        m_cacheFpsCount = 0;
+        m_cacheTime = .0f;
     }
 
     const bool Fps::init(void)
@@ -89,6 +96,20 @@ namespace engine
         if(!Geometry::tick(dp)) return false;
 
         float fps = 1000.0f / dp;
+
+        m_cacheSumFps += fps;
+        m_cacheTime += dp;
+        ++m_cacheFpsCount;
+
+        if(m_cacheSumFps < sm_StatisticalInterval)
+        {
+            return true;
+        }
+
+        fps = m_cacheSumFps / m_cacheFpsCount;
+        m_cacheSumFps = .0f;
+        m_cacheFpsCount = 0;
+        m_cacheSumFps = .0f;
 
         stringstream strs;
         strs << fps;

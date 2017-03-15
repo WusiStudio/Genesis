@@ -22,6 +22,7 @@
 #include <iostream>
 
 using WsTools::Log;
+using tools::unicode;
 
 TestAppaction & TestAppaction::Instance(void)
 {
@@ -87,7 +88,8 @@ TestAppaction & TestAppaction::Instance(void)
         // Log.info("我: {0}", (int)L'我');
 
         // string str("我没问题啊，可以输出字符啊");
-        // Log.info("str.length: {0}, {1}", str.length(), str);
+        // unicode(str);
+        // Log.info("str.size: {0}, {1}", getStringSize(str), str);
         // wstring wstr = /*L"我没问题啊，可以输出字符啊";*/ tools::sTOWs(str);
         // Log.info("wstr.length: {0}", wstr.length());
 
