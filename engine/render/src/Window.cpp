@@ -7,7 +7,6 @@
 
 #include "Vec.h"
 #include "Rectangle.h"
-#include "Materia.h"
 #include "Color.h"
 
 #include <algorithm>

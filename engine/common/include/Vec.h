@@ -84,10 +84,8 @@ namespace engine
         ~Vec3(void);
         
         //重载运算符
-        // const Vec3 operator+(const float s) const;
         const Vec3 operator+(const Size3 & offset) const;
         const Vec3 & operator+=(const Size3 & offset);
-        // const Vec3 operator-(const float s) const;
         const Size3 operator-(const Vec3 & v) const;
         const Vec3 operator-(const Size3 & offset) const;
         const Vec3 & operator-=(const Size3 & offset);

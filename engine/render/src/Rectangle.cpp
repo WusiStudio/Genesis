@@ -30,8 +30,10 @@ namespace engine
         float widthHalf = m_size.width / 2;
         float heightHalf = m_size.height / 2;
 
-        Vec3 tempVertexs[4] = {Vec3(-widthHalf, -heightHalf), Vec3(widthHalf, -heightHalf), Vec3(widthHalf, heightHalf), Vec3(-widthHalf, heightHalf)};
+        Vec3 tempVertexs[4] = { Vec3(-widthHalf, -heightHalf), Vec3(widthHalf, -heightHalf), Vec3(widthHalf, heightHalf), Vec3(-widthHalf, heightHalf) };
+        Vec3 tempNormals[4] = { Vec3(.0f, 1.0f, .0f), Vec3(.0f, 1.0f, .0f), Vec3(.0f, 1.0f, .0f), Vec3(.0f, 1.0f, .0f) };
         vertexs(tempVertexs);
+        normals(tempNormals);
 
         unsigned short tempIndies[4] = {0, 1, 3, 2};
         indies(tempIndies);

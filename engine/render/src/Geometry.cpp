@@ -14,24 +14,24 @@ namespace engine
 {
     using WsTools::Log;
 
-    Materia * Geometry::DefaultMateria(void)
+    Chartlet * Geometry::DefaultCharlet(void)
     {
-        static Materia * result = nullptr;
+        static Chartlet * result = nullptr;
         if(!result)
         {
-            result = &Materia::Create();
+            result = &Chartlet::Create();
             result->retain();
         }
 
         return result;
     }
 
-    const bool Geometry::bindMateria(Materia & m)
+    const bool Geometry::bindChartlet(Chartlet & c)
     {
-        if(m_materia) { m_materia->release(); }
+        if(m_chartlet) { m_chartlet->release(); }
 
-        m_materia = &m;
-        m.retain();
+        m_chartlet = &c;
+        c.retain();
 
         //更新着色器
         if(!updateShaderProgram()){ return false; }
@@ -45,7 +45,7 @@ namespace engine
         m_indies = nullptr;
         m_normals = nullptr;
         m_uvs = nullptr;
-        m_materia = nullptr;
+        m_chartlet = nullptr;
 
         m_shaderProgram = nullptr;
 
@@ -57,7 +57,7 @@ namespace engine
     {
         if(!Node::init()){ return false; }
 
-        m_materia = DefaultMateria();
+        m_chartlet = DefaultCharlet();
         updateShaderProgram();
         return true;
     }
@@ -286,9 +286,9 @@ namespace engine
         m_shaderProgram->use();
 
         //材质
-        if(!m_materia) 
+        if(!m_chartlet) 
         { 
-            Log.error("Materia Is NULL!");
+            Log.error("Chartlet Is NULL!");
             return false; 
         }
 
@@ -308,9 +308,9 @@ namespace engine
         return true;
     }
 
-    const Materia & Geometry::materia(void) const
+    const Chartlet & Geometry::chartlet(void) const
     {
-        return * m_materia;
+        return * m_chartlet;
     }
 
     ShaderProgram & Geometry::shaderProgram(void) const
@@ -322,19 +322,19 @@ namespace engine
     {
         vector<string> v_shader_files, f_shader_files;
 
-        if(m_materia)
+        if(m_chartlet)
         {
-            switch(m_materia->materiaType())
+            switch(m_chartlet->chartletType())
             {
-                case MateriaType::Purity:
+                case ChartletType::Purity:
                     v_shader_files.push_back("MPurity.vert");
                     f_shader_files.push_back("MPurity.frag");
                 break;
-                case MateriaType::Multicolor:
+                case ChartletType::Multicolor:
                     v_shader_files.push_back("Multicolor.vert");
                     f_shader_files.push_back("Multicolor.frag");
                 break;
-                case MateriaType::Chartlet2D:
+                case ChartletType::Chartlet2D:
                     v_shader_files.push_back("Chartlet2D.vert");
                     f_shader_files.push_back("Chartlet2D.frag");
                 break;
@@ -349,47 +349,47 @@ namespace engine
 
     const bool Geometry::customVaoData(void)
     {
-         MateriaType materiaType = m_materia->materiaType();
+         ChartletType chartletType = m_chartlet->chartletType();
 
          Vec2 * tempTexCoords = nullptr;
 
-        switch(materiaType)
+        switch(chartletType)
         {
-            case MateriaType::Purity:
+            case ChartletType::Purity:
                 glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs, GL_STATIC_DRAW);
-                m_shaderProgram->uniformSet("fColor", m_materia->color().rgba());
+                m_shaderProgram->uniformSet("fColor", m_chartlet->color().rgba());
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
             break;
-            case MateriaType::Multicolor:
+            case ChartletType::Multicolor:
                 //材质的颜色数据数量不匹配时重新创建材质
-                if(m_vertexsCount > m_materia->colorsCount())
+                if(m_vertexsCount > m_chartlet->colorsCount())
                 {
                     ColorRGBA * tempArray = new ColorRGBA[m_vertexsCount];
                     for(int i = 0; i < m_vertexsCount; ++i)
                     {
-                        tempArray[i] = m_materia->colors()[i % m_materia->colorsCount()];
+                        tempArray[i] = m_chartlet->colors()[i % m_chartlet->colorsCount()];
                     }
-                    Materia & temp_materia = Materia::Create();
-                    temp_materia.colors(tempArray, m_vertexsCount);
+                    Chartlet & temp_charlet = Chartlet::Create();
+                    temp_charlet.colors(tempArray, m_vertexsCount);
                     delete[] tempArray;
 
-                    m_materia->release();
-                    m_materia = &temp_materia;
-                    m_materia->retain();
+                    m_chartlet->release();
+                    m_chartlet = &temp_charlet;
+                    m_chartlet->retain();
                 }
 
-                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_materia->colorsCount()), nullptr, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_chartlet->colorsCount()), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
-                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(ColorRGBA) * m_materia->colorsCount()), m_materia->colors());
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(ColorRGBA) * m_chartlet->colorsCount()), m_chartlet->colors());
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
                 glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
                 glEnableVertexAttribArray(3);
             break;
-            case MateriaType::Chartlet2D:
+            case ChartletType::Chartlet2D:
 
                 glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec2) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
@@ -404,7 +404,7 @@ namespace engine
             break;
 
             default:
-                Log.error("materiaType({0}) is ndefine!", materiaType);
+                Log.error("chartletType({0}) is ndefine!", chartletType);
             return false;
         }
 
@@ -472,10 +472,10 @@ namespace engine
         m_shaderProgram->uniformSet("projectionMatrix", projectionMatrix);
 
         glBindVertexArray(m_vertexArrayObject);
-        if(m_materia->materiaType() == MateriaType::Chartlet2D)
+        if(m_chartlet->chartletType() == ChartletType::Chartlet2D)
         {
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, (GLuint)m_materia->chartlet2D()->textrueId());
+            glBindTexture(GL_TEXTURE_2D, (GLuint)m_chartlet->chartlet2D()->textrueId());
         }
 
         return true;
@@ -535,6 +535,6 @@ namespace engine
         if(m_vertexBufferObject){ glDeleteBuffers(1, &m_indiesBufferObject); }
         if(m_vertexBufferObject){ glDeleteVertexArrays(1, &m_vertexArrayObject); }
 
-        if(m_materia) { m_materia->release(); }
+        if(m_chartlet) { m_chartlet->release(); }
     }
 }

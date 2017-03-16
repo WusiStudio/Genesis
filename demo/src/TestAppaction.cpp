@@ -18,6 +18,7 @@
 #include "Character.h"
 #include "Label.h"
 #include "Fps.h"
+#include "Chartlet.h"
 
 #include <iostream>
 
@@ -51,8 +52,8 @@ TestAppaction & TestAppaction::Instance(void)
         node.append(fristCircle);
         window().append(node);
 
-        Materia & materia = Materia::Create("2.png");
-        fristCircle.bindMateria(materia);
+        Chartlet & chartlet = Chartlet::Create("2.png");
+        fristCircle.bindChartlet(chartlet);
 
 
         //world
@@ -68,18 +69,17 @@ TestAppaction & TestAppaction::Instance(void)
         window().bindCamera(gameWorldCamera);
 
 
-        Materia & container_materia = Materia::Create("container.png");
+        Chartlet & containerChartlet = Chartlet::Create("container.png");
 
         Cube & cube = Cube::Create(Size3(300.0f));
         cube.id("cube");
         cube.scale(1.0f);
-        cube.bindMateria(container_materia);
+        cube.bindChartlet(containerChartlet);
         gameWorld.append(cube);
 
 
-        Materia & colorMateria = Materia::Create();
-        colorMateria.color(ColorRGBA(.0f, 1.0f, .0f, 1.0f));
-
+        // Chartlet & colorChartlet = Chartlet::Create();
+        // colorChartlet.color(ColorRGBA(.0f, 1.0f, .0f, 1.0f));
         
         Fps & fps = Fps::Create();
         fps.position(Vec2(80.0f, 50.0f));

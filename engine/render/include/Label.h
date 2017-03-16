@@ -6,7 +6,7 @@
 #include "Color.h"
 #include "Vec.h"
 #include "Font.h"
-#include "Materia.h"
+#include "Chartlet.h"
 #include "Character.h"
 
 #include <vector>
@@ -40,7 +40,7 @@ namespace engine
         void text(const string & p_text);
         void forceRefresh(void);
 
-        const bool bindMateria(Materia & m);
+        const bool bindChartlet(Chartlet & c);
         
         void font(Font & p_font);
         Font & font(void) const;
@@ -55,7 +55,7 @@ namespace engine
         Size2 m_characterBoxSize;
         Node * m_characterBox;
         Font * m_font;
-        Materia * m_materia;
+        Chartlet * m_chartlet;
         vector<Character *> m_characterCache;
     };
 }

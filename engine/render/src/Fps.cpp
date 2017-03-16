@@ -1,5 +1,5 @@
 #include "Fps.h"
-#include "Materia.h"
+#include "Chartlet.h"
 #include "Color.h"
 #include <sstream>
 
@@ -34,8 +34,8 @@ namespace engine
         float unitWidth = m_size.width / (sm_drawFpsCount - 1);
         float fpsBaseLinePosY = m_size.height / 3 * 2 - heightHalf;
 
-        Materia & materia = Materia::Create();
-        if(materia.fault()){ return false; }
+        Chartlet & Chartlet = Chartlet::Create();
+        if(Chartlet.fault()){ return false; }
 
         Label & label = Label::Create();
         if(label.fault()){ return false; }
@@ -49,8 +49,15 @@ namespace engine
         ColorRGBA contentColor(.2f, .8f, .0f, .4f);
         ColorRGBA borderColor(1.0f, .0f, .0f, 1.0f);
         ColorRGBA baseLineColor(.9f, .8f, .0f, .9f);
+
+        Vec3 tNormal(.0f, 1.0f, .0f);
+        for(size_t i = 0; i < vertexsCount(); ++i)
+        {
+            normal((unsigned short)i, tNormal);
+        }
+        
         //
-        for(short i = 0; i < sm_drawFpsCount; ++i)
+        for(size_t i = 0; i < sm_drawFpsCount; ++i)
         {
             float x = -widthHalf + unitWidth * i;
             vertex((unsigned short)(i * 2), Vec3(x, -heightHalf));
@@ -81,14 +88,14 @@ namespace engine
         colors[sm_drawFpsCount * 2 + 4] = baseLineColor;
         colors[sm_drawFpsCount * 2 + 5] = baseLineColor;
 
-        materia.colors(colors, vertexsCount());
+        Chartlet.colors(colors, vertexsCount());
         delete[] colors;
-        return bindMateria(materia);
+        return bindChartlet(Chartlet);
     }
 
-    const bool Fps::bindMateria(Materia & m)
+    const bool Fps::bindChartlet(Chartlet & c)
     {
-        return Geometry::bindMateria(m);
+        return Geometry::bindChartlet(c);
     }
 
     const bool Fps::tick(const float dp)

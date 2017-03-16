@@ -16,7 +16,7 @@ namespace engine
         m_underline = Underline::normal;
         m_font = nullptr;
         m_fontSize = 16;
-        m_materia = nullptr;
+        m_chartlet = nullptr;
 
         m_text = "";
     }
@@ -25,7 +25,7 @@ namespace engine
     {
         if(m_characterBox) { m_characterBox->release(); }
         if(m_font)  { m_font->release(); }
-        if(m_materia) m_materia->release();
+        if(m_chartlet) m_chartlet->release();
     }
 
     const bool Label::init(void)
@@ -55,19 +55,19 @@ namespace engine
         m_refresh = true;
     }
 
-    const bool Label::bindMateria(Materia & m)
+    const bool Label::bindChartlet(Chartlet & m)
     {
-        if(m_materia)
+        if(m_chartlet)
         {
-            m_materia->release();
+            m_chartlet->release();
         }
-        m_materia = &m;
-        m_materia->retain();
+        m_chartlet = &m;
+        m_chartlet->retain();
         m_characterBox->each([this](BaseNode & node) -> bool{
             Character * character = dynamic_cast<Character *>(&node);
             if(!character) return true;
 
-            character->bindMateria(*m_materia);
+            character->bindChartlet(*m_chartlet);
             return true;
         });
 
@@ -106,7 +106,7 @@ namespace engine
                 {
                     Character & character = Character::Create(characterInfo);
 
-                    if(m_materia) { character.bindMateria(*m_materia); }
+                    if(m_chartlet) { character.bindChartlet(*m_chartlet); }
                     character.retain();
                     m_characterCache.push_back(&character);
                 }else{

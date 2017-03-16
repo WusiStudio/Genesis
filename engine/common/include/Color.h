@@ -22,6 +22,8 @@ namespace engine
         Vec3 brg(void) const;
         Vec3 bgr(void) const;
 
+        ColorRGB operator*(const ColorRGB & c) const;
+
         friend ostream & operator<<(ostream & _stream, const ColorRGB & param);
 
         float r, g, b;
@@ -46,6 +48,8 @@ namespace engine
         Vec4 gbra(void) const;
         Vec4 brga(void) const;
         Vec4 bgra(void) const;
+
+        ColorRGBA operator*(const ColorRGBA & c) const;
 
         friend ostream & operator<<(ostream & _stream, const ColorRGBA & param);
 

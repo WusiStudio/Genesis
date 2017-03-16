@@ -8,7 +8,7 @@
 
 namespace engine
 {
-    enum MateriaType {
+    enum ChartletType {
         //纯色
         Purity,
         //彩色
@@ -17,19 +17,19 @@ namespace engine
         Chartlet2D
     };
 
-    class Materia : public Object
+    class Chartlet : public Object
     {
         PROPERTY_R(ColorRGBA, color);
         PROPERTY_R(unsigned int, colorsCount);
     public:
-        CREATEFUNC(Materia);
-        static const Materia & defaultMateria(void);
+        CREATEFUNC(Chartlet);
+        static const Chartlet & defaultChartlet(void);
 
-        static Materia & Create(const ColorRGBA & c);
-        static Materia & Create(const ColorRGBA * colors, const unsigned int count);
-        static Materia & Create(Textrue2D & textrue2D);
-        static Materia & Create(const Image & image);
-        static Materia & Create(const string & img_path);
+        static Chartlet & Create(const ColorRGBA & c);
+        static Chartlet & Create(const ColorRGBA * colors, const unsigned int count);
+        static Chartlet & Create(Textrue2D & textrue2D);
+        static Chartlet & Create(const Image & image);
+        static Chartlet & Create(const string & img_path);
 
         const bool color(const ColorRGBA & c);
         
@@ -39,10 +39,10 @@ namespace engine
         const bool chartlet2D(Textrue2D & textrue2D);
         const Textrue2D * chartlet2D(void) const;
 
-        const MateriaType &  materiaType(void) const;
+        const ChartletType &  chartletType(void) const;
     protected:
-        Materia(void);
-        virtual ~Materia(void);
+        Chartlet(void);
+        virtual ~Chartlet(void);
         virtual const bool init(void) override;
         virtual const bool initWithColor(const ColorRGBA & c);
         virtual const bool initWithColors(const ColorRGBA * colors, const unsigned int count);
@@ -54,7 +54,7 @@ namespace engine
 
         ColorRGBA * m_colors;
         Textrue2D * m_textrue2D;
-        MateriaType m_materiaType; 
+        ChartletType m_chartletType; 
 
     };
 }

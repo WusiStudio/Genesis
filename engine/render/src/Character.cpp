@@ -64,17 +64,17 @@ namespace engine
     {
         vector<string> v_shader_files, f_shader_files;
 
-        switch(materia().materiaType())
+        switch(chartlet().chartletType())
         {
-            case MateriaType::Purity:
+            case ChartletType::Purity:
                 v_shader_files.push_back("FontMPurity.vert");
                 f_shader_files.push_back("FontMPurity.frag");
             break;
-            case MateriaType::Multicolor:
+            case ChartletType::Multicolor:
                 v_shader_files.push_back("Multicolor.vert");
                 f_shader_files.push_back("Multicolor.frag");
             break;
-            case MateriaType::Chartlet2D:
+            case ChartletType::Chartlet2D:
                 v_shader_files.push_back("Chartlet2D.vert");
                 f_shader_files.push_back("Chartlet2D.frag");
             break;
@@ -91,7 +91,7 @@ namespace engine
         Vec2 * fontTexCoords = new Vec2[vertexsCount()];
         if(!texCoords(fontTexCoords)) { return false; }
 
-        shaderProgram().uniformSet("fColor", materia().color().rgba());
+        shaderProgram().uniformSet("fColor", chartlet().color().rgba());
 
         glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount() + sizeof(Vec2) * vertexsCount()), nullptr, GL_STATIC_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * vertexsCount()), vertexs());

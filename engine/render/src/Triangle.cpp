@@ -1,6 +1,5 @@
 #include "Triangle.h"
 #include "WSLog.h"
-#include "Materia.h"
 #include "Image.h"
 #include "Textrue2D.h"
 

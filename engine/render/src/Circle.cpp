@@ -46,13 +46,17 @@ namespace engine
         vertexsCount(perimeter * m_density + 1);
         indiesCount(vertexsCount() + 1);
 
+        Vec3 tNormal(.0f, 1.0f, .0f);
+
         vertex(0, Vec3(0.0f));
+        normal(0, tNormal);
         indie(0, 0);
         float intervalAngle = PI * 2 / (vertexsCount() - 1);
 
         for(int i = 0; i < vertexsCount() - 1; ++i)
         {
             vertex(i + 1, Vec3(m_radius * cos(intervalAngle * i), m_radius * sin(intervalAngle * i)));
+            normal(i + 1, tNormal);
             indie(i + 1, i + 1);
         }
 

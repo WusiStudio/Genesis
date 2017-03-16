@@ -19,7 +19,7 @@ namespace engine
 
         Fps(void);
         virtual ~Fps(void);
-        const bool bindMateria(Materia & m);
+        const bool bindChartlet(Chartlet & c);
         const bool init(void) override;
 
         virtual const bool tick(const float dp) override;

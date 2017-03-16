@@ -8,7 +8,7 @@
 #include "Node.h"
 #include "Vec.h"
 #include "Matrix.h"
-#include "Materia.h"
+#include "Chartlet.h"
 #include "ShaderProgram.h"
 
 namespace engine
@@ -18,7 +18,7 @@ namespace engine
         V_PROPERTY_R(protected, unsigned short, vertexsCount);
         V_PROPERTY_R(protected, unsigned short, indiesCount);
     public:
-        const bool bindMateria(Materia & m);
+        const bool bindChartlet(Chartlet & c);
     protected:
         Geometry(void);
         virtual ~Geometry(void);
@@ -66,7 +66,7 @@ namespace engine
         //绑定数据到Vao
         const bool bindVaoData(void);
 
-        const Materia & materia(void) const;
+        const Chartlet & chartlet(void) const;
 
         //
         ShaderProgram & shaderProgram(void) const;
@@ -85,7 +85,7 @@ namespace engine
         const bool texCoords(Vec2 * tex_coords) const;
     private:
 
-        static Materia * DefaultMateria(void);
+        static Chartlet * DefaultCharlet(void);
 
         //顶点数据及顺序
         Vec3 * m_vertexs;
@@ -96,7 +96,7 @@ namespace engine
         // string m_customVertextShaderFile, m_customFragmentShaderFile;
         
         //材质对象
-        Materia * m_materia;
+        Chartlet * m_chartlet;
 
         //着色器对象
         ShaderProgram * m_shaderProgram;
