@@ -16,6 +16,6 @@ void main()
     vec3 ambient = vec3(ambientStrength) * ambientStrength.w;
     vec3 lightDir = normalize(lightPos - fVertexPos);
     vec3 diffuse =  max(dot(fNormal, lightDir), 0.0f) * vec3(1.0f, 1.0f, 1.0f);
-    color = vec4((ambient + diffuse) * vec3(color.xyz), color.w);
+    color = vec4((ambient + diffuse) * vec3(color), color.w);
 }
 
