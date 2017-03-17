@@ -17,6 +17,7 @@ namespace engine
     {
         V_PROPERTY_R(protected, unsigned short, vertexsCount);
         V_PROPERTY_R(protected, unsigned short, indiesCount);
+        PROPERTY(bool, illuminant);
     public:
         const bool bindChartlet(Chartlet & c);
     protected:

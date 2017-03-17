@@ -482,7 +482,8 @@ namespace engine
         //p
         Matrix4 projectionMatrix = screen_matrix;
 
-        m_shaderProgram->uniformSet("ambientStrength", Vec4(1.0f, 1.0f, 1.0f, .4f));
+        m_shaderProgram->uniformSet("ambientStrength", Vec4(1.0f, 1.0f, 1.0f, .1f));
+        m_shaderProgram->uniformSet("lightPos", Vec3(500.0f, 500.0f, -1000.0f));
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
         m_shaderProgram->uniformSet("viewMatrix", viewMatrix);

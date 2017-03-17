@@ -83,7 +83,7 @@ TestAppaction & TestAppaction::Instance(void)
         cubeBox.position(Vec3(.0f, .0f, -900.0f));
         gameWorld.append(cubeBox);
 
-        for(int i = 0; i < 100; ++i)
+        for(int i = 0; i < 50; ++i)
         {
             Cube & t_obj = Cube::Create(Size3(50.0f));
             t_obj.bindChartlet(containerChartlet);
