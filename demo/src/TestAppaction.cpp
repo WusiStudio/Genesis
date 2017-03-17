@@ -73,7 +73,6 @@ TestAppaction & TestAppaction::Instance(void)
 
         Cube & cube = Cube::Create(Size3(300.0f));
         cube.id("cube");
-        cube.scale(1.0f);
         cube.bindChartlet(containerChartlet);
         gameWorld.append(cube);
 

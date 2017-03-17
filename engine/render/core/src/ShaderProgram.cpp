@@ -202,6 +202,22 @@ namespace engine
         glUniform1f(uboIndex, s);
         return true;
     }
+    const bool ShaderProgram::uniformSet(const char * uniformName, const Vec2 & v) const
+    {
+        GLuint uboIndex = getUniformLocation(uniformName);
+        if(uboIndex == GL_INVALID_INDEX) return false;
+
+        glUniform2fv(uboIndex, 1, &v[0]);
+        return true;
+    }
+    const bool ShaderProgram::uniformSet(const char * uniformName, const Vec3 & v) const
+    {
+        GLuint uboIndex = getUniformLocation(uniformName);
+        if(uboIndex == GL_INVALID_INDEX) return false;
+
+        glUniform3fv(uboIndex, 1, &v[0]);
+        return true;
+    }
     const bool ShaderProgram::uniformSet(const char * uniformName, const Vec4 & v) const 
     {
         GLuint uboIndex = getUniformLocation(uniformName);
