@@ -266,6 +266,11 @@ namespace engine
         return m_vertexs;
     }
 
+    const Vec3 * Geometry::normals(void) const
+    {
+        return m_normals;
+    }
+
     const unsigned short * Geometry::indies(void) const 
     {
         return m_indies;
@@ -356,11 +361,15 @@ namespace engine
         switch(chartletType)
         {
             case ChartletType::Purity:
-                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_normals);
                 m_shaderProgram->uniformSet("fColor", m_chartlet->color().rgba());
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
+                glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(1);
             break;
             case ChartletType::Multicolor:
                 //材质的颜色数据数量不匹配时重新创建材质
@@ -380,24 +389,30 @@ namespace engine
                     m_chartlet->retain();
                 }
 
-                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_chartlet->colorsCount()), nullptr, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount + sizeof(ColorRGBA) * m_chartlet->colorsCount()), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
-                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(ColorRGBA) * m_chartlet->colorsCount()), m_chartlet->colors());
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_normals);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(ColorRGBA) * m_chartlet->colorsCount()), m_chartlet->colors());
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
-                glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(1);
+                glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount));
                 glEnableVertexAttribArray(3);
             break;
             case ChartletType::Chartlet2D:
 
-                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec2) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount + sizeof(Vec2) * m_vertexsCount), nullptr, GL_STATIC_DRAW);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_vertexs);
-                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec2) * m_vertexsCount), m_uvs);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount), m_normals);
+                glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount), (GLsizeiptr)(sizeof(Vec2) * m_vertexsCount), m_uvs);
 
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
                 glEnableVertexAttribArray(0);
-                glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount));
+                glEnableVertexAttribArray(1);
+                glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * m_vertexsCount + sizeof(Vec3) * m_vertexsCount));
                 glEnableVertexAttribArray(2);
 
                 delete[] tempTexCoords;
@@ -466,6 +481,8 @@ namespace engine
 
         //p
         Matrix4 projectionMatrix = screen_matrix;
+
+        m_shaderProgram->uniformSet("ambientStrength", Vec4(1.0f, 1.0f, 1.0f, .4f));
 
         m_shaderProgram->uniformSet("modelMatrix", modelMatrix);
         m_shaderProgram->uniformSet("viewMatrix", viewMatrix);

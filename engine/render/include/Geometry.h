@@ -54,6 +54,7 @@ namespace engine
 
         //数据起始地址
         const Vec3 * vertexs(void) const;
+        const Vec3 * normals(void) const;
         const unsigned short * indies(void) const;
 
         //顶点对象
