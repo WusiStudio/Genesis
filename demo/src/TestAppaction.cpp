@@ -61,7 +61,7 @@ TestAppaction & TestAppaction::Instance(void)
         gameWorld.id("gameWorld");
 
         Camera & gameWorldCamera = Camera::Create();
-        gameWorldCamera.position(Vec3(800.0f, .0f, .0f));
+        gameWorldCamera.position(Vec3(.0f, .0f, 800.0f));
         gameWorldCamera.viewPortSize(window().size());
         gameWorldCamera.target(Vec3(.0f, .0f, .0f));
         gameWorld.append(gameWorldCamera);
@@ -76,6 +76,20 @@ TestAppaction & TestAppaction::Instance(void)
         cube.scale(1.0f);
         cube.bindChartlet(containerChartlet);
         gameWorld.append(cube);
+
+
+        Node & cubeBox = Node::Create();
+        cubeBox.id("cubeBox");
+        cubeBox.position(Vec3(.0f, .0f, -900.0f));
+        gameWorld.append(cubeBox);
+
+        for(int i = 0; i < 100; ++i)
+        {
+            Cube & t_obj = Cube::Create(Size3(50.0f));
+            t_obj.bindChartlet(containerChartlet);
+            t_obj.position(Vec3(-2000.0f + 100.0f * i, .0f, .0f));
+            cubeBox.append(t_obj);
+        }
 
 
         // Chartlet & colorChartlet = Chartlet::Create();
@@ -180,13 +194,19 @@ TestAppaction & TestAppaction::Instance(void)
             Cube * cube = (Cube *)(gameWorld->find("cube"));
             if(cube)
             {
-                cube->rotate(cube->rotate() + Size3(PI / 180 / 2, 0, PI / 180 / 2));
+                cube->rotate(cube->rotate() + Size3(PI / 180 * dt / 15.0f, 0, PI / 180 * dt / 15.0f));
             }
 
             Label * label = dynamic_cast<Label *>(window().find("label"));
             if(label)
             {
                 label->rotate(Vec3(.0f, sin(temp / 1000.0f) * PI / 4, .0f));
+            }
+
+            Node * cubeBox = (Node *)(gameWorld->find("cubeBox"));
+            if(cubeBox)
+            {
+                cubeBox->rotate(cubeBox->rotate() - Size3(PI / 180 * dt / 20.0f, 0, PI / 180 / 2 * dt / 20.0f));
             }
         }
  }
