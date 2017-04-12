@@ -57,7 +57,7 @@ namespace engine
         }
         
         //
-        for(size_t i = 0; i < sm_drawFpsCount; ++i)
+        for(size_t i = 0; i < (size_t)sm_drawFpsCount; ++i)
         {
             float x = -widthHalf + unitWidth * i;
             vertex((unsigned short)(i * 2), Vec3(x, -heightHalf));
@@ -123,7 +123,7 @@ namespace engine
 
         string sfps = strs.str();
         auto dotIndex = sfps.find('.');
-        if(dotIndex != -1 && sfps.length() - dotIndex > 2)
+        if((int)dotIndex != -1 && sfps.length() - dotIndex > 2)
         {
             sfps = sfps.substr(0, dotIndex + 3);
         }

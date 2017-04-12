@@ -35,7 +35,7 @@ namespace engine
 
         const Uuid uuid(void) const;
     
-        const bool open(const int mode = ios::in | ios::out);
+        const bool open(const std::ios_base::openmode mode = ios::in | ios::out);
         
     protected:
         CREATEFUNC(File);

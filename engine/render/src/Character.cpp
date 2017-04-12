@@ -93,16 +93,20 @@ namespace engine
 
         shaderProgram().uniformSet("fColor", chartlet().color().rgba());
 
-        glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount() + sizeof(Vec2) * vertexsCount()), nullptr, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount() + sizeof(Vec3) * vertexsCount() + sizeof(Vec2) * vertexsCount()), nullptr, GL_STATIC_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizeiptr)(sizeof(Vec3) * vertexsCount()), vertexs());
-        glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount()), (GLsizeiptr)(sizeof(Vec2) * vertexsCount()), fontTexCoords);
+        glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount()), (GLsizeiptr)(sizeof(Vec3) * vertexsCount()), normals());
+        glBufferSubData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(Vec3) * vertexsCount() + sizeof(Vec3) * vertexsCount()), (GLsizeiptr)(sizeof(Vec2) * vertexsCount()), fontTexCoords);
 
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * vertexsCount()));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * vertexsCount()));
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 0, (const void *)(sizeof(Vec3) * vertexsCount() + sizeof(Vec3) * vertexsCount()));
+        glEnableVertexAttribArray(3);
 
         delete[] fontTexCoords;
 

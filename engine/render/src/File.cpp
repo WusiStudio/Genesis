@@ -86,7 +86,7 @@ namespace engine
         return true;
     }
 
-    const bool File::open(const int mode)
+    const bool File::open(const std::ios_base::openmode mode)
     {
         if(!this->m_filePath){ return false; }
 
